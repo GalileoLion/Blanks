@@ -1,12 +1,7 @@
-<p align="center"><img src="static/logo-small.png" alt="MarkText" width="100" height="100"></p>
+<p align="center"><img src="static/logo-small.png" alt="Blanks" width="100" height="100"></p>
 
-<h1 align="center">MarkText</h1>
+<h1 align="center">Blanks</h1>
 
-<div align="center">
-  <a href="https://twitter.com/intent/tweet?via=marktextme&url=https://github.com/marktext/marktext/&text=What%20do%20you%20want%20to%20say%20to%20app?&hashtags=happyMarkText">
-    <img src="https://img.shields.io/twitter/url/https/github.com/marktext/marktext.svg?style=for-the-badge" alt="twitter">
-  </a>
-</div>
 <div align="center">
   <strong>:high_brightness: Next generation markdown editor :crescent_moon:</strong><br>
   A simple and elegant open-source markdown editor that focused on speed and usability.<br>
@@ -14,6 +9,15 @@
 </div>
 
 <br>
+
+> **Note**: This project, **Blanks (中文名：“留白”)**, is an adaptation of the excellent open-source project [MarkText](https://github.com/marktext/marktext). 
+> 
+> Our design philosophy centers around **"去线留白设计+极简现代主义设计"** (Line-removal whitespace design + Minimalist modernism design). We aim to provide an even cleaner, more distraction-free writing environment while inheriting the core power of the original editor.
+
+## TODOs for Blanks Project
+
+- [ ] **Sponsorship**: Add back the original MarkText sponsorship links to support the core maintainers.
+- [ ] **Links**: Update or modify the remaining documentation and community links to point to the new Blanks project repositories and resources.
 
 <div align="center">
   <!-- License -->
@@ -111,20 +115,20 @@
 
 <br />
 
-<h2 align="center">Supporting MarkText</h2>
+<h2 align="center">Supporting Blanks</h2>
 
-MarkText is an MIT licensed open source project, and the latest version will always be downloadable for free from the GitHub release page. MarkText is still in development, and its development is inseparable from all sponsors. I hope you join them:
+Blanks is an MIT licensed open source project, and the latest version will always be downloadable for free from the GitHub release page. Blanks is still in development, and its development is inseparable from all sponsors. I hope you join them:
 
 - [Become a backer or sponsor on Patreon](https://www.patreon.com/ranluo) or [One time donation](https://github.com/Jocs/sponsor.me)
 - [Become a backer or sponsor on Open Collective](https://opencollective.com/marktext)
 
 ##### What's the difference between Patreon and Open Collective?
 
-Patreon: Funds will be directly sponsored to Luo Ran (@jocs) who created MarkText and continues to maintain it.
-Open Collective: All expenses are transparent. The funds will be used for the development and maintenance of MarkText, funding online and offline activities, and acquiring other necessary resources.
-Names and company logos of all sponsors (from both Patreon and Open Collective) will appear on the official website for MarkText and in its README.md file.
+Patreon: Funds will be directly sponsored to Luo Ran (@jocs) who created Blanks and continues to maintain it.
+Open Collective: All expenses are transparent. The funds will be used for the development and maintenance of Blanks, funding online and offline activities, and acquiring other necessary resources.
+Names and company logos of all sponsors (from both Patreon and Open Collective) will appear on the official website for Blanks and in its README.md file.
 
-**Looking for MarkText-like editing with cloud storage? try [Inkio](https://inkio.me)**
+**Looking for Blanks-like editing with cloud storage? try [Inkio](https://inkio.me)**
 
 <a href="https://inkio.me/" target="_blank">
  <img src="https://inkio.me/static/media/logo.35f605dc31b1a0615087.png" width="100">
@@ -193,9 +197,9 @@ Names and company logos of all sponsors (from both Patreon and Open Collective) 
 
 ## Why make another editor?
 
-1. I love writing. I have used a lot of markdown editors, yet there is still not an editor that can fully meet my needs. I don't like to be disturbed when I write by some unbearable bug. **MarkText** uses virtual DOM to render pages which has the added benefits of being highly efficient and being open source. That way anyone who loves markdown and writing can use MarkText.
-2. As mentioned above, **MarkText** is completely free and open source and will be open source forever. We hope that all markdown lovers will contribute their own code and help develop **MarkText** into a popular markdown editor.
-3. There are many markdown editors and all have their own merits, some have features which others don't. It's difficult to satisfy each markdown users' needs but we hope **MarkText** will be able to satisfy each markdown user as much as possible. Although the latest **MarkText** is still not perfect, we will try to make it as best as we possibly can.
+1. I love writing. I have used a lot of markdown editors, yet there is still not an editor that can fully meet my needs. I don't like to be disturbed when I write by some unbearable bug. **Blanks** uses virtual DOM to render pages which has the added benefits of being highly efficient and being open source. That way anyone who loves markdown and writing can use Blanks.
+2. As mentioned above, **Blanks** is completely free and open source and will be open source forever. We hope that all markdown lovers will contribute their own code and help develop **Blanks** into a popular markdown editor.
+3. There are many markdown editors and all have their own merits, some have features which others don't. It's difficult to satisfy each markdown users' needs but we hope **Blanks** will be able to satisfy each markdown user as much as possible. Although the latest **Blanks** is still not perfect, we will try to make it as best as we possibly can.
 
 ## Download and Installation
 
@@ -209,7 +213,7 @@ Want to see new features of the latest version? Please refer to [CHANGELOG](.git
 
 #### macOS
 
-You can either download the latest `marktext-%version%.dmg` from the [release page](https://github.com/marktext/marktext/releases/latest) or install MarkText using [**homebrew cask**](https://github.com/caskroom/homebrew-cask). To use Homebrew-Cask you just need to have [Homebrew](https://brew.sh/) installed.
+You can either download the latest `marktext-%version%.dmg` from the [release page](https://github.com/marktext/marktext/releases/latest) or install Blanks using [**homebrew cask**](https://github.com/caskroom/homebrew-cask). To use Homebrew-Cask you just need to have [Homebrew](https://brew.sh/) installed.
 
 ```bash
 brew install --cask mark-text
@@ -217,7 +221,7 @@ brew install --cask mark-text
 
 #### Windows
 
-Simply download and install MarkText via setup wizard (`marktext-setup-%version%.exe`) and choose whether to install per-user or machine wide. Alternatively, install MarkText using a package manager such as [Chocolatey](https://chocolatey.org/) or [Winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/).
+Simply download and install Blanks via setup wizard (`marktext-setup-%version%.exe`) and choose whether to install per-user or machine wide. Alternatively, install Blanks using a package manager such as [Chocolatey](https://chocolatey.org/) or [Winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/).
 
 To use Chocolatey, you need to have [Chocolatey](https://chocolatey.org/install) installed:
 
@@ -241,27 +245,27 @@ All binaries for Linux, macOS and Windows can be downloaded from the [release pa
 
 ## Development
 
-If you wish to build MarkText yourself, please check out our [build instructions](docs/dev/BUILD.md).
+If you wish to build Blanks yourself, please check out our [build instructions](docs/dev/BUILD.md).
 
 - [User documentation](docs/README.md)
 - [Developer documentation](docs/dev/README.md)
 
-If you have any questions regarding MarkText, you are welcome to write an issue. When doing so please use the default format found when opening an issue. Of course, if you submit a PR directly, it will be greatly appreciated.
+If you have any questions regarding Blanks, you are welcome to write an issue. When doing so please use the default format found when opening an issue. Of course, if you submit a PR directly, it will be greatly appreciated.
 
 ## Integrations
 
-- [Alfred Workflow](http://www.packal.org/workflow/mark-text): A Workflow for the macOS app Alfred: Use "mt" to open files/folder with MarkText.
+- [Alfred Workflow](http://www.packal.org/workflow/mark-text): A Workflow for the macOS app Alfred: Use "mt" to open files/folder with Blanks.
 
 ## Contribution
 
-MarkText is in development, please make sure to read the [Contributing Guide](CONTRIBUTING.md) before making a pull request. Want to add some features to MarkText? Refer to our [roadmap](https://github.com/marktext/marktext/projects?type=classic) and open issues.
+Blanks is in development, please make sure to read the [Contributing Guide](CONTRIBUTING.md) before making a pull request. Want to add some features to Blanks? Refer to our [roadmap](https://github.com/marktext/marktext/projects?type=classic) and open issues.
 
 
 ## Contributors
 
-Thank you to all the people who have already contributed to MarkText[[contributors](https://github.com/marktext/marktext/graphs/contributors)].
+Thank you to all the people who have already contributed to Blanks[[contributors](https://github.com/marktext/marktext/graphs/contributors)].
 
-Special thanks to @[Yasujizr](https://github.com/Yasujizr) who designed the MarkText logo.
+Special thanks to @[Yasujizr](https://github.com/Yasujizr) who designed the Blanks logo.
 
 <a href="https://github.com/marktext/marktext/graphs/contributors"><img src="https://opencollective.com/marktext/contributors.svg?width=890" /></a>
 

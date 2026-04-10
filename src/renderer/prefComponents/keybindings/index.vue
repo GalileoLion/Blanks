@@ -3,7 +3,7 @@
     <h4>Key Bindings</h4>
     <section class="keybindings">
       <div class="text">
-        Customize MarkText shortcuts and click on the save button below to apply all changes (requires a restart).
+        Customize Blanks shortcuts and click on the save button below to apply all changes (requires a restart).
         All available and default key binding can be found <a class="link" @click="openKeybindingWiki">online</a>.
       </div>
       <el-table
@@ -88,7 +88,7 @@ export default {
 
     // Show keyboard debugging tools which has been moved from CLI because we
     // need an active window on Windows.
-    this.showDebugTools = global.marktext.env.debug
+    this.showDebugTools = global.blanks.env.debug
   },
 
   unmounted () {
@@ -98,7 +98,7 @@ export default {
 
   methods: {
     openKeybindingWiki () {
-      shell.openExternal('https://github.com/marktext/marktext/blob/master/docs/KEYBINDINGS.md')
+      shell.openExternal('https://github.com/blanks/blanks/blob/master/docs/KEYBINDINGS.md')
     },
     saveKeybindings () {
       if (this.keybindingConfigurator && this.keybindingList.length > 0) {

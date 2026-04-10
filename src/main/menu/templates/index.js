@@ -2,7 +2,7 @@ import edit from './edit'
 import prefEdit from './prefEdit'
 import file from './file'
 import help from './help'
-import marktext from './marktext'
+import blanks from './blanks'
 import view from './view'
 import window from './window'
 import paragraph from './paragraph'
@@ -18,7 +18,7 @@ export dockMenu from './dock'
  */
 export const configSettingMenu = (keybindings) => {
   return [
-    ...(process.platform === 'darwin' ? [marktext(keybindings)] : []),
+    ...(process.platform === 'darwin' ? [blanks(keybindings)] : []),
     prefEdit(keybindings),
     help()
   ]
@@ -33,7 +33,7 @@ export const configSettingMenu = (keybindings) => {
  */
 export default function (keybindings, preferences, recentlyUsedFiles) {
   return [
-    ...(process.platform === 'darwin' ? [marktext(keybindings)] : []),
+    ...(process.platform === 'darwin' ? [blanks(keybindings)] : []),
     file(keybindings, preferences, recentlyUsedFiles),
     edit(keybindings),
     paragraph(keybindings),

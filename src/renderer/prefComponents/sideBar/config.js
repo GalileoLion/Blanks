@@ -43,6 +43,11 @@ export const category = [{
   label: 'keybindings',
   icon: KeyBindingIcon,
   path: '/preference/keybindings'
+}, {
+  name: 'Footer Bar',
+  label: 'footerbar',
+  icon: EditorIcon,
+  path: '/preference/footerbar'
 }]
 
 export const searchContent = Object.keys(preferences).map(k => {

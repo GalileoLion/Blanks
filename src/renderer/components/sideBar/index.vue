@@ -54,6 +54,7 @@ import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
 import Toc from './toc.vue'
 import { mapState } from 'vuex'
+import bus from '@/bus'
 
 export default {
   data () {
@@ -132,6 +133,8 @@ export default {
     handleLeftBottomClick (name) {
       if (name === 'settings') {
         this.$store.dispatch('OPEN_SETTING_WINDOW')
+      } else if (name === 'close') {
+        bus.$emit('view:toggle-layout-entry', 'showSideBar')
       }
     }
   }

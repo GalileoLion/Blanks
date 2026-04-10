@@ -398,7 +398,7 @@ const actions = {
   UPDATE_LINE_ENDING_MENU ({ state }) {
     const { lineEnding } = state.currentFile
     if (lineEnding) {
-      const { windowId } = global.marktext.env
+      const { windowId } = global.blanks.env
       ipcRenderer.send('mt::update-line-ending-menu', windowId, lineEnding)
     }
   },
@@ -1025,12 +1025,12 @@ const actions = {
       })
     }
 
-    const { windowId } = global.marktext.env
+    const { windowId } = global.blanks.env
     ipcRenderer.send('mt::editor-selection-changed', windowId, createApplicationMenuState(changes))
   },
 
   SELECTION_FORMATS (_, formats) {
-    const { windowId } = global.marktext.env
+    const { windowId } = global.blanks.env
     ipcRenderer.send('mt::update-format-menu', windowId, createSelectionFormatState(formats))
   },
 

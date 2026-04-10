@@ -1,7 +1,7 @@
 {
-  "name": "marktext",
+  "name": "blanks",
   "version": "0.17.1",
-  "homepage": "https://github.com/marktext/marktext/",
+  "homepage": "https://github.com/blanks/blanks/",
   "description": "Next generation markdown editor",
   "license": "MIT",
   "main": "./dist/electron/main.js",
@@ -15,7 +15,7 @@
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:dev": "node .electron-vue/build.js",
     "dev": "cross-env node .electron-vue/dev-runner.js",
-    "e2e": "yarn run pack && cross-env MARKTEXT_EXIT_ON_ERROR=1 playwright test -c test/e2e/playwright.config.js test/e2e",
+    "e2e": "yarn run pack && cross-env BLANKS_EXIT_ON_ERROR=1 playwright test -c test/e2e/playwright.config.js test/e2e",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src test",
     "pack": "yarn run pack:main && yarn run pack:renderer",
@@ -182,10 +182,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:marktext/marktext.git"
+    "url": "git@github.com:blanks/blanks.git"
   },
   "bugs": {
-    "url": "https://github.com/marktext/marktext/issues"
+    "url": "https://github.com/blanks/blanks/issues"
   },
   "author": {
     "name": "Jocs",

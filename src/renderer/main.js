@@ -50,7 +50,7 @@ sourceMapSupport.install({
   hookRequire: false
 })
 
-global.marktext = {}
+global.blanks = {}
 bootstrapRenderer()
 
 addElementStyle()
@@ -97,7 +97,7 @@ services.forEach(s => {
 })
 
 const router = new VueRouter({
-  routes: routes(global.marktext.env.type)
+  routes: routes(global.blanks.env.type)
 })
 
 /* eslint-disable no-new */

@@ -74,7 +74,7 @@ export default function (keybindings) {
     }]
   }
 
-  if (global.MARKTEXT_DEBUG) {
+  if (global.BLANKS_DEBUG) {
     viewMenu.submenu.push({
       type: 'separator'
     })

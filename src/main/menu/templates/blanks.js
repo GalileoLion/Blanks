@@ -1,14 +1,14 @@
 import { app } from 'electron'
 import { showAboutDialog } from '../actions/help'
-import * as actions from '../actions/marktext'
+import * as actions from '../actions/blanks'
 
 // macOS only menu.
 
 export default function (keybindings) {
   return {
-    label: 'MarkText',
+    label: 'Blanks',
     submenu: [{
-      label: 'About MarkText',
+      label: 'About Blanks',
       click (menuItem, focusedWindow) {
         showAboutDialog(focusedWindow)
       }
@@ -32,7 +32,7 @@ export default function (keybindings) {
     }, {
       type: 'separator'
     }, {
-      label: 'Hide MarkText',
+      label: 'Hide Blanks',
       accelerator: keybindings.getAccelerator('mt.hide'),
       click () {
         actions.osxHide()
@@ -51,7 +51,7 @@ export default function (keybindings) {
     }, {
       type: 'separator'
     }, {
-      label: 'Quit MarkText',
+      label: 'Quit Blanks',
       accelerator: keybindings.getAccelerator('file.quit'),
       click: app.quit
     }]

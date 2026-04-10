@@ -23,7 +23,7 @@ const initializeLogger = appEnvironment => {
 
 // NOTE: We only support Linux, macOS and Windows but not BSD nor SunOS.
 if (!/^(darwin|win32|linux)$/i.test(process.platform)) {
-  process.stdout.write(`Operating system "${process.platform}" is not supported! Please open an issue at "https://github.com/marktext/marktext".\n`)
+  process.stdout.write(`Operating system "${process.platform}" is not supported! Please open an issue at "https://github.com/blanks/blanks".\n`)
   process.exit(1)
 }
 
@@ -37,16 +37,16 @@ if (args['--disable-gpu']) {
   app.disableHardwareAcceleration()
 }
 
-// Make MarkText a single instance application.
+// Make Blanks a single instance application.
 if (!process.mas && process.env.NODE_ENV !== 'development') {
   const gotSingleInstanceLock = app.requestSingleInstanceLock()
   if (!gotSingleInstanceLock) {
-    process.stdout.write('Other MarkText instance detected: exiting...\n')
+    process.stdout.write('Other Blanks instance detected: exiting...\n')
     app.exit()
   }
 }
 
-// MarkText environment is configured successfully. You can now access paths, use the logger etc.
+// Blanks environment is configured successfully. You can now access paths, use the logger etc.
 // Create other instances that need access to the modules from above.
 let accessor = null
 try {
@@ -56,10 +56,10 @@ try {
   const msgHint = err.message.includes('Config schema violation')
     ? 'This seems to be an issue with your configuration file(s). '
     : ''
-  log.error(`Loading MarkText failed during initialization! ${msgHint}`, err)
+  log.error(`Loading Blanks failed during initialization! ${msgHint}`, err)
 
-  const EXIT_ON_ERROR = !!process.env.MARKTEXT_EXIT_ON_ERROR
-  const SHOW_ERROR_DIALOG = !process.env.MARKTEXT_ERROR_INTERACTION
+  const EXIT_ON_ERROR = !!process.env.BLANKS_EXIT_ON_ERROR
+  const SHOW_ERROR_DIALOG = !process.env.BLANKS_ERROR_INTERACTION
   if (!EXIT_ON_ERROR && SHOW_ERROR_DIALOG) {
     dialog.showErrorBox(
       'There was an error during loading',
@@ -80,5 +80,5 @@ log.transports.file.sync = false
 // Enable remote module
 remoteInitializeServer()
 
-const marktext = new App(accessor, args)
-marktext.init()
+const blanks = new App(accessor, args)
+blanks.init()

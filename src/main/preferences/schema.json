@@ -1,4 +1,14 @@
 {
+  "footerBarLayout": {
+    "description": "FooterBar--Define the layout of the footer bar, use 'divider' for splitting groups.",
+    "type": "string",
+    "default": "strong, em, u, mark, blockquote, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task"
+  },
+  "footerBarCustomIcons": {
+    "description": "FooterBar--Custom SVG icons for footer bar buttons.",
+    "type": "object",
+    "default": {}
+  },
   "autoSave": {
     "description": "General--Automatically save the content being edited.",
     "type": "boolean",
@@ -55,7 +65,7 @@
     "default": "modified"
   },
   "startUpAction": {
-    "description": "General--The action after MarkText startup, open the last edited content, open the specified folder or blank page",
+    "description": "General--The action after Blanks startup, open the last edited content, open the specified folder or blank page",
     "enum": [
       "folder",
       "lastState",
@@ -68,7 +78,7 @@
     "type": "string"
   },
   "language": {
-    "description": "General--The language MarkText use.",
+    "description": "General--The language Blanks use.",
     "type": "string",
     "default": "en"
   },
@@ -248,7 +258,7 @@
     "default": "."
   },
   "preferHeadingStyle": {
-    "description": "Markdown--The preferred heading style in MarkText",
+    "description": "Markdown--The preferred heading style in Blanks",
     "enum": [
       "atx",
       "setext"
@@ -311,7 +321,7 @@
     "default": "hand"
   },
   "theme": {
-    "description": "Theme--Select the theme used in MarkText",
+    "description": "Theme--Select the theme used in Blanks",
     "type": "string",
     "default": "light"
   },

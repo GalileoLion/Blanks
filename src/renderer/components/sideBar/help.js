@@ -2,6 +2,7 @@ import FilesIcon from '@/assets/icons/files.svg'
 import SearchIcon from '@/assets/icons/search.svg'
 import TocIcon from '@/assets/icons/toc.svg'
 import SettingIcon from '@/assets/icons/setting.svg'
+import FoldIcon from '@/assets/icons/fold.svg'
 
 export const sideBarIcons = [
   {
@@ -20,5 +21,9 @@ export const sideBarBottomIcons = [
   {
     name: 'settings',
     icon: SettingIcon
+  },
+  {
+    name: 'close',
+    icon: FoldIcon
   }
 ]

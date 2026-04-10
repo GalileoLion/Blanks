@@ -206,7 +206,7 @@ class Watcher {
       .on('addDir', pathname => addDir(win, pathname, type))
       .on('unlinkDir', pathname => unlinkDir(win, pathname, type))
       .on('raw', (event, subpath, details) => {
-        if (global.MARKTEXT_DEBUG_VERBOSE >= 3) {
+        if (global.BLANKS_DEBUG_VERBOSE >= 3) {
           console.log('watcher: ', event, subpath, details)
         }
 
@@ -328,7 +328,7 @@ class Watcher {
   }
 
   /**
-   * Check whether we should ignore the current event because the file may be changed from MarkText itself.
+   * Check whether we should ignore the current event because the file may be changed from Blanks itself.
    *
    * @param {number} winId
    * @param {string} pathname
@@ -355,7 +355,7 @@ class Watcher {
             try {
               const fileInfo = await fsPromises.stat(pathname)
               if (fileInfo.mtime - start < duration) {
-                if (global.MARKTEXT_DEBUG_VERBOSE >= 3) {
+                if (global.BLANKS_DEBUG_VERBOSE >= 3) {
                   console.log(`Ignoring file event after "stat": current="${currentTime}", start="${start}", file="${fileInfo.mtime}".`)
                 }
                 return true

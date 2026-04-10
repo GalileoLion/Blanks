@@ -3,6 +3,8 @@ import bus from '../bus'
 
 // user preference
 const state = {
+  footerBarLayout: 'strong, em, u, mark, blockquote, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task',
+  footerBarCustomIcons: {},
   autoSave: false,
   autoSaveDelay: 5000,
   titleBarStyle: 'custom',
@@ -160,7 +162,7 @@ const actions = {
   },
 
   DISPATCH_EDITOR_VIEW_STATE (_, viewState) {
-    const { windowId } = global.marktext.env
+    const { windowId } = global.blanks.env
     ipcRenderer.send('mt::view-layout-changed', windowId, viewState)
   }
 }

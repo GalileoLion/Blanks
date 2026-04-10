@@ -3,8 +3,8 @@ const commandDescriptions = Object.freeze({
   // # Key binding descriptions
   // #
 
-  'mt.hide': 'MarkText: Hide MarkText',
-  'mt.hide-others': 'MarkText: Hide Others',
+  'mt.hide': 'Blanks: Hide Blanks',
+  'mt.hide-others': 'Blanks: Hide Others',
   'file.new-window': 'File: New Window',
   'file.new-tab': 'File: New Tab',
   'file.open-file': 'File: Open file',
@@ -15,10 +15,10 @@ const commandDescriptions = Object.freeze({
   'file.rename-file': 'File: Rename...',
   'file.quick-open': 'File: Show quick open dialog',
   'file.print': 'File: Print current Tab',
-  'file.preferences': 'MarkText: Preferences',
+  'file.preferences': 'Blanks: Preferences',
   'file.close-tab': 'File: Close current Tab',
   'file.close-window': 'File: Close Window',
-  'file.quit': 'MarkText: Quit',
+  'file.quit': 'Blanks: Quit',
   'edit.undo': 'Edit: Undo',
   'edit.redo': 'Edit: Redo',
   'edit.cut': 'Edit: Cut',
@@ -112,12 +112,12 @@ const commandDescriptions = Object.freeze({
   'file.import-file': 'File: Import...',
   'file.export-file': 'File: Export...',
   'file.zoom': 'Window: Zoom...',
-  'file.check-update': 'MarkText: Check for Updates...',
+  'file.check-update': 'Blanks: Check for Updates...',
   'paragraph.reset-paragraph': 'Paragraph: Transform into Paragraph',
   'window.change-theme': 'Theme: Change Theme...',
   'view.text-direction': 'View: Set Text Direction',
-  'docs.user-guide': 'MarkText: End User Guide',
-  'docs.markdown-syntax': 'MarkText: Markdown Syntax Guide'
+  'docs.user-guide': 'Blanks: End User Guide',
+  'docs.markdown-syntax': 'Blanks: Markdown Syntax Guide'
 })
 
 export default id => {

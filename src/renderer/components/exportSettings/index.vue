@@ -106,7 +106,7 @@
           <div class="text">You can change the document appearance by choosing a theme or create a handcrafted one.</div>
           <cur-select
             description="Theme:"
-            more="https://github.com/marktext/marktext/blob/develop/docs/EXPORT_THEMES.md"
+            more="https://github.com/blanks/blanks/blob/develop/docs/EXPORT_THEMES.md"
             :value="theme"
             :options="themeList"
             :onChange="value => onSelectChange('theme', value)"
@@ -412,7 +412,7 @@ export default {
       this[key] = value
     },
     loadThemesFromDisk () {
-      const { userDataPath } = global.marktext.paths
+      const { userDataPath } = global.blanks.paths
       const themeDir = path.join(userDataPath, 'themes/export')
 
       // Search for dictionaries on filesystem.

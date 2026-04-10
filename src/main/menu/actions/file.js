@@ -4,7 +4,7 @@ import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
 import log from 'electron-log'
 import { isDirectory, isFile, exists } from 'common/filesystem'
 import { MARKDOWN_EXTENSIONS, isMarkdownFile } from 'common/filesystem/paths'
-import { checkUpdates, userSetting } from './marktext'
+import { checkUpdates, userSetting } from './blanks'
 import { showTabBar } from './view'
 import { COMMANDS } from '../../commands'
 import { EXTENSION_HASN, PANDOC_EXTENSIONS, URL_REG } from '../../config'
@@ -115,7 +115,7 @@ const handleResponseForSave = async (e, { id, filename, markdown, pathname, opti
 
   // If the file doesn't exist on disk add it to the recently used documents later
   // and execute file from filesystem watcher for a short time. The file may exists
-  // on disk nevertheless but is already tracked by MarkText.
+  // on disk nevertheless but is already tracked by Blanks.
   const alreadyExistOnDisk = !!pathname
 
   let filePath = pathname
@@ -246,7 +246,7 @@ ipcMain.on('mt::response-file-save-as', async (e, { id, filename, markdown, path
 
   // If the file doesn't exist on disk add it to the recently used documents later
   // and execute file from filesystem watcher for a short time. The file may exists
-  // on disk nevertheless but is already tracked by MarkText.
+  // on disk nevertheless but is already tracked by Blanks.
   const alreadyExistOnDisk = !!pathname
 
   let { filePath, canceled } = await dialog.showSaveDialog(win, {

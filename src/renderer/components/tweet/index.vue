@@ -97,7 +97,7 @@ export default {
       this.selectedFace = name
     },
     reportViaGithub () {
-      shell.openExternal('https://github.com/marktext/marktext/issues/new')
+      shell.openExternal('https://github.com/blanks/blanks/issues/new')
     },
     reportViaTwitter () {
       const { value, selectedFace } = this
@@ -105,12 +105,12 @@ export default {
       const origin = 'https://twitter.com/intent/tweet'
 
       const params = {
-        via: 'marktextme',
-        url: encodeURI('https://github.com/marktext/marktext/'),
+        via: 'blanksme',
+        url: encodeURI('https://github.com/blanks/blanks/'),
         text: value
       }
 
-      if (selectedFace === 'smile') params.hashtags = 'happyMarkText'
+      if (selectedFace === 'smile') params.hashtags = 'happyBlanks'
 
       shell.openExternal(`${origin}?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
       this.showTweetDialog = false

@@ -2,7 +2,7 @@ import path from 'path'
 import { shell } from 'electron'
 import { isFile } from 'common/filesystem'
 import * as actions from '../actions/help'
-import { checkUpdates } from '../actions/marktext'
+import { checkUpdates } from '../actions/blanks'
 
 /// Check whether the package is updatable at runtime.
 const isUpdatable = () => {
@@ -34,24 +34,24 @@ export default function () {
     submenu: [{
       label: 'Quick Start...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext/blob/master/docs/README.md')
+        shell.openExternal('https://github.com/blanks/blanks/blob/master/docs/README.md')
       }
     }, {
       label: 'Markdown Reference...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext/blob/master/docs/MARKDOWN_SYNTAX.md')
+        shell.openExternal('https://github.com/blanks/blanks/blob/master/docs/MARKDOWN_SYNTAX.md')
       }
     }, {
       label: 'Changelog...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext/blob/master/.github/CHANGELOG.md')
+        shell.openExternal('https://github.com/blanks/blanks/blob/master/.github/CHANGELOG.md')
       }
     }, {
       type: 'separator'
     }, {
       label: 'Donate via Open Collective...',
       click (item, win) {
-        shell.openExternal('https://opencollective.com/marktext')
+        shell.openExternal('https://opencollective.com/blanks')
       }
     }, {
       label: 'Feedback via Twitter...',
@@ -61,19 +61,19 @@ export default function () {
     }, {
       label: 'Report Issue or Request Feature...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext/issues')
+        shell.openExternal('https://github.com/blanks/blanks/issues')
       }
     }, {
       type: 'separator'
     }, {
       label: 'Website...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext')
+        shell.openExternal('https://github.com/blanks/blanks')
       }
     }, {
       label: 'Watch on GitHub...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext')
+        shell.openExternal('https://github.com/blanks/blanks')
       }
     }, {
       label: 'Follow us on Github...',
@@ -83,14 +83,14 @@ export default function () {
     }, {
       label: 'Follow us on Twitter...',
       click () {
-        shell.openExternal('https://twitter.com/marktextapp')
+        shell.openExternal('https://twitter.com/blanksapp')
       }
     }, {
       type: 'separator'
     }, {
       label: 'License...',
       click () {
-        shell.openExternal('https://github.com/marktext/marktext/blob/master/LICENSE')
+        shell.openExternal('https://github.com/blanks/blanks/blob/master/LICENSE')
       }
     }]
   }
@@ -110,7 +110,7 @@ export default function () {
     helpMenu.submenu.push({
       type: 'separator'
     }, {
-      label: 'About MarkText...',
+      label: 'About Blanks...',
       click (menuItem, browserWindow) {
         actions.showAboutDialog(browserWindow)
       }
