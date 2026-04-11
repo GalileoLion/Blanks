@@ -22,7 +22,7 @@ const getElectronPath = () => {
 const launchElectron = async userArgs => {
   userArgs = userArgs || []
   const executablePath = getElectronPath()
-  const args = [mainEntrypoint, '--user-data-dir', getTempPath()].concat(userArgs)
+  const args = [mainEntrypoint, '--user-data-dir', getTempPath(), '--no-sandbox', '--disable-setuid-sandbox'].concat(userArgs)
   const app = await _electron.launch({
     executablePath,
     args,
