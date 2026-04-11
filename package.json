@@ -28,7 +28,7 @@
     "preinstall": "node .electron-vue/preinstall.js",
     "build:muya": "cd src/muya && webpack --progress --config webpack.config.js",
     "release:muya": "yarn run build:muya && cd src/muya && yarn publish",
-    "rebuild": "electron-rebuild -f",
+    "rebuild": "cross-env GYP_MSVS_VERSION=2022 electron-rebuild -f",
     "gen-third-party": "node tools/generateThirdPartyLicense.js",
     "validate-licenses": "node tools/validateLicenses.js",
     "deobfuscateStackTrace": "node tools/deobfuscateStackTrace.js"
