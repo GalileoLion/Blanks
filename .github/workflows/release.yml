@@ -64,7 +64,7 @@ jobs:
         run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Strip ripgrep on Linux
         if: runner.os == 'Linux'
@@ -163,7 +163,7 @@ jobs:
         run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint
         run: |

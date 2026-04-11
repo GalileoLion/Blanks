@@ -71,7 +71,7 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.cacheNodeModules.outputs.cache-hit != 'true' }}
-        run: yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint
         run: |
@@ -143,7 +143,7 @@ jobs:
       - name: Install dependencies
         # Windows worker fail sometimes because a module cannot be found.
         # if: ${{ steps.cacheNodeModules.outputs.cache-hit != 'true' }}
-        run: yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint
         run: |
