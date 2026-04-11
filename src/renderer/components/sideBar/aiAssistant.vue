@@ -39,82 +39,62 @@
         <div
           v-for="(item, index) in displayChatHistory"
           :key="index"
-          :class="['message-row', item.isGroup ? 'assistant' : item.msg.role]"
+          :class="['message-row', item.role]"
         >
           <!-- Normal Chat Bubble -->
-          <div v-if="!item.isGroup && item.msg.content && item.msg.role !== 'tool'" :class="['chat-bubble', item.msg.role]">
-            {{ item.msg.content }}
+          <div v-if="item.type === 'text'" :class="['chat-bubble', item.role]">
+            {{ item.content }}
           </div>
 
-          <!-- Thought Chain Group -->
-          <div v-if="item.isGroup" class="thought-chain-container">
-            <div class="thought-chain-header" @click="toggleThoughtChain(item.id)">
-              <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedThoughtChains[item.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
+          <!-- Individual Tool Call -->
+          <div v-if="item.type === 'tool'" class="thought-chain-container">
+            <div class="thought-chain-header" @click="toggleThoughtChain(item.toolCall.id)">
+              <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedThoughtChains[item.toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
                 <path d="M8 5v14l11-7z" fill="currentColor"/>
               </svg>
-              <span>Used Tools</span>
+              <span>{{ getToolCallTitle(item.toolCall) }}</span>
             </div>
 
-            <div v-show="expandedThoughtChains[item.id]" class="thought-chain-body">
-              <template v-for="(subMsg, subIndex) in item.items">
-                <!-- Render tool results -->
-                <div v-if="subMsg.role === 'tool'" :key="'res_'+subIndex" class="tool-result-container">
-                  <div class="tool-result-header" @click="toggleToolResult(subMsg.tool_call_id)">
-                    <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedToolResults[subMsg.tool_call_id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
-                      <path d="M8 5v14l11-7z" fill="currentColor"/>
-                    </svg>
-                    <span>Result from {{ subMsg.name }}</span>
+            <div v-show="expandedThoughtChains[item.toolCall.id]" class="thought-chain-body">
+              <div class="tool-call-card">
+                <div class="tool-call-info">
+                  <div class="tool-call-body" v-if="item.toolCall.function.name === 'modify_document' && parseToolArgs(item.toolCall).content">
+                    <pre><code>{{ parseToolArgs(item.toolCall).content }}</code></pre>
                   </div>
-                  <div v-show="expandedToolResults[subMsg.tool_call_id]" class="tool-result-body">
-                    {{ subMsg.content }}
+                  <div class="tool-call-body" v-else-if="item.toolCall.function.name !== 'modify_document'">
+                    <pre><code>{{ item.toolCall.function.arguments }}</code></pre>
                   </div>
                 </div>
+                <div class="tool-call-actions">
+                  <button
+                    v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'"
+                    class="action-btn cancel"
+                    :disabled="isWaiting"
+                    @click="handleToolCall(item.toolCall, 'cancelled', item.msgRef)"
+                  >Cancel</button>
+                  <button
+                    v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'"
+                    class="action-btn confirm"
+                    :disabled="isWaiting"
+                    @click="handleToolCall(item.toolCall, 'confirmed', item.msgRef)"
+                  >Confirm</button>
+                  <span v-if="item.toolCall.status === 'confirmed'" class="status-label confirmed">Applied</span>
+                  <span v-if="item.toolCall.status === 'cancelled'" class="status-label cancelled">Cancelled</span>
+                </div>
+              </div>
 
-                <!-- Render tool calls -->
-                <div v-if="subMsg.tool_calls && subMsg.tool_calls.length > 0" :key="'call_'+subIndex" class="msg-tool-calls">
-                  <div v-for="toolCall in subMsg.tool_calls" :key="toolCall.id" class="tool-call-card">
-                    <div class="tool-call-info">
-                      <div class="tool-call-header" @click="toggleToolCall(toolCall.id)">
-                        <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedToolCalls[toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
-                          <path d="M8 5v14l11-7z" fill="currentColor"/>
-                        </svg>
-                        <template v-if="toolCall.function.name === 'modify_document'">
-                          <strong>Action: </strong> {{ parseToolArgs(toolCall).action | uppercase }}
-                          <span v-if="parseToolArgs(toolCall).action !== 'add'">
-                            (Lines {{ parseToolArgs(toolCall).startLine }} to {{ parseToolArgs(toolCall).endLine }})
-                          </span>
-                          <span v-else>
-                            (After Line {{ parseToolArgs(toolCall).startLine }})
-                          </span>
-                        </template>
-                        <template v-else>
-                          <strong>Tool Call: </strong> {{ toolCall.function.name }}
-                        </template>
-                      </div>
-                      <div v-show="expandedToolCalls[toolCall.id]" class="tool-call-body" v-if="toolCall.function.name === 'modify_document'">
-                        <pre><code>{{ parseToolArgs(toolCall).content }}</code></pre>
-                      </div>
-                      <div v-show="expandedToolCalls[toolCall.id]" class="tool-call-body" v-else>
-                        <pre><code>{{ toolCall.function.arguments }}</code></pre>
-                      </div>
-                    </div>
-                    <div class="tool-call-actions">
-                      <button
-                        v-if="toolCall.status !== 'confirmed' && toolCall.status !== 'cancelled'"
-                        class="action-btn cancel"
-                        @click="handleToolCall(toolCall, 'cancelled', subMsg)"
-                      >Cancel</button>
-                      <button
-                        v-if="toolCall.status !== 'confirmed' && toolCall.status !== 'cancelled'"
-                        class="action-btn confirm"
-                        @click="handleToolCall(toolCall, 'confirmed', subMsg)"
-                      >Confirm</button>
-                      <span v-if="toolCall.status === 'confirmed'" class="status-label confirmed">Applied</span>
-                      <span v-if="toolCall.status === 'cancelled'" class="status-label cancelled">Cancelled</span>
-                    </div>
-                  </div>
+              <!-- Render tool result if it exists -->
+              <div v-if="item.toolResult" class="tool-result-container">
+                <div class="tool-result-header" @click="toggleToolResult(item.toolCall.id)">
+                  <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedToolResults[item.toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
+                    <path d="M8 5v14l11-7z" fill="currentColor"/>
+                  </svg>
+                  <span>Result</span>
                 </div>
-              </template>
+                <div v-show="expandedToolResults[item.toolCall.id]" class="tool-result-body">
+                  {{ item.toolResult.content }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -151,6 +131,7 @@
 <script>
 import { mapState } from 'vuex'
 import { mcpManager } from '../../util/mcpClient.js'
+import bus from '../../bus'
 
 export default {
   name: 'AiAssistant',
@@ -195,35 +176,37 @@ export default {
     },
     displayChatHistory () {
       const display = []
-      let currentChain = null
-      let chainIndex = 0
 
-      this.currentChatHistory.forEach((msg, index) => {
-        if (msg.role === 'user') {
-          currentChain = null
-          display.push({ isGroup: false, msg })
-        } else if (msg.role === 'assistant' && msg.tool_calls && msg.tool_calls.length > 0) {
-          if (!currentChain) {
-            chainIndex++
-            currentChain = { isGroup: true, items: [], id: 'chain_' + chainIndex }
-            display.push(currentChain)
-          }
-          currentChain.items.push(msg)
-          if (msg.content) {
-            display.push({ isGroup: false, msg: { role: 'assistant', content: msg.content } })
-          }
-        } else if (msg.role === 'tool') {
-          if (!currentChain) {
-            chainIndex++
-            currentChain = { isGroup: true, items: [], id: 'chain_' + chainIndex }
-            display.push(currentChain)
-          }
-          currentChain.items.push(msg)
-        } else {
-          currentChain = null
-          display.push({ isGroup: false, msg })
+      const toolResultsMap = {}
+      this.currentChatHistory.forEach(msg => {
+        if (msg.role === 'tool' && msg.tool_call_id) {
+          toolResultsMap[msg.tool_call_id] = msg
         }
       })
+
+      this.currentChatHistory.forEach(msg => {
+        if (msg.role === 'user') {
+          display.push({ type: 'text', role: 'user', content: msg.content })
+        } else if (msg.role === 'assistant') {
+          if (msg.content) {
+            display.push({ type: 'text', role: 'assistant', content: msg.content })
+          }
+          if (msg.tool_calls && msg.tool_calls.length > 0) {
+            msg.tool_calls.forEach(tc => {
+              display.push({
+                type: 'tool',
+                role: 'assistant',
+                toolCall: tc,
+                toolResult: toolResultsMap[tc.id] || null,
+                msgRef: msg
+              })
+            })
+          }
+        }
+        // messages with role === 'tool' are skipped from pushing here
+        // as they are nested inside their corresponding 'tool' type blocks
+      })
+
       return display
     }
   },
@@ -285,6 +268,26 @@ export default {
         return {}
       }
     },
+    getToolCallTitle (toolCall) {
+      if (!toolCall || !toolCall.function) return 'Unknown Tool'
+      const name = toolCall.function.name
+      if (name === 'modify_document') {
+        const args = this.parseToolArgs(toolCall)
+        const action = args.action || 'edit'
+        if (action === 'add') return `Add content after line ${args.startLine}`
+        if (action === 'replace') {
+          const end = args.endLine || args.startLine
+          if (args.startLine === end) return `Replace line ${args.startLine}`
+          return `Replace lines ${args.startLine} to ${end}`
+        }
+        if (action === 'delete') {
+          const end = args.endLine || args.startLine
+          if (args.startLine === end) return `Delete line ${args.startLine}`
+          return `Delete lines ${args.startLine} to ${end}`
+        }
+      }
+      return `Use tool: ${name}`
+    },
     async sendMessage () {
       const msg = this.inputMsg.trim()
       if (!msg || this.isWaiting) return
@@ -312,7 +315,7 @@ export default {
         }
         this.currentChatHistory.push(responseMessage)
       } catch (err) {
-        this.currentChatHistory.push({ role: 'assistant', content: 'Error: ' + err.message })
+        this.currentChatHistory.push({ role: 'assistant', content: 'Error: ' + err.message, isError: true })
       } finally {
         this.isWaiting = false
         this.saveHistories()
@@ -325,31 +328,75 @@ export default {
         url = url.replace(/\/$/, '') + '/chat/completions'
       }
 
+      let docContext = ''
+      if (this.currentFile && typeof this.currentFile.markdown === 'string') {
+        const numberedLines = this.currentFile.markdown.split('\n').map((l, i) => `${i + 1}: ${l}`).join('\n')
+        // Truncate if insanely long to save tokens
+        const truncated = numberedLines.length > 30000 ? numberedLines.substring(0, 30000) + '\n... (truncated)' : numberedLines
+        docContext = `\n\n--- CURRENT DOCUMENT CONTENT WITH LINE NUMBERS ---\n${truncated}\n--- END OF DOCUMENT ---\n`
+      }
+
       // Inject system prompt to enforce extreme conciseness and tool usage
       const systemPrompt = {
         role: 'system',
         content: `You are a powerful AI assistant integrated directly into the MarkText Markdown editor.
 YOU HAVE FULL ACCESS TO TOOLS. You MUST use the provided tools to interact with the environment and modify documents. NEVER say you cannot use tools.
-If the user wants to modify the document, use the 'modify_document' tool to perform 'add', 'replace', or 'delete' actions on specific lines. DO NOT output the full modified document in text.
-You also have access to external MCP tools. Use them proactively when requested to gather context or perform tasks. Keep your textual responses extremely concise.`
+If the user wants to modify the document, DO NOT rewrite the entire document. Use the 'modify_document' tool to perform 'add', 'replace', or 'delete' actions on specific lines ONLY. DO NOT output the full modified document in text.
+You also have access to external MCP tools. Use them proactively when requested to gather context or perform tasks. Keep your textual responses extremely concise.
+CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT attempt to call ANY tool again immediately. Explain the situation and WAIT for new instructions from the user.` + docContext
       }
 
-      // Filter out tool specific internal state before sending
-      const cleanMessages = messages.map(m => {
-        const cleanM = { role: m.role, content: m.content || '' }
-        if (m.tool_calls) {
-          cleanM.tool_calls = m.tool_calls.map(tc => ({
-            id: tc.id,
-            type: tc.type,
-            function: tc.function
-          }))
+      // Filter out tool specific internal state and API errors before sending
+      const validMessages = messages.filter(m => !m.isError)
+
+      // 1. Collect all initiated tool_call_ids
+      const initiatedIds = new Set()
+      validMessages.forEach(m => {
+        if (m.role === 'assistant' && m.tool_calls) {
+          m.tool_calls.forEach(tc => initiatedIds.add(tc.id))
         }
-        if (m.tool_call_id) {
-          cleanM.tool_call_id = m.tool_call_id
-          cleanM.name = m.name
-        }
-        return cleanM
       })
+
+      // 2. Collect all answered tool_call_ids
+      const answeredIds = new Set()
+      validMessages.forEach(m => {
+        if (m.role === 'tool' && m.tool_call_id) {
+          answeredIds.add(m.tool_call_id)
+        }
+      })
+
+      // 3. Keep only intersection
+      const validToolCallIds = new Set([...initiatedIds].filter(id => answeredIds.has(id)))
+
+      // 4. Reconstruct clean message chain
+      const cleanMessages = []
+      for (const m of validMessages) {
+        const cleanM = { role: m.role, content: m.content || '' }
+
+        if (m.role === 'assistant') {
+          if (m.tool_calls) {
+            const validCalls = m.tool_calls.filter(tc => validToolCallIds.has(tc.id))
+            if (validCalls.length > 0) {
+              cleanM.tool_calls = validCalls.map(tc => ({
+                id: tc.id,
+                type: tc.type || 'function',
+                function: { name: tc.function.name, arguments: tc.function.arguments }
+              }))
+            } else if (!cleanM.content) {
+              cleanM.content = '(Tool calls omitted because they were aborted or incomplete)'
+            }
+          }
+          cleanMessages.push(cleanM)
+        } else if (m.role === 'tool') {
+          if (validToolCallIds.has(m.tool_call_id)) {
+            cleanM.tool_call_id = m.tool_call_id
+            if (m.name) cleanM.name = m.name // Keep name for broader compatibility
+            cleanMessages.push(cleanM)
+          }
+        } else {
+          cleanMessages.push(cleanM)
+        }
+      }
 
       const baseTools = [
         {
@@ -409,15 +456,51 @@ You also have access to external MCP tools. Use them proactively when requested 
       if (action === 'confirmed') {
         if (toolName === 'modify_document') {
           console.log('User confirmed action:', args)
-          // TODO: actual document modification
-          alert(`尝试执行操作: ${args.action.toUpperCase()}\n起始行: ${args.startLine}\n结束行: ${args.endLine}\n内容: ${args.content}\n\n(目前仅为UI展示功能，未实际修改底层文本)`)
 
-          this.currentChatHistory.push({
-            role: 'tool',
-            tool_call_id: toolCall.id,
-            name: toolName,
-            content: 'Document modification confirmed and executed.'
-          })
+          try {
+            let currentMarkdown = this.currentFile ? this.currentFile.markdown : ''
+            if (typeof currentMarkdown !== 'string') {
+              throw new Error('No valid document is open.')
+            }
+
+            let lines = currentMarkdown.split('\n')
+            const actionType = args.action
+
+            // startLine is 1-indexed in arguments
+            const startLine = Math.max(0, parseInt(args.startLine || 1) - 1)
+            // endLine is 1-indexed (inclusive). Default to startLine if omitted.
+            const endLine = Math.max(startLine, parseInt(args.endLine || args.startLine || 1) - 1)
+
+            const deleteCount = endLine - startLine + 1
+            const insertContent = typeof args.content === 'string' ? args.content : ''
+            const insertLines = insertContent.length > 0 ? insertContent.split('\n') : []
+
+            if (actionType === 'delete') {
+              lines.splice(startLine, deleteCount)
+            } else if (actionType === 'replace') {
+              lines.splice(startLine, deleteCount, ...insertLines)
+            } else if (actionType === 'add') {
+              // Add is typically inserting after the specified line
+              lines.splice(startLine + 1, 0, ...insertLines)
+            }
+
+            const newMarkdown = lines.join('\n')
+            bus.$emit('file-changed', { id: this.currentFileId, markdown: newMarkdown, renderCursor: true })
+
+            this.currentChatHistory.push({
+              role: 'tool',
+              tool_call_id: toolCall.id,
+              name: toolName,
+              content: 'Document modification confirmed and executed successfully.'
+            })
+          } catch (err) {
+            this.currentChatHistory.push({
+              role: 'tool',
+              tool_call_id: toolCall.id,
+              name: toolName,
+              content: `Error modifying document: ${err.message}`
+            })
+          }
           this.saveHistories()
         } else {
           // MCP Tool Call
@@ -481,7 +564,7 @@ You also have access to external MCP tools. Use them proactively when requested 
         }
         this.currentChatHistory.push(responseMessage)
       } catch (err) {
-        this.currentChatHistory.push({ role: 'assistant', content: 'Error: ' + err.message })
+        this.currentChatHistory.push({ role: 'assistant', content: 'Error: ' + err.message, isError: true })
       } finally {
         this.isWaiting = false
         this.saveHistories()
@@ -849,6 +932,10 @@ You also have access to external MCP tools. Use them proactively when requested 
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
+  }
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
   .action-btn.confirm {
     background: var(--themeColor);
