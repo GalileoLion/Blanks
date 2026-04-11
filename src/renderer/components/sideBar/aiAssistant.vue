@@ -47,46 +47,36 @@
           </div>
 
           <!-- Individual Tool Call -->
-          <div v-if="item.type === 'tool'" class="thought-chain-container">
-            <div class="thought-chain-header" @click="toggleThoughtChain(item.toolCall.id)">
-              <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedThoughtChains[item.toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
-                <path d="M8 5v14l11-7z" fill="currentColor"/>
-              </svg>
-              <span>{{ getToolCallTitle(item.toolCall) }}</span>
-            </div>
-
-            <div v-show="expandedThoughtChains[item.toolCall.id]" class="thought-chain-body">
-              <div class="tool-call-card">
-                <div class="tool-call-info">
-                  <div class="tool-call-body" v-if="item.toolCall.function.name === 'modify_document' && parseToolArgs(item.toolCall).content">
-                    <pre><code>{{ parseToolArgs(item.toolCall).content }}</code></pre>
-                  </div>
-                  <div class="tool-call-body" v-else-if="item.toolCall.function.name !== 'modify_document'">
-                    <pre><code>{{ item.toolCall.function.arguments }}</code></pre>
-                  </div>
-                </div>
-                <div class="tool-call-actions">
-                  <button
-                    v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'"
-                    class="action-btn cancel"
-                    :disabled="isWaiting"
-                    @click="handleToolCall(item.toolCall, 'cancelled', item.msgRef)"
-                  >Cancel</button>
-                  <button
-                    v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'"
-                    class="action-btn confirm"
-                    :disabled="isWaiting"
-                    @click="handleToolCall(item.toolCall, 'confirmed', item.msgRef)"
-                  >Confirm</button>
-                  <span v-if="item.toolCall.status === 'confirmed'" class="status-label confirmed">Applied</span>
-                  <span v-if="item.toolCall.status === 'cancelled'" class="status-label cancelled">Cancelled</span>
+          <div v-if="item.type === 'tool'" class="tool-call-wrapper">
+            <div v-show="expandedThoughtChains[item.toolCall.id] !== false" class="tool-call-expanded">
+              <!-- Diff View for modify_document -->
+              <div v-if="item.toolCall.function.name === 'modify_document'" class="diff-view">
+                <div class="diff-pane combined" :class="parseToolArgs(item.toolCall).action">
+                  <template v-if="parseToolArgs(item.toolCall).action === 'delete'">
+                    <div class="diff-title" style="color: #d9534f;">Delete (Line {{ parseToolArgs(item.toolCall).startLine }})</div>
+                    <pre class="diff-text delete-text"><code>- {{ getBeforeDiff(item.toolCall) }}</code></pre>
+                  </template>
+                  <template v-else-if="parseToolArgs(item.toolCall).action === 'add'">
+                    <div class="diff-title" style="color: #5cb85c;">Add (Line {{ parseToolArgs(item.toolCall).startLine }})</div>
+                    <pre class="diff-text add-text"><code>+ {{ getAfterDiff(item.toolCall) }}</code></pre>
+                  </template>
+                  <template v-else-if="parseToolArgs(item.toolCall).action === 'replace'">
+                    <div class="diff-title" style="color: #f0ad4e;">Replace (Line {{ parseToolArgs(item.toolCall).startLine }})</div>
+                    <pre class="diff-text delete-text"><code>- {{ getBeforeDiff(item.toolCall) }}</code></pre>
+                    <div class="diff-divider"></div>
+                    <pre class="diff-text add-text"><code>+ {{ getAfterDiff(item.toolCall) }}</code></pre>
+                  </template>
                 </div>
               </div>
+              <!-- Raw JSON for other tools -->
+              <div v-else class="raw-view">
+                <pre><code>{{ item.toolCall.function.arguments }}</code></pre>
+              </div>
 
-              <!-- Render tool result if it exists -->
+              <!-- Tool Result if exists -->
               <div v-if="item.toolResult" class="tool-result-container">
                 <div class="tool-result-header" @click="toggleToolResult(item.toolCall.id)">
-                  <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedToolResults[item.toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }">
+                  <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedToolResults[item.toolCall.id] ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }">
                     <path d="M8 5v14l11-7z" fill="currentColor"/>
                   </svg>
                   <span>Result</span>
@@ -94,6 +84,29 @@
                 <div v-show="expandedToolResults[item.toolCall.id]" class="tool-result-body">
                   {{ item.toolResult.content }}
                 </div>
+              </div>
+            </div>
+
+            <div class="tool-call-header-row">
+              <div class="tool-call-header-main" @click="toggleThoughtChain(item.toolCall.id)">
+                <svg viewBox="0 0 24 24" width="12" height="12" :style="{ transform: expandedThoughtChains[item.toolCall.id] !== false ? 'rotate(-90deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+                <span class="tool-call-title">{{ getToolCallTitle(item.toolCall) }}</span>
+              </div>
+              <div class="tool-call-actions-mini" v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'">
+                <button class="mini-btn confirm" :disabled="isWaiting" @click.stop="handleToolCall(item.toolCall, 'confirmed', item.msgRef)" title="Confirm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+                <button class="mini-btn cancel" :disabled="isWaiting" @click.stop="handleToolCall(item.toolCall, 'cancelled', item.msgRef)" title="Cancel">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+              </div>
+              <div class="tool-call-status-mini" v-else>
+                <span :class="['status-icon', item.toolCall.status]" :title="item.toolCall.status === 'confirmed' ? 'Applied' : 'Cancelled'">
+                  <svg v-if="item.toolCall.status === 'confirmed'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
               </div>
             </div>
           </div>
@@ -210,6 +223,11 @@ export default {
       return display
     }
   },
+  watch: {
+    currentFileId () {
+      this.scrollToBottom()
+    }
+  },
   mounted () {
     const faces = [':ai', ':AI', ':aI', ':Ai']
     this.aiFaceText = faces[Math.floor(Math.random() * faces.length)]
@@ -227,6 +245,25 @@ export default {
       try {
         this.chatHistories = JSON.parse(savedHistories)
       } catch (e) {}
+    }
+
+    this.scrollToBottom()
+
+    // Detect when the sidebar becomes visible to trigger scroll to bottom
+    if (typeof IntersectionObserver !== 'undefined') {
+      this.visibilityObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.scrollToBottom()
+        }
+      })
+      if (this.$refs.chatList) {
+        this.visibilityObserver.observe(this.$refs.chatList)
+      }
+    }
+  },
+  beforeDestroy () {
+    if (this.visibilityObserver) {
+      this.visibilityObserver.disconnect()
     }
   },
   methods: {
@@ -288,6 +325,25 @@ export default {
       }
       return `Use tool: ${name}`
     },
+    getBeforeDiff (toolCall) {
+      if (toolCall.function.name !== 'modify_document') return ''
+      const args = this.parseToolArgs(toolCall)
+      if (args.action === 'add') return '(No previous content, inserting below...)'
+      const md = this.currentFile ? this.currentFile.markdown : ''
+      if (typeof md !== 'string') return ''
+      const lines = md.split('\n')
+      const startLine = Math.max(0, parseInt(args.startLine || 1) - 1)
+      const endLine = Math.max(startLine, parseInt(args.endLine || args.startLine || 1) - 1)
+      const deleteCount = endLine - startLine + 1
+      const deletedLines = lines.slice(startLine, startLine + deleteCount)
+      return deletedLines.join('\n')
+    },
+    getAfterDiff (toolCall) {
+      if (toolCall.function.name !== 'modify_document') return ''
+      const args = this.parseToolArgs(toolCall)
+      if (args.action === 'delete') return '(Content deleted)'
+      return args.content || ''
+    },
     async sendMessage () {
       const msg = this.inputMsg.trim()
       if (!msg || this.isWaiting) return
@@ -342,6 +398,7 @@ export default {
         content: `You are a powerful AI assistant integrated directly into the MarkText Markdown editor.
 YOU HAVE FULL ACCESS TO TOOLS. You MUST use the provided tools to interact with the environment and modify documents. NEVER say you cannot use tools.
 If the user wants to modify the document, DO NOT rewrite the entire document. Use the 'modify_document' tool to perform 'add', 'replace', or 'delete' actions on specific lines ONLY. DO NOT output the full modified document in text.
+When calling a tool, provide ONLY the required arguments and necessary result text. DO NOT output redundant text, explanations, or the rest of the conversation content in your response before or after the tool call.
 You also have access to external MCP tools. Use them proactively when requested to gather context or perform tasks. Keep your textual responses extremely concise.
 CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT attempt to call ANY tool again immediately. Explain the situation and WAIT for new instructions from the user.` + docContext
       }
@@ -403,14 +460,14 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
           type: 'function',
           function: {
             name: 'modify_document',
-            description: 'Modify the document by adding, replacing, or deleting lines.',
+            description: 'Modify the document by adding, replacing, or deleting specific lines.',
             parameters: {
               type: 'object',
               properties: {
                 action: { type: 'string', enum: ['add', 'replace', 'delete'] },
                 startLine: { type: 'number', description: 'The starting line number (1-indexed) to modify. For "add", it inserts after this line.' },
                 endLine: { type: 'number', description: 'The ending line number (1-indexed, inclusive) to replace or delete. Not needed for "add".' },
-                content: { type: 'string', description: 'The markdown content to add or replace. Empty for "delete".' }
+                content: { type: 'string', description: 'The EXACT markdown snippet to insert or replace. ONLY include the changed lines, NEVER the full document. Empty for "delete".' }
               },
               required: ['action', 'startLine']
             }
@@ -578,7 +635,8 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
       this.$set(this.expandedToolResults, id, !this.expandedToolResults[id])
     },
     toggleThoughtChain (id) {
-      this.$set(this.expandedThoughtChains, id, !this.expandedThoughtChains[id])
+      const current = this.expandedThoughtChains[id] !== false
+      this.$set(this.expandedThoughtChains, id, !current)
     },
     scrollToBottom () {
       this.$nextTick(() => {
@@ -743,12 +801,6 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     flex-direction: column;
     gap: 6px;
     max-width: 100%;
-    animation: fadeIn 0.3s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .message-row.user {
@@ -791,46 +843,208 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     font-size: 13px;
   }
 
-  /* --- Thought Chain (Notion Toggle Style) --- */
-  .thought-chain-container {
+  /* --- Tool Call (Notion Inline Block Style) --- */
+  .tool-call-wrapper {
     width: 100%;
-    margin: 2px 0;
+    margin: 4px 0;
     font-size: 13px;
-  }
-
-  .thought-chain-header {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 6px;
-    border-radius: 4px;
-    color: var(--sideBarColor);
-    opacity: 0.7;
-    cursor: pointer;
-    user-select: none;
-    font-weight: 500;
-    transition: background 0.2s, opacity 0.2s;
-  }
-  .thought-chain-header:hover {
-    background: rgba(127,127,127,0.1);
-    opacity: 1;
-  }
-
-  .thought-chain-body {
-    margin-top: 4px;
-    margin-left: 10px;
-    padding-left: 12px;
-    border-left: 1px solid rgba(127,127,127,0.2);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
   }
 
-  /* --- Tool Results & Calls --- */
+  .tool-call-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(127,127,127,0.05);
+    border: 1px solid rgba(127,127,127,0.15);
+    border-radius: 6px;
+    padding: 6px 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background 0.2s;
+  }
+  .tool-call-header-row:hover {
+    background: rgba(127,127,127,0.08);
+  }
+
+  .tool-call-header-main {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    overflow: hidden;
+    flex: 1;
+    color: var(--sideBarColor);
+    user-select: none;
+  }
+
+  .tool-call-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .tool-call-actions-mini {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .mini-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(127,127,127,0.2);
+    background: var(--sideBarBgColor);
+    color: var(--sideBarColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s;
+    padding: 0;
+  }
+  .mini-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .mini-btn.confirm {
+    color: var(--themeColor);
+  }
+  .mini-btn.confirm:not(:disabled):hover {
+    background: var(--themeColor);
+    color: #fff;
+    border-color: var(--themeColor);
+  }
+  .mini-btn.cancel {
+    color: #d9534f;
+  }
+  .mini-btn.cancel:not(:disabled):hover {
+    background: #d9534f;
+    color: #fff;
+    border-color: #d9534f;
+  }
+
+  .tool-call-status-mini {
+    flex-shrink: 0;
+  }
+  .status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+  }
+  .status-icon.confirmed {
+    color: var(--themeColor);
+  }
+  .status-icon.cancelled {
+    color: #d9534f;
+  }
+
+  .tool-call-expanded {
+    margin-left: 8px;
+    padding-left: 12px;
+    border-left: 2px solid rgba(127,127,127,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 6px;
+    margin-top: 0;
+  }
+
+  /* Diff View for modifying documents */
+  .diff-view {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .diff-pane {
+    background: rgba(127,127,127,0.05);
+    border-radius: 6px;
+    padding: 8px;
+    border: 1px solid rgba(127,127,127,0.1);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .diff-pane.delete {
+    /* No border-left */
+  }
+  .diff-pane.add {
+    /* No border-left */
+  }
+  .diff-pane.replace {
+    /* No border-left */
+  }
+
+  .diff-title {
+    font-size: 10px;
+    opacity: 0.6;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  .diff-pane pre, .raw-view pre {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    color: var(--sideBarColor);
+    opacity: 0.9;
+  }
+
+  .diff-text {
+    padding: 4px 6px;
+    border-radius: 4px;
+    display: block;
+    overflow-x: hidden;
+  }
+  .delete-text {
+    background: rgba(217, 83, 79, 0.15);
+    color: #d9534f !important;
+  }
+  .add-text {
+    background: rgba(92, 184, 92, 0.15);
+    color: #5cb85c !important;
+  }
+  .diff-divider {
+    height: 1px;
+    background: rgba(127, 127, 127, 0.2);
+    margin: 6px 0;
+  }
+
+  .raw-view {
+    background: rgba(127,127,127,0.05);
+    border-radius: 6px;
+    padding: 8px;
+    border: 1px solid rgba(127,127,127,0.1);
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  /* Tool Results */
   .tool-result-container {
     color: var(--sideBarColor);
     font-size: 12px;
     opacity: 0.85;
+    margin-top: 4px;
   }
 
   .tool-result-header {
@@ -861,114 +1075,9 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     border: 1px solid rgba(127,127,127,0.1);
   }
 
-  .msg-tool-calls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .tool-call-card {
-    background: rgba(127,127,127,0.03);
-    border: 1px solid rgba(127,127,127,0.1);
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 12px;
-  }
-
-  .tool-call-info {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
-  }
-
-  .tool-call-header {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--sideBarColor);
-    font-weight: 600;
-    user-select: none;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  }
-  .tool-call-header:hover {
-    opacity: 0.8;
-  }
-
-  .tool-call-body {
-    width: 100%;
-    color: var(--sideBarColor);
-    opacity: 0.8;
-    word-break: break-all;
-    white-space: pre-wrap;
-    background: rgba(127,127,127,0.05);
-    padding: 6px 8px;
-    border-radius: 4px;
-  }
-  .tool-call-body pre {
-    margin: 0;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 11px;
-  }
-
-  .tool-call-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 4px;
-  }
-
-  .action-btn {
-    background: rgba(127,127,127,0.1);
-    border: 1px solid rgba(127,127,127,0.15);
-    color: var(--sideBarColor);
-    padding: 4px 10px;
-    font-size: 11px;
-    font-weight: 500;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .action-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .action-btn.confirm {
-    background: var(--themeColor);
-    color: #fff;
-    border-color: var(--themeColor);
-  }
-  .action-btn.confirm:hover {
-    opacity: 0.9;
-  }
-  .action-btn.cancel:hover {
-    background: rgba(217, 83, 79, 0.1);
-    color: #d9534f;
-    border-color: rgba(217, 83, 79, 0.3);
-  }
-
-  .status-label {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-  .status-label.confirmed {
-    color: var(--themeColor);
-    background: rgba(0, 180, 100, 0.1);
-  }
-  .status-label.cancelled {
-    color: #d9534f;
-    background: rgba(217, 83, 79, 0.1);
-  }
-
   /* --- Input Area (Notion style pill) --- */
   .chat-input-area {
-    padding: 16px;
+    padding: 12px 16px;
     background: var(--sideBarBgColor);
     position: relative;
     z-index: 2;
@@ -976,14 +1085,16 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
 
   .chat-input-wrapper {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-end;
+    gap: 0;
     background: var(--inputBgColor);
     border: 1px solid var(--floatBorderColor);
-    border-radius: 20px;
-    padding: 6px 12px;
+    border-radius: 18px;
+    padding: 0;
+    min-height: 36px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
   }
   .chat-input-wrapper:focus-within {
     border-color: var(--themeColor);
@@ -992,10 +1103,11 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
 
   .chat-input-wrapper .settings-toggle {
     padding: 0;
-    width: 24px;
-    height: 24px;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
     border-radius: 50%;
-    border: 1px solid var(--floatBorderColor);
+    border: none;
     background: var(--sideBarBgColor);
     display: flex;
     align-items: center;
@@ -1003,19 +1115,20 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     color: var(--themeColor);
     opacity: 0.8;
     transition: all 0.2s;
+    box-sizing: border-box;
+    margin: 0;
   }
   .chat-input-wrapper .settings-toggle:hover {
     opacity: 1;
     background: var(--itemBgColor);
-    border-color: var(--themeColor);
   }
   .chat-input-wrapper .settings-toggle.face-btn .face-text {
     transform: rotate(90deg);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: -0.5px;
-    padding-bottom: 1px;
+    padding-bottom: 2px;
   }
 
   .chat-input-wrapper textarea {
@@ -1024,13 +1137,15 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     background: transparent;
     color: var(--sideBarColor);
     outline: none;
-    font-size: 14px;
+    font-size: 13px;
     font-family: inherit;
     resize: none;
-    min-height: 24px;
+    box-sizing: border-box;
+    min-height: 34px;
     max-height: 120px;
-    padding: 4px 0;
-    line-height: 1.4;
+    padding: 8px 6px;
+    line-height: 18px;
+    margin: 0;
   }
   .chat-input-wrapper textarea::placeholder {
     color: var(--sideBarColor);
@@ -1041,8 +1156,9 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
     background: var(--themeColor);
     color: #fff;
     border: none;
@@ -1050,6 +1166,8 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     cursor: pointer;
     transition: opacity 0.2s, transform 0.1s;
     padding: 0;
+    box-sizing: border-box;
+    margin: 0;
   }
   .send-btn:disabled {
     background: rgba(127,127,127,0.2);

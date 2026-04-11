@@ -1,0 +1,731 @@
+
+> blanks@0.17.1 dev
+> cross-env node .electron-vue/dev-runner.js
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+  building marktext
+  getting ready...
+
+(node:63295) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+┏ Main Process ---------------
+
+  compiling...
+
+┗ ----------------------------
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+┏ Main Process ---------------
+
+  asset [1m[32mmain.js[39m[22m 3.96 MiB [1m[33m[compared for emit][39m[22m (name: main)
+  cached modules 1.35 MiB (javascript) 1.04 KiB (runtime) [1m[32m[cached][39m[22m 366 modules
+  webpack 5.72.0 compiled [1m[32msuccessfully[39m[22m in 7738 ms
+
+┗ ----------------------------
+
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/renderer.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_mermaid_core_mjs.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_flowchart-elk-definition-e097735e_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_mindmap-definition-617cf8dd_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_createText-aebacdfe_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_dagre-d3-es_src_dagre_index_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/src_muya_lib_parser_render_sequence_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_sequenceDiagram-465a088a_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_c4Diagram-817c8e44_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_flowDb-170db09d_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_ganttDiagram-db6931fb_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_gitGraphDiagram-6b463803_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_xychartDiagram-f746c04c_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_flowDiagram-61eb444c_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_edges-80f1ebb6_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_styles-4ba6ed67_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_erDiagram-9cfc3649_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_quadrantDiagram-6c355bbc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_sankeyDiagram-6db3d513_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_styles-bbc3fe3b_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_journeyDiagram-deae3313_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_timeline-definition-732a2638_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_requirementDiagram-4038b16c_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-core_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-sqf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-sqf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_index-67a42d7d_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_pieDiagram-a5166659_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_stateDiagram-b620d43f_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_styles-b966c4ae_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_infoDiagram-a336098b_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-factor_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_classDiagram-48ab76fb_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-mel_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-mel_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-csharp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-vim_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-vim_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_mermaid_dist_stateDiagram-v2-2671c3d1_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-markdown_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-sas_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_mermaid_dist_classDiagram-v2-8ecb0bfc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-js-templates_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-php_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-opencl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-factor_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-gherkin_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-cmake_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/vendors-node_modules_prismjs_components_prism-cmake_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bash_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-textile_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-opencl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gherkin_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-autohotkey_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-autohotkey_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asciidoc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-abap_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apacheconf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-avisynth_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apacheconf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-abap_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sas_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-core_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xquery_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cshtml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scheme_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javascript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-csharp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-php_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-graphql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ruby_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rest_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-keepalived_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bash_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lisp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pug_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-stylus_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-markup_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-keepalived_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cobol_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-swift_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-markdown_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsx_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-css-extras_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-perl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javastacktrace_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-icu-message-format_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-avisynth_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-http_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-puppet_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cobol_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qsharp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asciidoc_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pure_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-naniscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mongodb_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javascript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rust_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cpp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-js-extras_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-renpy_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-zig_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-markup-templating_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haskell_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-renpy_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_plugins_keep-markup_prism-keep-markup_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scheme_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nsis_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smarty_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-inform7_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xquery_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-log_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mongodb_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-arduino_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-arduino_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-stylus_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ruby_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-coq_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mermaid_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rest_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kumir_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-livescript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-d_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-yaml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nsis_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dax_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-web-idl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-textile_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-elixir_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-java_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-docker_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-purebasic_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-powershell_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-psl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pure_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dax_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xeora_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nevod_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-clojure_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ftl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-css-extras_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-inform7_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-purescript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-batch_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kotlin_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wren_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-psl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-swift_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-c_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-soy_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-promql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-q_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-regex_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-coq_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-plsql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-clojure_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vala_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apex_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haskell_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-robotframework_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-v_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-liquid_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-markup_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pug_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-al_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-python_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bsl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-fsharp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-maxscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javadoc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dart_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-typoscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-uorazor_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scss_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-moonscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-coffeescript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dhall_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javadoclike_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lisp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pascal_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cpp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-plsql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-groovy_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-puppet_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-js-templates_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-stan_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-log_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-graphql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-js-extras_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsdoc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-al_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rust_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tremor_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-powerquery_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-verilog_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-concurnas_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-purebasic_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haxe_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-purescript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-uri_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsx_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-zig_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lilypond_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cshtml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smali_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/src_muya_lib_parser_render_plantuml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-perl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-uorazor_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bicep_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-parser_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cil_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-shell-session_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-elm_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-typescript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pascaligo_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-unrealscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hlsl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-d_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hcl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-systemd_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-csp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sass_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dot_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-java_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-web-idl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-fsharp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wiki_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-n1ql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-velocity_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-yaml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-visual-basic_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-icu-message-format_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-python_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-excel-formula_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_mermaid_dist_flowDiagram-v2-2f8f667a_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-powershell_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mermaid_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cil_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apex_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-liquid_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nim_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-css_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-latex_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-verilog_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smarty_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-moonscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vala_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jq_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asmatmel_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qsharp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nevod_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-django_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-livescript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-julia_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-powerquery_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-crystal_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-splunk-spl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-elixir_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kotlin_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-antlr4_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-chaiscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-concurnas_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kusto_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-c_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-latte_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xeora_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ftl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-http_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-basic_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-visual-basic_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-applescript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-v_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pascal_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tcl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-git_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ocaml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-io_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vbnet_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-naniscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jolie_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-unrealscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scala_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tt2_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-basic_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-n1ql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-applescript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cfscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asmatmel_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-batch_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-q_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gn_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-fortran_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bsl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-io_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-groovy_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-splunk-spl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-peoplecode_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nix_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-diff_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lolcode_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vbnet_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vhdl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kumir_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-aspnet_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-soy_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-maxscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dart_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gap_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tremor_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-toml_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-iecst_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-haxe_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hlsl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javastacktrace_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-docker_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-less_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-kusto_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-aql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-robotframework_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-brightscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cypher_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-stan_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-avro-idl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-squirrel_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hcl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wasm_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-abnf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jolie_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tcl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nginx_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-coffeescript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-protobuf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-eiffel_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-templating_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-keyman_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-magma_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-turtle_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsdoc_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-parser_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javadoc_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pcaxis_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wren_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-typoscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-parigp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-neon_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-solution-file_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pascaligo_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smali_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bro_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scss_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gdscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-regex_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bicep_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dataweave_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-iecst_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-handlebars_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-typescript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-promql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-crystal_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-vhdl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-scala_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dhall_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-erlang_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsstacktrace_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nix_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lilypond_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-velocity_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-twig_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-fortran_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-css_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-go_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-peoplecode_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-antlr4_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cfscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xojo_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dot_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-firestore-security-rules_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-chaiscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-flow_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-makefile_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-autoit_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dns-zone-file_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-uri_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jq_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bison_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qore_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-solidity_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wasm_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ocaml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-reason_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tt2_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wolfram_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wiki_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-django_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lolcode_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nim_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ini_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-csp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-magma_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-brightscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-squirrel_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-aspnet_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-monkey_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rip_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-j_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bro_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-latte_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mizar_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sass_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xojo_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-icon_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asm6502_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-solidity_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-markup-templating_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-aql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-oz_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gn_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-latex_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-cypher_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-excel-formula_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-glsl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-glsl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-neon_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sparql_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-julia_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gap_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-actionscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-elm_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-toml_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-avro-idl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-openqasm_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ada_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-warpscript_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-shell-session_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-mizar_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-protobuf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-clike_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-qore_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smalltalk_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-keyman_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-eiffel_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-go_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-agda_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ichigojam_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-makefile_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gdscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-turtle_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-phpdoc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xml-doc_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-icon_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-sparql_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-handlebars_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-parigp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-twig_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-flow_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rego_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-abnf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nasm_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-wolfram_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-monkey_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dataweave_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-javadoclike_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-asm6502_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ada_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-actionscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gedcom_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lua_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-firestore-security-rules_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-dns-zone-file_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-pcaxis_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-autoit_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-reason_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-oz_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rip_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-j_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-birb_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-openqasm_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bbcode_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsstacktrace_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-n4js_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-erlang_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-false_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-idris_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ichigojam_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-apl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-prolog_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-objectivec_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-r_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nginx_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-systemd_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-llvm_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-erb_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-solution-file_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-clike_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-json_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nasm_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-agda_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-less_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ejs_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-objectivec_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-processing_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-editorconfig_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-templating_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tsx_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-roboconf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-smalltalk_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jexl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-go-module_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-warpscript_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-phpdoc_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-json5_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-idris_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ini_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ignore_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-lua_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-diff_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-matlab_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-rego_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hoon_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-etlua_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tap_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bison_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-birb_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-yang_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jexl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-n4js_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ebnf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gedcom_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-racket_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-llvm_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-r_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-processing_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hoon_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-erb_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bbcode_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-json_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-roboconf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bnf_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-php-extras_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ejs_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-matlab_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-go-module_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-json5_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ebnf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-etlua_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-brainfuck_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-editorconfig_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tap_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-prolog_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-properties_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nand2tetris-hdl_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gcode_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-false_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-php-extras_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-ignore_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hpkp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-xml-doc_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-properties_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-yang_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-nand2tetris-hdl_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-bnf_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hsts_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-tsx_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-racket_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-arff_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-brainfuck_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsonp_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-git_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-gcode_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-jsonp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-arff_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hpkp_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-hsts_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-csv_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-cs_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-cs_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-vb_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-csv_min_js.js": no such file
+Error parsing bundle asset "/home/kelon/MakeFun/marktext/dist/electron/node_modules_prismjs_components_prism-t4-vb_js.js": no such file
+
+No bundles were parsed. Analyzer will show only original module sizes from stats file.
+
+Webpack Bundle Analyzer is started at http://127.0.0.1:8888
+Use Ctrl+C to close it
+┏ Renderer Process -----------
+
+  assets by status 40.4 MiB [1m[32m[cached][39m[22m 673 assets
+  orphan modules 571 KiB [1m[33m[orphan][39m[22m 599 modules
+  runtime modules 32 KiB 17 modules
+  modules by path [1m./node_modules/[39m[22m 9.64 MiB (javascript) 1.47 MiB (asset)
+    javascript modules 9.64 MiB 1833 modules
+    asset modules 2.75 KiB (javascript) 1.47 MiB (asset)
+      modules by path [1m./node_modules/katex/dist/[39m[22m 2.46 KiB (javascript) 1.03 MiB (asset) 60 modules
+      modules by path [1m./node_modules/@marktext/file-icons/build/[39m[22m 210 bytes (javascript) 374 KiB (asset) 5 modules
+      modules by path [1m./node_modules/element-ui/lib/[39m[22m 84 bytes (javascript) 82.2 KiB (asset) 2 modules
+    [1m./node_modules/html-tags/html-tags-void.json[39m[22m 119 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  modules by path [1m./src/[39m[22m 2.93 MiB (javascript) 1.41 MiB (asset)
+    modules by path [1m./src/renderer/[39m[22m 1.6 MiB 532 modules
+    modules by path [1m./src/muya/[39m[22m 1.32 MiB (javascript) 1.41 MiB (asset) 259 modules
+    modules by path [1m./src/common/[39m[22m 9.58 KiB 5 modules
+    [1m./src/main/preferences/schema.json[39m[22m 8.43 KiB [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
+  + 54 modules
+  
+  [1m[31mERROR[39m[22m in [1m
+    ✘  http://eslint.org/docs/rules/no-trailing-spaces  Trailing spaces not allowed  
+    src/renderer/components/sideBar/aiAssistant.vue:221:1
+    
+  
+    ✘  http://eslint.org/docs/rules/no-trailing-spaces  Trailing spaces not allowed  
+    src/renderer/components/sideBar/aiAssistant.vue:223:1
+    
+  
+  
+  ✘ 2 problems (2 errors, 0 warnings)
+  
+  
+  Errors:
+    2  http://eslint.org/docs/rules/no-trailing-spaces[39m[22m
+  
+  webpack 5.72.0 compiled with [1m[31m1 error[39m[22m in 9572 ms
+
+┗ ----------------------------
+
+assets by status 40.4 MiB [cached] 673 assets
+orphan modules 571 KiB [orphan] 599 modules
+runtime modules 32 KiB 17 modules
+modules by path ./node_modules/ 9.64 MiB (javascript) 1.47 MiB (asset)
+  javascript modules 9.64 MiB 1833 modules
+  asset modules 2.75 KiB (javascript) 1.47 MiB (asset)
+    modules by path ./node_modules/katex/dist/ 2.46 KiB (javascript) 1.03 MiB (asset) 60 modules
+    modules by path ./node_modules/@marktext/file-icons/build/ 210 bytes (javascript) 374 KiB (asset) 5 modules
+    modules by path ./node_modules/element-ui/lib/ 84 bytes (javascript) 82.2 KiB (asset) 2 modules
+  ./node_modules/html-tags/html-tags-void.json 119 bytes [built] [code generated]
+modules by path ./src/ 2.93 MiB (javascript) 1.41 MiB (asset)
+  modules by path ./src/renderer/ 1.6 MiB 532 modules
+  modules by path ./src/muya/ 1.32 MiB (javascript) 1.41 MiB (asset) 259 modules
+  modules by path ./src/common/ 9.58 KiB 5 modules
+  ./src/main/preferences/schema.json 8.43 KiB [built] [code generated]
++ 54 modules
+
+ERROR in ✘  http://eslint.org/docs/rules/no-trailing-spaces  Trailing spaces not allowed  
+  src/renderer/components/sideBar/aiAssistant.vue:221:1
+  
+
+  ✘  http://eslint.org/docs/rules/no-trailing-spaces  Trailing spaces not allowed  
+  src/renderer/components/sideBar/aiAssistant.vue:223:1
+  
+
+
+✘ 2 problems (2 errors, 0 warnings)
+
+
+Errors:
+  2  http://eslint.org/docs/rules/no-trailing-spaces
+
+webpack 5.72.0 compiled with 1 error in 9572 ms
+┏ Electron -------------------
+
+  Debugger listening on ws://127.0.0.1:5858/5e685001-615d-4538-b770-f0048fbf868e
+  For help, see: https://nodejs.org/en/docs/inspector
+  
+┗ ----------------------------
+
+┏ Electron -------------------
+
+  
+  DevTools listening on ws://127.0.0.1:8315/devtools/browser/1000f92e-c22a-4259-a52d-676338e24af1
+  
+┗ ----------------------------
+
+┏ Electron -------------------
+
+  [63456:0411/160256.469683:ERROR:sandbox_linux.cc(377)] InitializeSandbox() called with multiple threads in process gpu-process.
+  
+┗ ----------------------------
+
+┏ Electron -------------------
+
+  Unable to install `vue-devtools`: 
+   Error: Invalid header: Does not start with Cr24
+      at crxToZip (webpack-internal:///./node_modules/unzip-crx-3/dist/index.js:32:15)
+      at eval (webpack-internal:///./node_modules/unzip-crx-3/dist/index.js:69:32)
+      at callHanler (webpack-internal:///./node_modules/yaku/lib/yaku.js:719:16)
+      at tryCatcher (webpack-internal:///./node_modules/yaku/lib/yaku.js:436:32)
+      at eval (webpack-internal:///./node_modules/yaku/lib/yaku.js:575:38)
+      at flush (webpack-internal:///./node_modules/yaku/lib/yaku.js:478:17)
+      at processTicksAndRejections (node:internal/process/task_queues:78:11)
+  
+┗ ----------------------------
+
