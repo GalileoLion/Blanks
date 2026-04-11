@@ -43,6 +43,9 @@
       <toc
         v-else-if="rightColumn === 'toc'"
       ></toc>
+      <ai-assistant
+        v-else-if="rightColumn === 'ai'"
+      ></ai-assistant>
     </div>
     <div class="drag-bar" ref="dragBar" v-show="rightColumn"></div>
   </div>
@@ -53,6 +56,7 @@ import { sideBarIcons, sideBarBottomIcons } from './help'
 import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
 import Toc from './toc.vue'
+import AiAssistant from './aiAssistant.vue'
 import { mapState } from 'vuex'
 import bus from '@/bus'
 
@@ -68,7 +72,8 @@ export default {
   components: {
     Tree,
     SideBarSearch,
-    Toc
+    Toc,
+    AiAssistant
   },
   computed: {
     ...mapState({
