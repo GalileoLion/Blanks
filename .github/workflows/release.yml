@@ -60,6 +60,9 @@ jobs:
           path: ${{ env.HOME }}/.cache//electron-builder
           key: ${{ runner.os }}-electron-builder-cache-v2-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
 
+      - name: Configure Git for SSH
+        run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
 
@@ -155,6 +158,9 @@ jobs:
         with:
           path: ${{ env.LOCALAPPDATA }}\electron-builder\cache
           key: ${{ runner.os }}-electron-builder-cache-v2-${{ hashFiles(format('{0}{1}', github.workspace, '\yarn.lock')) }}
+
+      - name: Configure Git for SSH
+        run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
