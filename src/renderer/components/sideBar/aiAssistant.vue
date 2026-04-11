@@ -1,17 +1,15 @@
 <template>
   <div class="side-bar-ai">
-    <div class="ai-header">
-      <span class="title">AI Assistant</span>
-      <div class="settings-toggle" @click="showSettings = !showSettings" title="Settings">
-        <svg viewBox="0 0 1024 1024" aria-hidden="true" width="16" height="16">
-          <path d="M512 85.333333c-235.648 0-426.666667 191.018667-426.666667 426.666667s191.018667 426.666667 426.666667 426.666667 426.666667-191.018667 426.666667-426.666667-191.018667-426.666667-426.666667-426.666667z m0 768c-188.501333 0-341.333333-152.832-341.333333-341.333333s152.832-341.333333 341.333333-341.333333 341.333333 152.832 341.333333 341.333333-152.832 341.333333-341.333333 341.333333z" fill="currentColor"/>
-          <path d="M512 341.333333a170.666667 170.666667 0 1 0 0 341.333334 170.666667 170.666667 0 0 0 0-341.333334z m0 256a85.333333 85.333333 0 1 1 0-170.666666 85.333333 85.333333 0 0 1 0 170.666666z" fill="currentColor"/>
-        </svg>
-      </div>
-    </div>
-
     <!-- Settings Panel -->
     <div class="ai-settings" v-show="showSettings">
+      <div class="settings-header">
+        <span class="title">Settings</span>
+        <div class="settings-toggle close" @click="showSettings = false" title="Close Settings">
+          <svg viewBox="0 0 1024 1024" aria-hidden="true" width="16" height="16">
+            <path d="M512 85.333333C276.362667 85.333333 85.333333 276.362667 85.333333 512s191.029333 426.666667 426.666667 426.666667 426.666667-191.029333 426.666667-426.666667S747.637333 85.333333 512 85.333333z m166.4 551.253334l-41.813333 41.813333L512 553.813333l-124.586667 124.586667-41.813333-41.813333L470.186667 512 345.6 387.413333l41.813333-41.813333L512 470.186667l124.586667-124.586667 41.813333 41.813333L553.813333 512l124.586667 124.586667z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
       <div class="setting-item">
         <label>Base URL</label>
         <input type="text" v-model="config.baseUrl" placeholder="e.g. https://api.openai.com/v1" />
@@ -54,9 +52,17 @@
           placeholder="Ask AI to modify content..."
           @keydown.enter.prevent="sendMessage"
         ></textarea>
-        <button class="send-btn" :disabled="!inputMsg.trim() || isWaiting" @click="sendMessage">
-          Send
-        </button>
+        <div class="input-actions">
+          <div class="settings-toggle" @click="showSettings = true" title="Settings">
+            <svg viewBox="0 0 1024 1024" aria-hidden="true" width="16" height="16">
+              <path d="M512 85.333333c-235.648 0-426.666667 191.018667-426.666667 426.666667s191.018667 426.666667 426.666667 426.666667 426.666667-191.018667 426.666667-426.666667-191.018667-426.666667-426.666667-426.666667z m0 768c-188.501333 0-341.333333-152.832-341.333333-341.333333s152.832-341.333333 341.333333-341.333333 341.333333 152.832 341.333333 341.333333-152.832 341.333333-341.333333 341.333333z" fill="currentColor"/>
+              <path d="M512 341.333333a170.666667 170.666667 0 1 0 0 341.333334 170.666667 170.666667 0 0 0 0-341.333334z m0 256a85.333333 85.333333 0 1 1 0-170.666666 85.333333 85.333333 0 0 1 0 170.666666z" fill="currentColor"/>
+            </svg>
+          </div>
+          <button class="send-btn" :disabled="!inputMsg.trim() || isWaiting" @click="sendMessage">
+            Send
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -200,12 +206,13 @@ export default {
     background: var(--sideBarBgColor);
   }
 
-  .ai-header {
+  .settings-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--floatBorderColor);
+    margin-bottom: 10px;
     font-size: 14px;
     font-weight: 600;
   }
@@ -213,6 +220,8 @@ export default {
   .settings-toggle {
     cursor: pointer;
     opacity: 0.7;
+    display: flex;
+    align-items: center;
   }
   .settings-toggle:hover {
     opacity: 1;
@@ -357,8 +366,13 @@ export default {
     border-color: var(--themeColor);
   }
 
+  .input-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .send-btn {
-    align-self: flex-end;
     background: var(--themeColor);
     color: #fff;
     border: none;
