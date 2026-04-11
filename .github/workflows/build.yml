@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-12, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
 
     env:
       DISPLAY: ":99.0"
@@ -87,7 +87,7 @@ jobs:
         run: yarn build:bin
 
   windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     continue-on-error: false
     timeout-minutes: 45
 
@@ -113,6 +113,7 @@ jobs:
         run: |
           npm install --global node-gyp@^9.0.0
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
+          npm config set msvs_version 2022
           node-gyp install
         shell: pwsh
 
