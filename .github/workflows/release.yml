@@ -73,7 +73,7 @@ jobs:
           yarn run validate-licenses
 
       - name: Run unit and E2E tests
-        uses: GabrielBB/xvfb-action@v3
+        uses: GabrielBB/xvfb-action@v1
         with:
           run: yarn run test
 
@@ -131,7 +131,7 @@ jobs:
       # Workaround: Fix native build failure due to outdated node-gyp version.
       - name: Fix node-gyp
         run: |
-          npm install --global node-gyp@latest
+          npm install --global node-gyp@^9.0.0
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
           node-gyp install
         shell: pwsh
