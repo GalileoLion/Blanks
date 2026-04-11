@@ -19,7 +19,7 @@
         ></source-code>
       </div>
       <tab-notifications></tab-notifications>
-    <footer-bar></footer-bar>
+    <footer-bar v-if="isFooterLoaded"></footer-bar>
     </div>
 </template>
 
@@ -29,9 +29,24 @@ import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
-import FooterBar from './footerBar.vue'
 
 export default {
+  data () {
+    return {
+      isFooterLoaded: false
+    }
+  },
+  mounted () {
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => {
+        this.isFooterLoaded = true
+      })
+    } else {
+      setTimeout(() => {
+        this.isFooterLoaded = true
+      }, 500)
+    }
+  },
   props: {
     markdown: {
       type: String,
@@ -65,7 +80,7 @@ export default {
     Editor,
     SourceCode,
     TabNotifications,
-    FooterBar
+    FooterBar: () => import('./footerBar.vue')
   },
   computed: {
     ...mapState({

@@ -197,12 +197,17 @@ export default {
       & > svg {
         width: 18px;
         height: 18px;
-        fill: var(--sideBarIconColor);
+        color: var(--sideBarIconColor);
+        stroke: currentColor;
+        stroke-width: 2.5px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
         opacity: 1;
         transition: transform .25s ease-in-out;
       }
       &.active > svg {
-        fill: var(--themeColor);
+        color: var(--themeColor);
       }
     }
   }
