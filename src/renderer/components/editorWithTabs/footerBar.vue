@@ -277,7 +277,33 @@ export default {
       bus.$emit('format', type)
     },
     handleParagraph (type) {
-      bus.$emit('paragraph', type)
+      if (type === 'table') {
+        // 快速插入的方法比弹出插入更符合直觉和易用性
+        // bus.$emit('paragraph', type)
+        const editorVue = this.$parent.$children.find(c => c.editor && typeof c.editor.updateParagraph === 'function')
+        if (editorVue) {
+          editorVue.focusEditor() // 确保焦点回到编辑器
+
+          const contentState = editorVue.editor.contentState
+          if (contentState) {
+            const { start, end } = contentState.cursor
+            const block = contentState.getBlock(start.key)
+            const isAllowed = contentState.isAllowedTransformation(block, 'table', start.key !== end.key)
+
+            // 如果不允许直接转换（比如当前行有文字），则在下方插入新段落
+            if (!isAllowed) {
+              editorVue.editor.insertParagraph('after')
+            }
+
+            // 稍作延迟，确保 DOM 更新且光标位置计算正确后，再唤起表格选择器
+            setTimeout(() => {
+              contentState.updateParagraph('table', true)
+            }, 50)
+          }
+        }
+      } else {
+        bus.$emit('paragraph', type)
+      }
     },
     handleOpenSettings () {
       ipcRenderer.send('mt::open-setting-window')
