@@ -69,6 +69,8 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        env:
+          GYP_MSVS_VERSION: 2022
         run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Strip ripgrep on Linux
@@ -139,7 +141,7 @@ jobs:
       # Workaround: Fix native build failure due to outdated node-gyp version.
       - name: Fix node-gyp
         run: |
-          npm install --global node-gyp@^9.0.0
+          npm install --global node-gyp@^10.0.0
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
           npm config set msvs_version 2022
           node-gyp install
@@ -174,6 +176,8 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
+        env:
+          GYP_MSVS_VERSION: 2022
         run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint

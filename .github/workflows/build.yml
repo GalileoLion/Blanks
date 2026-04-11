@@ -76,6 +76,8 @@ jobs:
 
       - name: Install dependencies
         if: ${{ steps.cacheNodeModules.outputs.cache-hit != 'true' }}
+        env:
+          GYP_MSVS_VERSION: 2022
         run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint
@@ -116,7 +118,7 @@ jobs:
       # Workaround: Fix native build failure due to outdated node-gyp version.
       - name: Fix node-gyp
         run: |
-          npm install --global node-gyp@^9.0.0
+          npm install --global node-gyp@^10.0.0
           npm prefix -g | % {npm config set node_gyp "$_\node_modules\node-gyp\bin\node-gyp.js"}
           npm config set msvs_version 2022
           node-gyp install
@@ -154,6 +156,8 @@ jobs:
       - name: Install dependencies
         # Windows worker fail sometimes because a module cannot be found.
         # if: ${{ steps.cacheNodeModules.outputs.cache-hit != 'true' }}
+        env:
+          GYP_MSVS_VERSION: 2022
         run: yarn install --check-files --frozen-lockfile --ignore-engines
 
       - name: Lint
