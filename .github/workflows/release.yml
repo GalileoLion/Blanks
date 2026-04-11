@@ -63,6 +63,11 @@ jobs:
       - name: Configure Git for SSH
         run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile --ignore-engines
 
@@ -162,6 +167,11 @@ jobs:
 
       - name: Configure Git for SSH
         run: git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile --ignore-engines
