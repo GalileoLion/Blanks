@@ -37,6 +37,7 @@
     "@electron/remote": "^2.0.8",
     "@hfelix/electron-localshortcut": "^4.0.1",
     "@marktext/file-icons": "^1.0.6",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@octokit/rest": "^18.12.0",
     "arg": "^5.0.1",
     "axios": "^0.26.1",
