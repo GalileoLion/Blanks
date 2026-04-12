@@ -410,25 +410,52 @@ CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT
     }
   }
 
-  const baseTools = [
-    {
-      type: 'function',
-      function: {
-        name: 'modify_document',
-        description: 'Modify the document by adding, replacing, or deleting specific lines.',
-        parameters: {
-          type: 'object',
-          properties: {
-            action: { type: 'string', enum: ['add', 'replace', 'delete'] },
-            startLine: { type: 'number', description: 'The starting line number (1-indexed) to modify. For "add", it inserts after this line.' },
-            endLine: { type: 'number', description: 'The ending line number (1-indexed, inclusive) to replace or delete. Not needed for "add".' },
-            content: { type: 'string', description: 'The EXACT markdown snippet to insert or replace. ONLY include the changed lines, NEVER the full document. Empty for "delete".' }
-          },
-          required: ['action', 'startLine']
-        }
+const baseTools = [
+  {
+    type: 'function',
+    function: {
+      name: 'get_document_info',
+      description: 'Get document metadata: total line count and character count.',
+      parameters: {
+        type: 'object',
+        properties: {},
+        required: []
       }
     }
-  ]
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'read_document',
+      description: 'Read document content. Can read specific lines or the entire document.',
+      parameters: {
+        type: 'object',
+        properties: {
+          startLine: { type: 'number', description: 'Starting line number (1-indexed). If omitted, starts from line 1.' },
+          endLine: { type: 'number', description: 'Ending line number (1-indexed, inclusive). If omitted, reads to the end.' }
+        },
+        required: []
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'modify_document',
+      description: 'Modify the document by adding, replacing, or deleting specific lines.',
+      parameters: {
+        type: 'object',
+        properties: {
+          action: { type: 'string', enum: ['add', 'replace', 'delete'] },
+          startLine: { type: 'number', description: 'The starting line number (1-indexed) to modify. For "add", it inserts after this line.' },
+          endLine: { type: 'number', description: 'The ending line number (1-indexed, inclusive) to replace or delete. Not needed for "add".' },
+          content: { type: 'string', description: 'The EXACT markdown snippet to insert or replace. ONLY include the changed lines, NEVER the full document. Empty for "delete".' }
+        },
+        required: ['action', 'startLine']
+      }
+    }
+  }
+]
 
   const mcpTools = mcpManager.getOpenAITools()
   const tools = [...baseTools, ...mcpTools]
@@ -467,6 +494,7 @@ const handleToolCall = async (toolCall, action, msg) => {
   const args = parseToolArgs(toolCall)
 
   if (action === 'confirmed') {
+    // Handle built-in tools
     if (toolName === 'modify_document') {
       console.log('User confirmed action:', args)
       try {
@@ -506,6 +534,67 @@ const handleToolCall = async (toolCall, action, msg) => {
           tool_call_id: toolCall.id,
           name: toolName,
           content: `Error modifying document: ${err.message}`
+        })
+      }
+      saveHistories()
+    } else if (toolName === 'read_document') {
+      try {
+        let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
+        if (typeof currentMarkdown !== 'string') {
+          throw new Error('No valid document is open.')
+        }
+
+        const lines = currentMarkdown.split('\n')
+        const startLine = args.startLine ? Math.max(1, parseInt(args.startLine)) : 1
+        const endLine = args.endLine ? Math.min(lines.length, parseInt(args.endLine)) : lines.length
+        
+        const selectedLines = lines.slice(startLine - 1, endLine)
+        const result = selectedLines.map((l, i) => `${startLine + i}: ${l}`).join('\n')
+
+        currentChatHistory.value.push({
+          role: 'tool',
+          tool_call_id: toolCall.id,
+          name: toolName,
+          content: `Lines ${startLine}-${endLine}:\n${result}`
+        })
+      } catch (err) {
+        currentChatHistory.value.push({
+          role: 'tool',
+          tool_call_id: toolCall.id,
+          name: toolName,
+          content: `Error reading document: ${err.message}`
+        })
+      }
+      saveHistories()
+    } else if (toolName === 'get_document_info') {
+      try {
+        let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
+        if (typeof currentMarkdown !== 'string') {
+          throw new Error('No valid document is open.')
+        }
+
+        const lines = currentMarkdown.split('\n')
+        const totalLines = lines.length
+        const totalChars = currentMarkdown.length
+        const fileName = currentFile.value?.name || 'Untitled'
+
+        currentChatHistory.value.push({
+          role: 'tool',
+          tool_call_id: toolCall.id,
+          name: toolName,
+          content: JSON.stringify({
+            fileName,
+            totalLines,
+            totalChars,
+            isEmpty: totalChars === 0
+          })
+        })
+      } catch (err) {
+        currentChatHistory.value.push({
+          role: 'tool',
+          tool_call_id: toolCall.id,
+          name: toolName,
+          content: `Error getting document info: ${err.message}`
         })
       }
       saveHistories()
