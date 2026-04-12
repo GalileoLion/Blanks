@@ -19,16 +19,22 @@
       ></source-code>
     </div>
     <tab-notifications></tab-notifications>
+    <footer-bar v-if="isFooterLoaded"></footer-bar>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useLayoutStore } from '@/store/layout'
 import { storeToRefs } from 'pinia'
 import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
+
+const FooterBar = defineAsyncComponent(() =>
+  import('./footerBar.vue')
+)
 
 defineProps({
   markdown: {
@@ -65,6 +71,20 @@ defineProps({
 const layoutStore = useLayoutStore()
 
 const { showSideBar, sideBarWidth } = storeToRefs(layoutStore)
+
+const isFooterLoaded = ref(false)
+
+onMounted(() => {
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(() => {
+      isFooterLoaded.value = true
+    })
+  } else {
+    setTimeout(() => {
+      isFooterLoaded.value = true
+    }, 500)
+  }
+})
 </script>
 
 <style scoped>

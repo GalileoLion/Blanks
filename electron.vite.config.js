@@ -28,6 +28,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src/renderer/src'),
+        '@extension': resolve(__dirname, 'src/extension'),
         common: resolve(__dirname, 'src/common'),
         muya: resolve(__dirname, 'src/muya'),
         main_renderer: resolve(__dirname, 'src/main')
@@ -40,6 +41,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src/renderer/src'),
+        '@extension': resolve(__dirname, 'src/extension'),
         common: resolve(__dirname, 'src/common'),
         muya: resolve(__dirname, 'src/muya'),
         main_renderer: resolve(__dirname, 'src/main')
@@ -53,6 +55,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src/renderer/src'),
+        '@extension': resolve(__dirname, 'src/extension'),
         common: resolve(__dirname, 'src/common'),
         muya: resolve(__dirname, 'src/muya'),
         main_renderer: resolve(__dirname, 'src/main')

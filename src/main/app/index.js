@@ -603,9 +603,9 @@ class App {
     this._createSettingWindow(category)
   }
 
-  _listenForIpcMain() {
-    registerKeyboardListeners()
-    registerSpellcheckerListeners()
+_listenForIpcMain() {
+  registerKeyboardListeners()
+  registerSpellcheckerListeners()
 
     // 处理语言设置请求
     ipcMain.on('mt::get-current-language', (event) => {

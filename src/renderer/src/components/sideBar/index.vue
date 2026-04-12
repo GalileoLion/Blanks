@@ -7,6 +7,7 @@
   >
     <div class="left-column">
       <ul>
+        <!-- 内置侧边栏图标 -->
         <li
           v-for="(c, index) of sideBarIcons"
           :key="index"
@@ -14,6 +15,16 @@
           @click="handleLeftIconClick(c.id)"
         >
           <component :is="c.icon" />
+        </li>
+        <!-- 插件侧边栏图标 -->
+        <li
+          v-for="plugin in pluginSidebarComponents"
+          :key="plugin.id"
+          :class="{ active: plugin.id === rightColumn }"
+          @click="handleLeftIconClick(plugin.id)"
+          :title="plugin.name"
+        >
+          <component :is="plugin.icon" />
         </li>
       </ul>
       <ul class="bottom">
@@ -27,6 +38,7 @@
       </ul>
     </div>
     <div v-show="rightColumn" class="right-column">
+      <!-- 内置组件 -->
       <tree
         v-if="rightColumn === 'files'"
         :projectTree="projectTree"
@@ -35,13 +47,19 @@
       ></tree>
       <side-bar-search v-else-if="rightColumn === 'search'"></side-bar-search>
       <toc v-else-if="rightColumn === 'toc'"></toc>
+      
+      <!-- 插件组件 -->
+      <component
+        v-else-if="activePluginComponent"
+        :is="activePluginComponent"
+      />
     </div>
     <div v-show="rightColumn" ref="dragBar" class="drag-bar"></div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick, watch } from 'vue'
+import { ref, computed, onMounted, nextTick, shallowRef } from 'vue'
 import { useLayoutStore } from '@/store/layout'
 import { useProjectStore } from '@/store/project'
 import { useEditorStore } from '@/store/editor'
@@ -51,6 +69,8 @@ import Tree from './tree.vue'
 import SideBarSearch from './search.vue'
 import Toc from './toc.vue'
 import { storeToRefs } from 'pinia'
+import bus from '@/bus'
+import { pluginManager } from '@extension/pluginManager'
 
 const layoutStore = useLayoutStore()
 const projectStore = useProjectStore()
@@ -61,6 +81,9 @@ const dragBar = ref(null)
 
 const openedFiles = ref([])
 const sideBarViewWidth = ref(280)
+
+// 插件侧边栏组件 - 直接使用 pluginManager 的响应式数据
+const pluginSidebarComponents = computed(() => pluginManager.sidebarComponents.value)
 
 const { rightColumn, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
 
@@ -73,7 +96,16 @@ const finalSideBarWidth = computed(() => {
   return sideBarViewWidth.value < 220 ? 220 : sideBarViewWidth.value
 })
 
-onMounted(() => {
+// 计算当前激活的插件组件
+const activePluginComponent = computed(() => {
+  const plugin = pluginSidebarComponents.value.find(p => p.id === rightColumn.value)
+  return plugin ? plugin.component : null
+})
+
+onMounted(async () => {
+  // 加载插件
+  await pluginManager.loadPlugins()
+
   nextTick(() => {
     const dragBarEl = dragBar.value
     let startX = 0
@@ -122,6 +154,8 @@ const handleLeftIconClick = (name) => {
 const handleLeftBottomClick = (name) => {
   if (name === 'settings') {
     projectStore.OPEN_SETTING_WINDOW()
+  } else if (name === 'close') {
+    bus.emit('view:toggle-layout-entry', 'showSideBar')
   }
 }
 </script>
@@ -142,7 +176,7 @@ const handleLeftBottomClick = (name) => {
 }
 
 .side-bar .left-column svg {
-  fill: var(--iconColor);
+  fill: none;
 }
 
 .left-column {
@@ -181,13 +215,19 @@ const handleLeftBottomClick = (name) => {
 .left-column ul > li > svg {
   width: 18px;
   height: 18px;
-  fill: var(--sideBarIconColor);
+  color: var(--sideBarIconColor);
+  stroke: currentColor;
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
   opacity: 1;
   transition: transform 0.25s ease-in-out;
 }
 
 .left-column ul > li.active > svg {
-  fill: var(--themeColor);
+  color: var(--themeColor);
+  stroke: currentColor;
 }
 
 .side-bar:hover .left-column ul li svg {

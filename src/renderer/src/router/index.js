@@ -8,6 +8,8 @@ import Theme from '@/prefComponents/theme'
 import Image from '@/prefComponents/image'
 import Keybindings from '@/prefComponents/keybindings'
 import Experimental from '@/prefComponents/experimental'
+import FooterBar from '@/prefComponents/footerBar'
+import Plugins from '@/prefComponents/plugins'
 
 const parseSettingsPage = (type) => {
   let pageUrl = '/preference'
@@ -70,12 +72,22 @@ const routes = (type) => [
         name: 'keybindings'
       },
       {
-        path: 'experimental',
-        component: Experimental,
-        name: 'experimental'
-      }
-    ]
-  }
+      path: 'experimental',
+      component: Experimental,
+      name: 'experimental'
+    },
+    {
+      path: 'footerBar',
+      component: FooterBar,
+      name: 'footerBar'
+    },
+    {
+      path: 'plugins',
+      component: Plugins,
+      name: 'plugins'
+    }
+  ]
+}
 ]
 
 export default routes

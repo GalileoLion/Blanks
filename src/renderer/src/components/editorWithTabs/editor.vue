@@ -862,6 +862,26 @@ const handleParagraph = (type) => {
   }
 }
 
+const handleQuickInsertTable = () => {
+  if (!editor.value) return
+  const contentState = editor.value.contentState
+  if (!contentState) return
+  
+  const { start, end } = contentState.cursor
+  const block = contentState.getBlock(start.key)
+  const isAllowed = contentState.isAllowedTransformation(block, 'table', start.key !== end.key)
+  
+  // 如果不允许直接转换（比如当前行有文字），则在下方插入新段落
+  if (!isAllowed) {
+    editor.value.insertParagraph('after')
+  }
+  
+  // 稍作延迟，确保 DOM 更新且光标位置计算正确后，再唤起表格选择器
+  setTimeout(() => {
+    contentState.updateParagraph('table', true)
+  }, 50)
+}
+
 const handleInlineFormat = (type) => {
   editor.value && editor.value.format(type)
 }
@@ -1049,6 +1069,7 @@ onMounted(() => {
   bus.on('export', handleExport)
   bus.on('print-service-clearup', handlePrintServiceClearup)
   bus.on('paragraph', handleEditParagraph)
+  bus.on('quick-insert-table', handleQuickInsertTable)
   bus.on('format', handleInlineFormat)
   bus.on('searchValue', handleSearch)
   bus.on('replaceValue', handReplace)
