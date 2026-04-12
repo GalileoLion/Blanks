@@ -1,7 +1,7 @@
 {
   "name": "blanks",
   "version": "0.17.1",
-  "homepage": "https://github.com/blanks/blanks/",
+  "homepage": "https://github.com/GalileoLion/Blanks/",
   "description": "Next generation markdown editor",
   "license": "MIT",
   "main": "./dist/electron/main.js",
@@ -183,10 +183,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:blanks/blanks.git"
+    "url": "git@github.com:GalileoLion/Blanks.git"
   },
   "bugs": {
-    "url": "https://github.com/blanks/blanks/issues"
+    "url": "https://github.com/GalileoLion/Blanks/issues"
   },
   "author": {
     "name": "Jocs",
