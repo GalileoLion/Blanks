@@ -95,10 +95,10 @@
                 <span class="tool-call-title">{{ getToolCallTitle(item.toolCall) }}</span>
               </div>
               <div class="tool-call-actions-mini" v-if="item.toolCall.status !== 'confirmed' && item.toolCall.status !== 'cancelled'">
-                <button class="mini-btn confirm" :disabled="isWaiting" @click.stop="handleToolCall(item.toolCall, 'confirmed', item.msgRef)" title="Confirm">
+                <button class="mini-btn confirm" :disabled="isWaiting || (autoConfirm && item.toolCall.status === 'pending')" @click.stop="handleToolCall(item.toolCall, 'confirmed', item.msgRef)" title="Confirm">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </button>
-                <button class="mini-btn cancel" :disabled="isWaiting" @click.stop="handleToolCall(item.toolCall, 'cancelled', item.msgRef)" title="Cancel">
+                <button class="mini-btn cancel" :disabled="isWaiting || (autoConfirm && item.toolCall.status === 'pending')" @click.stop="handleToolCall(item.toolCall, 'cancelled', item.msgRef)" title="Cancel">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
               </div>
@@ -296,6 +296,10 @@ const getBeforeDiff = (toolCall) => {
   if (toolCall.function.name !== 'modify_document') return ''
   const args = parseToolArgs(toolCall)
   if (args.action === 'add') return '(No previous content, inserting below...)'
+  // Use saved snapshot instead of live content
+  if (toolCall._beforeSnapshot !== undefined) {
+    return toolCall._beforeSnapshot
+  }
   const md = currentFile.value ? currentFile.value.markdown : ''
   if (typeof md !== 'string') return ''
   const lines = md.split('\n')
@@ -310,6 +314,10 @@ const getAfterDiff = (toolCall) => {
   if (toolCall.function.name !== 'modify_document') return ''
   const args = parseToolArgs(toolCall)
   if (args.action === 'delete') return '(Content deleted)'
+  // Use saved snapshot instead of live content
+  if (toolCall._afterSnapshot !== undefined) {
+    return toolCall._afterSnapshot
+  }
   return args.content || ''
 }
 
@@ -360,8 +368,28 @@ const sendMessage = async () => {
 
     // Auto-confirm all pending tool calls if autoConfirm is enabled
     if (autoConfirm.value && responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
+      // Execute tool calls and add results silently
       for (const toolCall of responseMessage.tool_calls) {
-        await handleToolCall(toolCall, 'confirmed', responseMessage)
+        toolCall.status = 'confirmed'
+        await handleToolCallSilent(toolCall)
+      }
+      saveHistories()
+      scrollToBottom()
+
+      // Continue auto-confirming in a loop (like Claude Code accept-edits mode)
+      while (autoConfirm.value) {
+        const nextResponse = await callAI(currentChatHistory.value)
+        if (!nextResponse.tool_calls || nextResponse.tool_calls.length === 0) {
+          break
+        }
+        currentChatHistory.value.push(nextResponse)
+        saveHistories()
+        for (const toolCall of nextResponse.tool_calls) {
+          toolCall.status = 'confirmed'
+          await handleToolCallSilent(toolCall)
+        }
+        saveHistories()
+        scrollToBottom()
       }
     }
   } catch (err) {
@@ -413,6 +441,8 @@ ${truncated}
     role: 'system',
     content: `You are a powerful AI assistant integrated directly into the MarkText Markdown editor.
 YOU HAVE FULL ACCESS TO TOOLS. You MUST use the provided tools to interact with the environment and modify documents. NEVER say you cannot use tools.
+CRITICAL: ALWAYS call 'get_document_info' first to understand the current document state before making any modifications or answering questions about the document content. This ensures you have the latest document context.
+CRITICAL: When performing multiple consecutive operations (especially on different line ranges), ALWAYS call 'read_document' with specific startLine and endLine parameters to check those exact lines before each 'modify_document' call. Don't assume content - always verify with read_document first.
 If the user wants to modify the document, DO NOT rewrite the entire document. Use the 'modify_document' tool to perform 'add', 'replace', or 'delete' actions on specific lines ONLY. DO NOT output the full modified document in text.
 When calling a tool, provide ONLY the required arguments and necessary result text. DO NOT output redundant text, explanations, or the rest of the conversation content in your response before or after the tool call.
 You also have access to external MCP tools. Use them proactively when requested to gather context or perform tasks. Keep your textual responses extremely concise.
@@ -544,6 +574,104 @@ const baseTools = [
   return data.choices[0].message
 }
 
+// Silent tool call executor - executes without showing pending UI state
+const handleToolCallSilent = async (toolCall) => {
+  const toolName = toolCall.function.name
+  const args = parseToolArgs(toolCall)
+  let resultContent = ''
+
+  try {
+    if (toolName === 'modify_document') {
+      let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
+      if (typeof currentMarkdown !== 'string') {
+        throw new Error('No valid document is open.')
+      }
+
+      // Save before snapshot for diff display
+      const beforeLines = currentMarkdown.split('\n')
+      const actionType = args.action
+      const startLine = Math.max(0, parseInt(args.startLine || 1) - 1)
+      const endLine = Math.max(startLine, parseInt(args.endLine || args.startLine || 1) - 1)
+      const deleteCount = endLine - startLine + 1
+      const insertContent = typeof args.content === 'string' ? args.content : ''
+      const insertLines = insertContent.length > 0 ? insertContent.split('\n') : []
+
+      // Store snapshot for diff display (frozen at execution time)
+      toolCall._beforeSnapshot = beforeLines.slice(startLine, startLine + deleteCount).join('\n')
+      toolCall._afterSnapshot = insertContent
+
+      let lines = beforeLines
+
+      if (actionType === 'delete') {
+        lines.splice(startLine, deleteCount)
+      } else if (actionType === 'replace') {
+        lines.splice(startLine, deleteCount, ...insertLines)
+      } else if (actionType === 'add') {
+        lines.splice(startLine + 1, 0, ...insertLines)
+      }
+
+      const newMarkdown = lines.join('\n')
+      bus.emit('file-changed', { id: currentFileId.value, markdown: newMarkdown, renderCursor: true })
+      resultContent = 'Document modification confirmed and executed successfully.'
+} else if (toolName === 'read_document') {
+      let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
+      if (typeof currentMarkdown !== 'string') {
+        throw new Error('No valid document is open.')
+      }
+
+      const lines = currentMarkdown.split('\n')
+      // Handle both number and string arguments
+      const startLineNum = args.startLine ? parseInt(args.startLine) : 1
+      const endLineNum = args.endLine ? parseInt(args.endLine) : lines.length
+      const startLine = Math.max(1, isNaN(startLineNum) ? 1 : startLineNum)
+      const endLine = Math.min(lines.length, isNaN(endLineNum) ? lines.length : endLineNum)
+
+      const selectedLines = lines.slice(startLine - 1, endLine)
+      const result = selectedLines.map((l, i) => `${startLine + i}: ${l}`).join('\n')
+      resultContent = `Lines ${startLine}-${endLine}:\n${result}`
+    } else if (toolName === 'get_document_info') {
+      let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
+      if (typeof currentMarkdown !== 'string') {
+        throw new Error('No valid document is open.')
+      }
+
+      const lines = currentMarkdown.split('\n')
+      const totalLines = lines.length
+      const totalChars = currentMarkdown.length
+      const fileName = currentFile.value?.filename || 'Untitled'
+      const filePath = currentFile.value?.pathname || '(unsaved)'
+      const isSaved = currentFile.value?.isSaved !== false
+
+      resultContent = JSON.stringify({
+        fileName,
+        filePath,
+        totalLines,
+        totalChars,
+        isSaved,
+        isEmpty: totalChars === 0
+      })
+    } else {
+      // MCP tool call
+      const result = await mcpManager.callTool(toolName, args)
+      if (result.content && result.content.length > 0) {
+        resultContent = result.content.map(c => c.text).join('\n')
+      } else {
+        resultContent = JSON.stringify(result)
+      }
+    }
+  } catch (err) {
+    resultContent = `Error: ${err.message}`
+  }
+
+  // Add result silently
+  currentChatHistory.value.push({
+    role: 'tool',
+    tool_call_id: toolCall.id,
+    name: toolName,
+    content: resultContent
+  })
+}
+
 const handleToolCall = async (toolCall, action, msg) => {
   toolCall.status = action
   saveHistories()
@@ -561,13 +689,19 @@ const handleToolCall = async (toolCall, action, msg) => {
           throw new Error('No valid document is open.')
         }
 
-        let lines = currentMarkdown.split('\n')
+        // Save snapshot for diff display
+        const beforeLines = currentMarkdown.split('\n')
         const actionType = args.action
         const startLine = Math.max(0, parseInt(args.startLine || 1) - 1)
         const endLine = Math.max(startLine, parseInt(args.endLine || args.startLine || 1) - 1)
         const deleteCount = endLine - startLine + 1
         const insertContent = typeof args.content === 'string' ? args.content : ''
         const insertLines = insertContent.length > 0 ? insertContent.split('\n') : []
+
+        toolCall._beforeSnapshot = beforeLines.slice(startLine, startLine + deleteCount).join('\n')
+        toolCall._afterSnapshot = insertContent
+
+        let lines = beforeLines
 
         if (actionType === 'delete') {
           lines.splice(startLine, deleteCount)
@@ -595,7 +729,7 @@ const handleToolCall = async (toolCall, action, msg) => {
         })
       }
       saveHistories()
-    } else if (toolName === 'read_document') {
+} else if (toolName === 'read_document') {
       try {
         let currentMarkdown = currentFile.value ? currentFile.value.markdown : ''
         if (typeof currentMarkdown !== 'string') {
@@ -603,9 +737,12 @@ const handleToolCall = async (toolCall, action, msg) => {
         }
 
         const lines = currentMarkdown.split('\n')
-        const startLine = args.startLine ? Math.max(1, parseInt(args.startLine)) : 1
-        const endLine = args.endLine ? Math.min(lines.length, parseInt(args.endLine)) : lines.length
-        
+        // Handle both number and string arguments
+        const startLineNum = args.startLine ? parseInt(args.startLine) : 1
+        const endLineNum = args.endLine ? parseInt(args.endLine) : lines.length
+        const startLine = Math.max(1, isNaN(startLineNum) ? 1 : startLineNum)
+        const endLine = Math.min(lines.length, isNaN(endLineNum) ? lines.length : endLineNum)
+
         const selectedLines = lines.slice(startLine - 1, endLine)
         const result = selectedLines.map((l, i) => `${startLine + i}: ${l}`).join('\n')
 
