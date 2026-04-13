@@ -55,6 +55,22 @@
                 <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
               </svg>
             </button>
+            <button v-else-if="item === 'sup'" class="footer-btn" @click="handleFormat('sup')" title="Superscript">
+              <span v-if="footerBarCustomIcons && footerBarCustomIcons['sup']" class="custom-svg-wrapper" v-html="footerBarCustomIcons['sup']"></span>
+              <svg v-else class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 12h-4c0-1.5.442-2 1.5-2.5S23 8.334 23 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06"></path>
+                <path d="M3 4 L17 20"></path>
+                <path d="M17 4 L3 20"></path>
+              </svg>
+            </button>
+            <button v-else-if="item === 'sub'" class="footer-btn" @click="handleFormat('sub')" title="Subscript">
+              <span v-if="footerBarCustomIcons && footerBarCustomIcons['sub']" class="custom-svg-wrapper" v-html="footerBarCustomIcons['sub']"></span>
+              <svg v-else class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19h-4c0-1.5.44-2 1.5-2.5S23 15.33 23 14c0-.47-.17-.93-.48-1.29a2.11 2.11 0 0 0-2.62-.44c-.42.24-.74.62-.9 1.07"></path>
+                <path d="M3 4 L17 20"></path>
+                <path d="M17 4 L3 20"></path>
+              </svg>
+            </button>
             <button v-else-if="item === 'inline_code'" class="footer-btn" @click="handleFormat('inline_code')" title="Inline Code">
               <span v-if="footerBarCustomIcons && footerBarCustomIcons['inline_code']" class="custom-svg-wrapper" v-html="footerBarCustomIcons['inline_code']"></span>
               <svg v-else class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

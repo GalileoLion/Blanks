@@ -8,7 +8,7 @@
       <template #children>
         <TextBox
           description="Footer Bar Layout"
-          notes="Define the layout of the footer bar, use 'divider' for splitting groups. Comma separated list of icon IDs (e.g. strong, em, u, mark, blockquote, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task)."
+          notes="Define the layout of the footer bar, use 'divider' for splitting groups. Comma separated list of icon IDs (e.g. strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task)."
           :input="footerBarLayout"
           :onChange="value => onSelectChange('footerBarLayout', value)"
         ></TextBox>
@@ -66,7 +66,7 @@ const preferencesStore = usePreferencesStore()
 const selectedIcon = ref('strong')
 const customSvgInput = ref('')
 const availableIcons = [
-  'strong', 'em', 'u', 'mark', 'blockquote', 'inline_code', 'inline_math',
+  'strong', 'em', 'u', 'mark', 'blockquote', 'sup', 'sub', 'inline_code', 'inline_math',
   'pre', 'mathblock', 'link', 'image', 'table',
   'ul-bullet', 'ol-order', 'ul-task'
 ]
@@ -83,7 +83,7 @@ const onSelectChange = (type, value) => {
 }
 
 const resetToDefault = () => {
-  const defaultLayout = 'strong, em, u, mark, blockquote, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task'
+  const defaultLayout = 'strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task'
   onSelectChange('footerBarLayout', defaultLayout)
 }
 

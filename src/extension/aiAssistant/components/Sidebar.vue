@@ -129,6 +129,12 @@
             @keydown.enter.exact.prevent="sendMessage"
             rows="1"
           ></textarea>
+          <button 
+            class="auto-confirm-btn" 
+            :class="{ active: autoConfirm }" 
+            @click="autoConfirm = !autoConfirm" 
+            :title="autoConfirm ? 'Auto-confirm ON' : 'Auto-confirm OFF'"
+          >👌</button>
           <button class="send-btn" :disabled="!inputMsg.trim() || isWaiting" @click="sendMessage">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="12" y1="19" x2="12" y2="5"></line>
@@ -162,6 +168,7 @@ const config = ref({
 })
 const inputMsg = ref('')
 const isWaiting = ref(false)
+const autoConfirm = ref(false)
 const chatHistories = ref({})
 const expandedToolResults = ref({})
 const expandedThoughtChains = ref({})
@@ -310,6 +317,24 @@ const sendMessage = async () => {
   const msg = inputMsg.value.trim()
   if (!msg || isWaiting.value) return
 
+  // Cancel all pending tool calls and add tool result for them
+  currentChatHistory.value.forEach(msgItem => {
+    if (msgItem.role === 'assistant' && msgItem.tool_calls) {
+      msgItem.tool_calls.forEach(call => {
+        if (call.status === 'pending') {
+          call.status = 'cancelled'
+          // Add a tool result for the cancelled call
+          currentChatHistory.value.push({
+            role: 'tool',
+            tool_call_id: call.id,
+            name: call.function.name,
+            content: 'Cancelled by user.'
+          })
+        }
+      })
+    }
+  })
+
   inputMsg.value = ''
   currentChatHistory.value.push({ role: 'user', content: msg })
   saveHistories()
@@ -331,6 +356,14 @@ const sendMessage = async () => {
       })
     }
     currentChatHistory.value.push(responseMessage)
+    saveHistories()
+
+    // Auto-confirm all pending tool calls if autoConfirm is enabled
+    if (autoConfirm.value && responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
+      for (const toolCall of responseMessage.tool_calls) {
+        await handleToolCall(toolCall, 'confirmed', responseMessage)
+      }
+    }
   } catch (err) {
     currentChatHistory.value.push({ role: 'assistant', content: 'Error: ' + err.message, isError: true })
   } finally {
@@ -346,11 +379,34 @@ const callAI = async (messages) => {
     url = url.replace(/\/$/, '') + '/chat/completions'
   }
 
+  // Build document context: info + content (truncated to 30000 chars)
   let docContext = ''
   if (currentFile.value && typeof currentFile.value.markdown === 'string') {
-    const numberedLines = currentFile.value.markdown.split('\n').map((l, i) => `${i + 1}: ${l}`).join('\n')
-    const truncated = numberedLines.length > 30000 ? numberedLines.substring(0, 30000) + '\n... (truncated)' : numberedLines
-    docContext = `\n\n--- CURRENT DOCUMENT CONTENT WITH LINE NUMBERS ---\n${truncated}\n--- END OF DOCUMENT ---\n`
+    const lines = currentFile.value.markdown.split('\n')
+    const totalLines = lines.length
+    const totalChars = currentFile.value.markdown.length
+    const fileName = currentFile.value.filename || 'Untitled'
+    const filePath = currentFile.value.pathname || '(unsaved)'
+    const isSaved = currentFile.value.isSaved !== false
+    
+    // Full content with line numbers, truncated to 30000 chars
+    const numberedLines = lines.map((l, i) => `${i + 1}: ${l}`).join('\n')
+    const truncated = numberedLines.length > 30000 
+      ? numberedLines.substring(0, 30000) + '\n... (truncated, use read_document tool to read more)' 
+      : numberedLines
+    
+    docContext = `
+--- DOCUMENT INFO ---
+File Name: ${fileName}
+File Path: ${filePath}
+Total Lines: ${totalLines}
+Total Characters: ${totalChars}
+Is Saved: ${isSaved}
+
+--- DOCUMENT CONTENT WITH LINE NUMBERS ---
+${truncated}
+--- END OF DOCUMENT ---
+`
   }
 
   const systemPrompt = {
@@ -363,50 +419,52 @@ You also have access to external MCP tools. Use them proactively when requested 
 CRITICAL RULE: If a tool call fails, errors, or is cancelled by the user, DO NOT attempt to call ANY tool again immediately. Explain the situation and WAIT for new instructions from the user.` + docContext
   }
 
+  // Clean messages: only include complete tool call chains
   const validMessages = messages.filter(m => !m.isError)
 
-  const initiatedIds = new Set()
-  validMessages.forEach(m => {
-    if (m.role === 'assistant' && m.tool_calls) {
-      m.tool_calls.forEach(tc => initiatedIds.add(tc.id))
-    }
-  })
-
-  const answeredIds = new Set()
+  // Build map of tool call id -> result message
+  const toolResultsMap = new Map()
   validMessages.forEach(m => {
     if (m.role === 'tool' && m.tool_call_id) {
-      answeredIds.add(m.tool_call_id)
+      toolResultsMap.set(m.tool_call_id, m)
     }
   })
-
-  const validToolCallIds = new Set([...initiatedIds].filter(id => answeredIds.has(id)))
 
   const cleanMessages = []
   for (const m of validMessages) {
-    const cleanM = { role: m.role, content: m.content || '' }
-
     if (m.role === 'assistant') {
+      const cleanM = { role: m.role, content: m.content || '' }
+
       if (m.tool_calls) {
-        const validCalls = m.tool_calls.filter(tc => validToolCallIds.has(tc.id))
-        if (validCalls.length > 0) {
-          cleanM.tool_calls = validCalls.map(tc => ({
+        // Only include tool calls that have results
+        const callsWithResults = m.tool_calls.filter(tc => toolResultsMap.has(tc.id))
+
+        if (callsWithResults.length > 0) {
+          cleanM.tool_calls = callsWithResults.map(tc => ({
             id: tc.id,
             type: tc.type || 'function',
             function: { name: tc.function.name, arguments: tc.function.arguments }
           }))
-        } else if (!cleanM.content) {
-          cleanM.content = '(Tool calls omitted because they were aborted or incomplete)'
+        }
+
+        // If no content and no valid tool calls, add minimal placeholder
+        if (!cleanM.content && !cleanM.tool_calls) {
+          cleanM.content = ' '
         }
       }
+
       cleanMessages.push(cleanM)
     } else if (m.role === 'tool') {
-      if (validToolCallIds.has(m.tool_call_id)) {
-        cleanM.tool_call_id = m.tool_call_id
-        if (m.name) cleanM.name = m.name
-        cleanMessages.push(cleanM)
+      if (toolResultsMap.has(m.tool_call_id)) {
+        cleanMessages.push({
+          role: 'tool',
+          tool_call_id: m.tool_call_id,
+          name: m.name,
+          content: m.content || ' '
+        })
       }
     } else {
-      cleanMessages.push(cleanM)
+      cleanMessages.push({ role: m.role, content: m.content || '' })
     }
   }
 
@@ -415,7 +473,7 @@ const baseTools = [
     type: 'function',
     function: {
       name: 'get_document_info',
-      description: 'Get document metadata: total line count and character count.',
+      description: 'Get document metadata: file name, path, total lines, total characters, and save status.',
       parameters: {
         type: 'object',
         properties: {},
@@ -576,7 +634,9 @@ const handleToolCall = async (toolCall, action, msg) => {
         const lines = currentMarkdown.split('\n')
         const totalLines = lines.length
         const totalChars = currentMarkdown.length
-        const fileName = currentFile.value?.name || 'Untitled'
+        const fileName = currentFile.value?.filename || 'Untitled'
+        const filePath = currentFile.value?.pathname || '(unsaved)'
+        const isSaved = currentFile.value?.isSaved !== false
 
         currentChatHistory.value.push({
           role: 'tool',
@@ -584,8 +644,10 @@ const handleToolCall = async (toolCall, action, msg) => {
           name: toolName,
           content: JSON.stringify({
             fileName,
+            filePath,
             totalLines,
             totalChars,
+            isSaved,
             isEmpty: totalChars === 0
           })
         })
@@ -692,6 +754,51 @@ onMounted(() => {
   if (savedHistories) {
     try {
       chatHistories.value = JSON.parse(savedHistories)
+      
+      // Fix: auto-repair incomplete tool call chains
+      for (const fileId of Object.keys(chatHistories.value)) {
+        const history = chatHistories.value[fileId]
+        if (!Array.isArray(history)) continue
+        
+        // Build set of all tool_call_ids that have results
+        const hasResult = new Set()
+        history.forEach(msg => {
+          if (msg.role === 'tool' && msg.tool_call_id) {
+            hasResult.add(msg.tool_call_id)
+          }
+        })
+        
+        // Find pending/cancelled tool calls without results and add placeholder results
+        const needsRepair = []
+        history.forEach(msg => {
+          if (msg.role === 'assistant' && msg.tool_calls) {
+            msg.tool_calls.forEach(tc => {
+              if (!hasResult.has(tc.id) && (tc.status === 'pending' || tc.status === 'cancelled' || !tc.status)) {
+                needsRepair.push({
+                  toolCallId: tc.id,
+                  toolName: tc.function?.name || 'unknown',
+                  status: tc.status
+                })
+                tc.status = 'cancelled'
+              }
+            })
+          }
+        })
+        
+        // Add placeholder tool results
+        needsRepair.forEach(({ toolCallId, toolName, status }) => {
+          history.push({
+            role: 'tool',
+            tool_call_id: toolCallId,
+            name: toolName,
+            content: status === 'pending' ? 'Cancelled by user.' : 'Cancelled.'
+          })
+          hasResult.add(toolCallId)
+        })
+      }
+      
+      // Save repaired histories
+      localStorage.setItem('ai_assistant_histories', JSON.stringify(chatHistories.value))
     } catch (e) {}
   }
 
@@ -1218,5 +1325,32 @@ onUnmounted(() => {
 }
 .send-btn:not(:disabled):active {
   transform: scale(0.95);
+}
+
+.auto-confirm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid var(--floatBorderColor);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  opacity: 0.5;
+}
+.auto-confirm-btn:hover {
+  opacity: 0.8;
+}
+.auto-confirm-btn.active {
+  background: var(--themeColor);
+  border-color: var(--themeColor);
+  opacity: 1;
 }
 </style>
