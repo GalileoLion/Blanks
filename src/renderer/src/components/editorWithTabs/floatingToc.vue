@@ -7,9 +7,10 @@
     class="toc-capsule"
     :class="[`level-${item.lvl}`, { active: isActive(item.slug) }]"
     :style="{ width: getCapsuleWidth(item.lvl) + 'px' }"
-    :title="item.content"
     @click="handleClick(item.slug)"
-  ></div>
+  >
+    <span class="toc-label">{{ truncateTitle(item.content) }}</span>
+  </div>
 </div>
 </template>
 
@@ -27,9 +28,35 @@ const activePath = ref([]) // Store all parent slugs of the active heading
 const tocContainerRef = ref(null)
 const capsuleRefs = ref({})
 const BASE_WIDTH = 40
+const USER_SCROLL_COOLDOWN = 1000 // ms to wait after user stops scrolling before auto-scroll
+
+let isUserScrolling = false
+let userScrollTimeout = null
 
 const setCapsuleRef = (el, slug) => {
   if (el) capsuleRefs.value[slug] = el
+}
+
+// Handle user scroll on TOC container
+const handleTocScroll = () => {
+  isUserScrolling = true
+  if (userScrollTimeout) clearTimeout(userScrollTimeout)
+  userScrollTimeout = setTimeout(() => {
+    isUserScrolling = false
+    // Re-trigger auto-scroll after cooldown
+    if (activeSlug.value) {
+      scrollTocToActive(activeSlug.value)
+    }
+  }, USER_SCROLL_COOLDOWN)
+}
+
+// Truncate title to 11 Chinese characters
+const truncateTitle = (title) => {
+  if (!title) return ''
+  // Count actual characters (Chinese characters are 1 each)
+  const chars = Array.from(title)
+  if (chars.length <= 11) return title
+  return chars.slice(0, 10).join('') + '…'
 }
 
 // Filter out level 1 headings (h1)
@@ -123,8 +150,10 @@ const updateActiveHeader = () => {
     activeSlug.value = currentHeading.id
     activePath.value = findParentPath(currentHeading.id)
     
-    // Auto-scroll TOC to keep active heading visible
+  // Auto-scroll TOC to keep active heading visible (but not during user scroll)
+  if (!isUserScrolling) {
     scrollTocToActive(currentHeading.id)
+  }
   }
 }
 
@@ -170,14 +199,26 @@ const scrollTocToActive = (slug) => {
 }
 
 let animationId = null
+
 onMounted(() => {
   const updateScroll = () => {
     updateActiveHeader()
     animationId = requestAnimationFrame(updateScroll)
   }
   updateScroll()
+  
+  // Listen for user scroll on TOC container
+  if (tocContainerRef.value) {
+    tocContainerRef.value.addEventListener('scroll', handleTocScroll)
+  }
 })
-onBeforeUnmount(() => { if (animationId) cancelAnimationFrame(animationId) })
+onBeforeUnmount(() => { 
+  if (animationId) cancelAnimationFrame(animationId)
+  if (userScrollTimeout) clearTimeout(userScrollTimeout)
+  if (tocContainerRef.value) {
+    tocContainerRef.value.removeEventListener('scroll', handleTocScroll)
+  }
+})
 </script>
 
 <style scoped>
@@ -187,7 +228,9 @@ onBeforeUnmount(() => { if (animationId) cancelAnimationFrame(animationId) })
   top: 50%;
   transform: translateY(-50%);
   height: 50vh;
+  width: 200px; /* Increased width to accommodate titles */
   overflow-y: auto;
+  overflow-x: hidden;
   z-index: 99999;
   padding: 20px 16px 20px 0;
   display: flex;
@@ -228,6 +271,36 @@ onBeforeUnmount(() => { if (animationId) cancelAnimationFrame(animationId) })
 
 .toc-capsule:hover {
   background-color: rgba(100, 100, 100, 0.9);
+}
+
+/* Title label shown next to capsule - hidden by default */
+/* All labels right-aligned at 20px position */
+.toc-label {
+  position: absolute;
+  right: 20px; /* Align all labels to same right edge */
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  color: var(--sideBarColor);
+  opacity: 0;
+  cursor: pointer;
+  text-align: right;
+  transition: opacity 0.2s ease;
+}
+
+/* Show all titles when hovering the TOC container */
+.floating-toc-outer:hover .toc-label {
+  opacity: 0.5;
+}
+
+/* Active capsule title uses theme color and is more visible */
+.toc-capsule.active .toc-label {
+  color: var(--themeColor);
+}
+
+.floating-toc-outer:hover .toc-capsule.active .toc-label {
+  opacity: 1;
 }
 
 .toc-capsule.active {
