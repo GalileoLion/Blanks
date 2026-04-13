@@ -17,6 +17,7 @@
         :muyaIndexCursor="muyaIndexCursor"
         :text-direction="textDirection"
       ></source-code>
+      <floating-toc v-if="showFloatingToc"></floating-toc>
     </div>
     <tab-notifications></tab-notifications>
     <footer-bar v-if="isFooterLoaded"></footer-bar>
@@ -24,13 +25,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { ref, onMounted, defineAsyncComponent, computed } from 'vue'
 import { useLayoutStore } from '@/store/layout'
+import { useEditorStore } from '@/store/editor'
 import { storeToRefs } from 'pinia'
 import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
+import FloatingToc from './floatingToc.vue'
 
 const FooterBar = defineAsyncComponent(() =>
   import('./footerBar.vue')
@@ -69,8 +72,14 @@ defineProps({
 })
 
 const layoutStore = useLayoutStore()
+const editorStore = useEditorStore()
 
 const { showSideBar, sideBarWidth } = storeToRefs(layoutStore)
+const { listToc } = storeToRefs(editorStore)
+
+const showFloatingToc = computed(() => {
+  return listToc.value && listToc.value.length > 0
+})
 
 const isFooterLoaded = ref(false)
 
@@ -100,6 +109,7 @@ onMounted(() => {
   & > .container {
     flex: 1;
     overflow: hidden;
+    position: relative;
   }
 }
 </style>
