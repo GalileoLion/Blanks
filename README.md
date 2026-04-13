@@ -60,11 +60,14 @@ Download from the [Releases page](https://github.com/wglubrigati/marktext-plus/r
 ```bash
 git clone https://github.com/wglubrigati/marktext-plus.git
 cd marktext-plus
-npm install
-npm run dev
+yarn install --ignore-scripts
+yarn rebuild-native
+yarn dev
 ```
 
-To build distributable packages: `npm run build:linux`, `build:win`, or `build:mac`.
+> **Note:** If `yarn install` fails due to GitHub rate limiting (e.g., `@vscode/ripgrep` download error), use `--ignore-scripts` flag. The system has `rg` (ripgrep) installed, so it will be used automatically.
+
+To build distributable packages: `yarn build:linux`, `build:win`, or `build:mac`.
 
 ## Acknowledgements
 
