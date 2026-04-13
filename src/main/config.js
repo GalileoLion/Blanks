@@ -19,6 +19,7 @@ export const editorWinOptions = Object.freeze({
   useContentSize: true,
   show: true,
   frame: false,
+  // thickFrame: !isOsx,
   titleBarStyle: 'hiddenInset',
   zoomFactor: 1.0
 })
