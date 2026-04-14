@@ -50,13 +50,17 @@ const handleTocScroll = () => {
   }, USER_SCROLL_COOLDOWN)
 }
 
-// Truncate title to 11 Chinese characters
+// Truncate to 11 Chinese chars (English=0.5 each, ellipsis=0.5)
 const truncateTitle = (title) => {
   if (!title) return ''
-  // Count actual characters (Chinese characters are 1 each)
-  const chars = Array.from(title)
-  if (chars.length <= 11) return title
-  return chars.slice(0, 10).join('') + '…'
+  const isCJK = (c) => /[\u4e00-\u9fa5]/.test(c)
+  let w = 0, i = 0
+  for (; i < title.length; i++) {
+    const cw = isCJK(title[i]) ? 1 : 0.5
+    if (w + cw > 10.5) break
+    w += cw
+  }
+  return i >= title.length ? title : title.slice(0, i) + '…'
 }
 
 // Filter out level 1 headings (h1)
