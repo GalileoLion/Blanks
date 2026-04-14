@@ -17,7 +17,7 @@
         :muyaIndexCursor="muyaIndexCursor"
         :text-direction="textDirection"
       ></source-code>
-      <floating-toc v-if="showFloatingToc"></floating-toc>
+      <floating-toc v-if="showFloatingToc && isFloatingTocLoaded"></floating-toc>
     </div>
     <tab-notifications></tab-notifications>
     <footer-bar v-if="isFooterLoaded"></footer-bar>
@@ -33,10 +33,13 @@ import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
-import FloatingToc from './floatingToc.vue'
 
 const FooterBar = defineAsyncComponent(() =>
   import('./footerBar.vue')
+)
+
+const FloatingToc = defineAsyncComponent(() =>
+  import('./floatingToc.vue')
 )
 
 defineProps({
@@ -82,15 +85,23 @@ const showFloatingToc = computed(() => {
 })
 
 const isFooterLoaded = ref(false)
+const isFloatingTocLoaded = ref(false)
 
 onMounted(() => {
+  // Load footer bar and floating TOC independently on idle
   if (typeof requestIdleCallback !== 'undefined') {
     requestIdleCallback(() => {
       isFooterLoaded.value = true
     })
+    requestIdleCallback(() => {
+      isFloatingTocLoaded.value = true
+    })
   } else {
     setTimeout(() => {
       isFooterLoaded.value = true
+    }, 500)
+    setTimeout(() => {
+      isFloatingTocLoaded.value = true
     }, 500)
   }
 })

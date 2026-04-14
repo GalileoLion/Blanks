@@ -38,28 +38,37 @@ class PluginManager {
   }
 
   /**
-   * 扫描并加载所有插件
+   * 扫描并异步加载所有插件
    * 在开发环境中需要手动导入，生产环境可以动态导入
    */
   async loadPlugins() {
     const loadedPlugins = []
 
     try {
-      // 使用相对路径匹配插件
-      const pluginModules = import.meta.glob('./*/index.js', { eager: true })
+      // 使用相对路径匹配插件 - 异步模式，不阻塞启动
+      const pluginModules = import.meta.glob('./*/index.js')
 
-      for (const [path, module] of Object.entries(pluginModules)) {
+      // 并行加载所有插件
+      const loadPromises = Object.entries(pluginModules).map(async ([path, loadModule]) => {
         try {
+          const module = await loadModule()
           const plugin = module.default || module
           if (this.validatePlugin(plugin)) {
             const pluginId = path.match(/\.\/([^/]+)\//)?.[1]
             plugin.id = plugin.id || pluginId
-            loadedPlugins.push(plugin)
+            return plugin
           }
         } catch (e) {
           console.error(`Failed to load plugin from ${path}:`, e)
         }
-      }
+        return null
+      })
+
+      // 等待所有插件加载完成
+      const results = await Promise.all(loadPromises)
+      results.forEach(plugin => {
+        if (plugin) loadedPlugins.push(plugin)
+      })
     } catch (e) {
       console.error('Failed to scan plugins:', e)
     }
