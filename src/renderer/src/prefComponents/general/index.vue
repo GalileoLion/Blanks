@@ -1,27 +1,41 @@
 <template>
-  <div class="pref-general">
-    <h4>{{ t('preferences.general.title') }}</h4>
-    <compound>
-      <template #head>
-        <h6 class="title">{{ t('preferences.general.autoSave.title') }}</h6>
-      </template>
-      <template #children>
-        <bool
-          :description="t('preferences.general.autoSave.description')"
-          :bool="autoSave"
-          :on-change="(value) => onSelectChange('autoSave', value)"
-        ></bool>
-        <range
-          :description="t('preferences.general.autoSave.delayDescription')"
-          :value="autoSaveDelay"
-          :min="1000"
-          :max="10000"
-          unit="ms"
-          :step="100"
-          :on-change="(value) => onSelectChange('autoSaveDelay', value)"
-        ></range>
-      </template>
-    </compound>
+<div class="pref-general">
+<h4>{{ t('preferences.general.title') }}</h4>
+<compound>
+<template #head>
+<h6 class="title">{{ t('preferences.general.misc.language.title') }}</h6>
+</template>
+<template #children>
+<cur-select
+:description="t('preferences.general.misc.language.title')"
+:value="language"
+:options="getLanguageOptions()"
+:on-change="(value) => onSelectChange('language', value)"
+></cur-select>
+</template>
+</compound>
+
+<compound>
+<template #head>
+<h6 class="title">{{ t('preferences.general.autoSave.title') }}</h6>
+</template>
+<template #children>
+<bool
+:description="t('preferences.general.autoSave.description')"
+:bool="autoSave"
+:on-change="(value) => onSelectChange('autoSave', value)"
+></bool>
+<range
+:description="t('preferences.general.autoSave.delayDescription')"
+:value="autoSaveDelay"
+:min="1000"
+:max="10000"
+unit="ms"
+:step="100"
+:on-change="(value) => onSelectChange('autoSaveDelay', value)"
+></range>
+</template>
+</compound>
 
     <compound>
       <template #head>
@@ -133,22 +147,8 @@
           </el-radio-group>
         </section>
       </template>
-    </compound>
-
-    <compound>
-      <template #head>
-        <h6 class="title">{{ t('preferences.general.misc.title') }}</h6>
-      </template>
-      <template #children>
-        <cur-select
-          :description="t('preferences.general.misc.language.title')"
-          :value="language"
-          :options="getLanguageOptions()"
-          :on-change="(value) => onSelectChange('language', value)"
-        ></cur-select>
-      </template>
-    </compound>
-  </div>
+</compound>
+</div>
 </template>
 
 <script setup>

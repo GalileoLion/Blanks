@@ -14,7 +14,8 @@ export const usePreferencesStore = defineStore('preferences', {
     hideScrollbar: false,
     wordWrapInToc: false,
     fileSortBy: 'created',
-    startUpAction: 'openLastFolder',
+    // Startup options: 'blank' (open blank page), 'openLastFolder' (open last folder), 'folder' (open default directory)
+    startUpAction: 'blank',
     restoreLayoutState: true,
     defaultDirectoryToOpen: '',
     lastOpenedFolder: '',
