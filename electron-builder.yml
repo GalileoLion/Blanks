@@ -1,9 +1,9 @@
-appId: com.electron.app
-productName: MarkText+
+appId: com.blanks.app
+productName: Blanks
 publish:
   provider: github
-  owner: wglubrigati
-  repo: marktext-plus
+  owner: GalileoLion
+  repo: Blanks
 directories:
   buildResources: build
 files:
@@ -88,8 +88,8 @@ fileAssociations:
     mimeType: text/markdown
     role: Editor
 win:
-  executableName: marktext
-  artifactName: 'marktext-win-${arch}-${version}.${ext}'
+  executableName: blanks
+  artifactName: 'blanks-win-${arch}-${version}.${ext}'
   target:
     - target: 'nsis'
       arch: [x64]
@@ -97,7 +97,7 @@ win:
       arch: [x64]
   icon: static/icon.ico
 nsis:
-  artifactName: 'marktext-win-${arch}-${version}-setup.${ext}'
+  artifactName: 'blanks-win-${arch}-${version}-setup.${ext}'
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: true
@@ -107,7 +107,7 @@ nsis:
   perMachine: false
   include: windows/installer.nsh
 mac:
-  artifactName: 'marktext-mac-${arch}-${version}.${ext}'
+  artifactName: 'blanks-mac-${arch}-${version}.${ext}'
   entitlementsInherit: build/mac/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -121,7 +121,7 @@ mac:
     - target: zip
       arch: [x64, arm64]
 dmg:
-  artifactName: 'marktext-mac-${arch}-${version}.${ext}'
+  artifactName: 'blanks-mac-${arch}-${version}.${ext}'
   contents:
     - x: 410
       y: 240
@@ -131,18 +131,18 @@ dmg:
       y: 240
       type: 'file'
 linux:
-  artifactName: 'marktext-linux-${version}.${ext}'
-  executableName: 'marktext'
-  description: 'MarkText+ — an enhanced open-source text editor for markdown and beyond.'
-  maintainer: 'MarkText Contributors'
+  artifactName: 'blanks-linux-${version}.${ext}'
+  executableName: 'blanks'
+  description: 'Blanks — an enhanced open-source text editor for markdown and beyond.'
+  maintainer: 'Galileo Lion'
   category: 'Office;TextEditor;Utility'
   mimeTypes:
-    - 'text/markdown'
+  - 'text/markdown'
   icon: 'static/icon.png'
   desktop:
     entry:
-      StartupWMClass: 'marktext-plus'
-      Keywords: 'marktext;'
+    StartupWMClass: 'blanks'
+  Keywords: 'blanks;marktext;'
   target:
     - AppImage
     - snap

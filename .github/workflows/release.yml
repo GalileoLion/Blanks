@@ -1,9 +1,9 @@
-name: Build/release MarkText+
+name: Build/release Blanks
 
 on:
   push:
     tags:
-      - v*.*.*
+      - 'v*.*.*'
 
 permissions:
   contents: write
@@ -11,8 +11,9 @@ permissions:
 jobs:
   release:
     runs-on: ${{ matrix.os }}
-
+    # 一个平台失败不影响其他平台
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
@@ -20,7 +21,7 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v4
 
-      - name: Install python 3.12
+      - name: Install Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -34,37 +35,41 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y icnsutils graphicsmagick xz-utils libx11-dev libxkbfile-dev gnome-keyring libsecret-1-dev libfontconfig-dev rpm
 
+      # Note: Removed --ignore-scripts to ensure native modules compile properly
+      # Added GYP_JOBS and npm_config_jobs to limit parallelism for memory-constrained runners
       - name: Install Dependencies
-        run: npm ci --no-audit --no-fund --ignore-scripts --loglevel verbose
+        run: npm ci --no-audit --no-fund --loglevel verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GYP_JOBS: 4
+          npm_config_jobs: 1
 
-      # Electron requires C++20 support for native modules after Electron 33
-      - name: Set C++20 for MacOS
+      # Electron 33+ requires C++20 support for native modules
+      - name: Set C++20 for macOS
         if: runner.os == 'macOS'
         run: |
           echo "CXXFLAGS=-std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
 
-      - name: build-linux
+      - name: Build Linux
         if: runner.os == 'Linux'
         run: npm run build:linux
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_ELECTRON_CLANG: '0'
 
-      - name: build-mac
+      - name: Build macOS
         if: runner.os == 'macOS'
         run: npm run build:mac
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: build-win
+      - name: Build Windows
         if: runner.os == 'Windows'
         run: npm run build:win
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: release
+      - name: Release
         uses: softprops/action-gh-release@v2
         with:
           draft: false
@@ -72,14 +77,17 @@ jobs:
           generate_release_notes: true
           name: '${{ github.ref_name }}'
           body: |
-            ## Note for MacOS Users
-            MacOS releases are **not notarized**. After dragging MarkText+ into Applications, run:
-            ```
-            xattr -cr /Applications/marktext.app
-            sudo codesign --force --deep --sign - /Applications/marktext.app
+            ## Blanks Release ${{ github.ref_name }}
+
+            ### Note for macOS Users
+            macOS releases are **not notarized**. After dragging Blanks into Applications, run:
+            ```bash
+            xattr -cr /Applications/Blanks.app
+            sudo codesign --force --deep --sign - /Applications/Blanks.app
             ```
 
-            ## Changes
+            ### Changes
+            See [full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)
           files: |
             dist/*.exe
             dist/*.zip
@@ -89,5 +97,7 @@ jobs:
             dist/*.deb
             dist/*.rpm
             dist/*.tar.gz
+            dist/*.blockmap
+            dist/*.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

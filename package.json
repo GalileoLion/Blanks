@@ -1,17 +1,17 @@
 {
-  "name": "marktext-plus",
-  "version": "1.0.3",
-  "description": "MarkText+",
+  "name": "blanks",
+  "version": "0.2.0",
+  "description": "Blanks - An enhanced markdown editor based on MarkText",
   "main": "./out/main/index.js",
-  "author": "William Lubrigati",
-  "homepage": "https://github.com/wglubrigati/marktext-plus",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wglubrigati/marktext-plus.git"
-  },
-  "bugs": {
-    "url": "https://github.com/wglubrigati/marktext-plus/issues"
-  },
+"author": "Galileo Lion",
+"homepage": "https://github.com/GalileoLion/Blanks",
+"repository": {
+  "type": "git",
+  "url": "https://github.com/GalileoLion/Blanks.git"
+},
+"bugs": {
+  "url": "https://github.com/GalileoLion/Blanks/issues"
+},
   "license": "MIT",
   "keywords": [
     "markdown",
