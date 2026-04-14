@@ -222,7 +222,33 @@
           </div>
         </div>
       </div>
-      <div class="word-count">
+      <!-- Custom word count tooltip using Element Plus el-tooltip component.
+           The title bar's word count modal is not encapsulated as a separate component,
+           so we use el-tooltip here for simplicity and style control. -->
+      <el-tooltip
+        v-if="wordCount"
+        placement="top"
+        :effect="tooltipEffect"
+      >
+<template #content>
+<div class="tooltip-item">
+  <span class="label">Words:</span>
+  <span class="value">{{ wordCount.word || 0 }}</span>
+</div>
+<div class="tooltip-item">
+  <span class="label">Characters:</span>
+  <span class="value">{{ wordCount.character || 0 }}</span>
+</div>
+<div class="tooltip-item">
+  <span class="label">Paragraphs:</span>
+  <span class="value">{{ wordCount.paragraph || 0 }}</span>
+</div>
+</template>
+        <div class="word-count">
+          {{ wordCountDisplay }}
+        </div>
+      </el-tooltip>
+      <div v-else class="word-count">
         {{ wordCountDisplay }}
       </div>
       <button
@@ -242,6 +268,7 @@ import { storeToRefs } from 'pinia'
 import { useLayoutStore } from '@/store/layout'
 import { usePreferencesStore } from '@/store/preferences'
 import { useEditorStore } from '@/store/editor'
+import { railscastsThemes, oneDarkThemes } from '@/config'
 import bus from '@/bus'
 
 const layoutStore = useLayoutStore()
@@ -249,7 +276,7 @@ const preferencesStore = usePreferencesStore()
 const editorStore = useEditorStore()
 
 const { showSideBar } = storeToRefs(layoutStore)
-const { footerBarLayout, footerBarCustomIcons, sourceCode } = storeToRefs(preferencesStore)
+const { footerBarLayout, footerBarCustomIcons, sourceCode, theme } = storeToRefs(preferencesStore)
 const { tabs, currentFile } = storeToRefs(editorStore)
 
 const showFileDropdown = ref(false)
@@ -276,6 +303,12 @@ const groupedLayout = computed(() => {
 })
 
 const wordCount = computed(() => currentFile.value?.wordCount)
+
+const tooltipEffect = computed(() => {
+  const currentTheme = theme.value
+  const isDarkTheme = railscastsThemes.includes(currentTheme) || oneDarkThemes.includes(currentTheme)
+  return isDarkTheme ? 'dark' : 'light'
+})
 
 const wordCountDisplay = computed(() => {
   if (!wordCount.value) return '0W / 0C / 0P'
@@ -563,5 +596,43 @@ onUnmounted(() => {
 
 .source-code-btn {
   margin-right: -15px;
+}
+
+/* Word count tooltip styles - using theme color variables */
+/* Override Element UI tooltip colors to match theme */
+
+.word-count-tooltip,
+.el-tooltip__content {
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--floatBgColor) !important;
+  color: var(--editorColor);
+  border: 1px solid var(--floatBorderColor);
+  border-radius: 4px;
+  box-shadow: var(--floatShadow);
+}
+
+.el-tooltip__content .tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 4px 0;
+}
+
+.el-tooltip__content .label {
+  color: var(--editorColor50);
+}
+
+.el-tooltip__content .value {
+  color: var(--editorColor);
+  font-weight: 500;
+}
+
+/* Ensure tooltip follows theme colors properly */
+.el-tooltip__content {
+  background: var(--floatBgColor) !important;
+  border-color: var(--floatBorderColor) !important;
+  color: var(--editorColor) !important;
 }
 </style>
