@@ -69,7 +69,7 @@ class Muya {
       eventCenter.dispatch('scroll', {
         scrollTop: container.scrollTop
       })
-    }, 250)
+    }, 100)
 
     eventCenter.attachDOMEvent(container, 'focus', () => {
       eventCenter.dispatch('focus')
@@ -132,15 +132,17 @@ class Muya {
     eventCenter.dispatch('change', { markdown, wordCount, cursor, muyaIndexCursor, history, toc })
   }
 
-  dispatchSelectionChange = () => {
-    const selectionChanges = this.contentState.selectionChange()
+  dispatchSelectionChange = (cursor) => {
+    const selectionChanges = this.contentState.selectionChange(cursor)
+
+    if (!this.container) return
 
     this.eventCenter.dispatch('selectionChange', selectionChanges)
     this.eventCenter.dispatch('scroll', { scrollTop: this.container.scrollTop })
   }
 
-  dispatchSelectionFormats = () => {
-    const { formats } = this.contentState.selectionFormats()
+  dispatchSelectionFormats = (cursor) => {
+    const { formats } = this.contentState.selectionFormats(cursor)
 
     this.eventCenter.dispatch('selectionFormats', formats)
   }

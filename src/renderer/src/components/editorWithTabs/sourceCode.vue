@@ -85,9 +85,10 @@ const prepareTabSwitch = () => {
 
 const scrollToCords = (y) => {
   requestAnimationFrame(() => {
-    if (sourceCodeContainer.value) {
-      sourceCodeContainer.value.scrollTop = y
-    }
+    // Ensures there we have scrolled to that position before the browser paints the next frame
+    // prevents "flickers"
+    if (!sourceCodeContainer.value) return
+    sourceCodeContainer.value.scrollTop = y
   })
 }
 
@@ -337,10 +338,11 @@ onBeforeUnmount(() => {
 })
 
 const handleScroll = debounce(() => {
-  if (sourceCodeContainer.value && tabId.value) {
-    editorStore.updateScrollPosition(tabId.value, sourceCodeContainer.value.scrollTop)
+  if (!tabId.value || !sourceCodeContainer.value) {
+    return
   }
-}, 500)
+  editorStore.updateScrollPosition(tabId.value, sourceCodeContainer.value.scrollTop)
+}, 100)
 </script>
 
 <style>

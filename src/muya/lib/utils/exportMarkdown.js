@@ -67,11 +67,11 @@ class ExportMarkdown {
         case 'figure': {
           this.insertLineBreak(result, indent)
           switch (block.functionType) {
-            case 'table': {
-              const table = block.children[0]
-              result.push(this.normalizeTable(table, indent))
-              break
-            }
+    case 'table': {
+      const table = block.children[0]
+      result.push(this.normalizeTable(table, indent))
+      break
+    }
             case 'html': {
               result.push(this.normalizeHTML(block, indent))
               break
@@ -322,7 +322,7 @@ class ExportMarkdown {
     for (i = 0; i < tableData.length; i++) {
       for (j = 0; j < columnWidth.length; j++) {
         columnWidth[j].width = Math.max(columnWidth[j].width, tableData[i][j].length + 2) // add 2, because have two space around text
-      }
+    }
     }
     tableData.forEach((r, i) => {
       const rs =

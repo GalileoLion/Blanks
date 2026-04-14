@@ -462,7 +462,7 @@ const importRegister = (ContentState) => {
     const { anchor, focus } = this.cursor
     const anchorBlock = this.getBlock(anchor.key)
     const focusBlock = this.getBlock(focus.key)
-    if (!anchorBlock || !focusBlock) return defaultCursor
+  if (!anchorBlock || !focusBlock) return defaultCursor
     const { text: anchorText } = anchorBlock
     const { text: focusText } = focusBlock
     if (anchor.key === focus.key) {
