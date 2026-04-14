@@ -213,6 +213,23 @@ const selectDefaultDirectoryToOpen = () => {
 }
 </script>
 
+<style>
+/* 单选按钮全局样式覆盖 - 使用主题色 */
+.el-radio.is-checked .el-radio__input .el-radio__inner {
+  border-color: var(--themeColor) !important;
+  background-color: var(--themeColor) !important;
+}
+
+.el-radio.is-checked .el-radio__label {
+  color: var(--themeColor) !important;
+}
+
+.el-radio__input.is-checked .el-radio__inner {
+  border-color: var(--themeColor) !important;
+  background-color: var(--themeColor) !important;
+}
+</style>
+
 <style scoped>
 .pref-general .startup-action-ctrl div {
   display: flex;

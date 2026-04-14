@@ -107,4 +107,14 @@ span.el-switch__label {
 .el-switch:not(.is-checked) .el-switch__core::after {
   background: var(--iconColor);
 }
+
+/* 开启状态：轨道边框和背景使用主题色，滑块使用背景色 */
+.el-switch.is-checked .el-switch__core {
+  border-color: var(--themeColor);
+  background-color: var(--themeColor);
+}
+
+.el-switch.is-checked .el-switch__core::after {
+  background: var(--floatBgColor);
+}
 </style>
