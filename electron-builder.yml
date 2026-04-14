@@ -141,8 +141,8 @@ linux:
   icon: 'static/icon.png'
   desktop:
     entry:
-    StartupWMClass: 'blanks'
-  Keywords: 'blanks;marktext;'
+      StartupWMClass: 'blanks'
+    Keywords: 'blanks;marktext;'
   target:
     - AppImage
     - snap
