@@ -27,10 +27,30 @@ class Preference extends EventEmitter {
     this.hasPreferencesFile = fs.existsSync(
       path.join(this.preferencesPath, `./${PREFERENCES_FILE_NAME}.json`)
     )
-    this.store = new Store({
-      schema,
-      name: PREFERENCES_FILE_NAME
-    })
+
+    // Handle schema validation errors by removing invalid config and retrying
+    try {
+      this.store = new Store({
+        schema,
+        name: PREFERENCES_FILE_NAME
+      })
+    } catch (err) {
+      if (err.message.includes('Config schema violation')) {
+        log.warn('Preferences validation failed, removing invalid config:', err.message)
+        // Remove invalid config file and retry
+        const configPath = path.join(this.preferencesPath, `./${PREFERENCES_FILE_NAME}.json`)
+        if (fs.existsSync(configPath)) {
+          fs.unlinkSync(configPath)
+          this.hasPreferencesFile = false
+        }
+        this.store = new Store({
+          schema,
+          name: PREFERENCES_FILE_NAME
+        })
+      } else {
+        throw err
+      }
+    }
 
     this.staticPath = path.join(global.__static, 'preference.json')
     this.init()
