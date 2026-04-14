@@ -22,8 +22,15 @@ class PluginManager {
    */
   loadEnabledPlugins() {
     try {
+      if (typeof localStorage === 'undefined') {
+        console.warn('localStorage is undefined')
+        return []
+      }
       const saved = localStorage.getItem('marktext_enabled_plugins')
-      return saved ? JSON.parse(saved) : []
+      console.log('Loaded from localStorage:', saved)
+      const result = saved ? JSON.parse(saved) : []
+      console.log('Parsed enabled plugins:', result)
+      return result
     } catch (e) {
       console.error('Failed to load enabled plugins:', e)
       return []
@@ -34,7 +41,18 @@ class PluginManager {
    * 保存启用的插件列表到localStorage
    */
   saveEnabledPlugins() {
-    localStorage.setItem('marktext_enabled_plugins', JSON.stringify(this.enabledPlugins.value))
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const data = JSON.stringify(this.enabledPlugins.value)
+        console.log('Saving to localStorage:', data)
+        localStorage.setItem('marktext_enabled_plugins', data)
+        console.log('Enabled plugins saved successfully')
+      } else {
+        console.warn('localStorage is undefined, cannot save')
+      }
+    } catch (e) {
+      console.error('Failed to save enabled plugins:', e)
+    }
   }
 
   /**
@@ -45,10 +63,10 @@ class PluginManager {
     const loadedPlugins = []
 
     try {
-      // 使用相对路径匹配插件 - 异步模式，不阻塞启动
+      // 先获取插件列表（不加载内容）
       const pluginModules = import.meta.glob('./*/index.js')
 
-      // 并行加载所有插件
+      // 并行异步加载每个插件
       const loadPromises = Object.entries(pluginModules).map(async ([path, loadModule]) => {
         try {
           const module = await loadModule()
