@@ -3,7 +3,7 @@
     class="side-bar-toc"
     :class="[{ 'side-bar-toc-overflow': !wordWrapInToc, 'side-bar-toc-wordwrap': wordWrapInToc }]"
   >
-    <div class="title">{{ t('sideBar.toc.title') }}</div>
+    <!-- <div class="title">{{ t('sideBar.toc.title') }}</div> -->
     <el-tree
       v-if="toc.length"
       :data="toc"
@@ -45,7 +45,7 @@ const handleClick = ({ slug }) => {
 .side-bar-toc {
   height: calc(100% - 35px);
   margin: 0;
-  padding: 0;
+  padding-top: 0;
   list-style: none;
   display: flex;
   flex-direction: column;

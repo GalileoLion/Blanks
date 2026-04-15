@@ -37,8 +37,8 @@
         </li>
       </ul>
     </div>
-    <div v-show="rightColumn" class="right-column">
-      <!-- 内置组件 -->
+<div v-show="rightColumn" class="right-column">
+<!-- 内置组件 -->
       <tree
         v-if="rightColumn === 'files'"
         :projectTree="projectTree"
@@ -88,7 +88,7 @@ const pluginSidebarComponents = computed(() => pluginManager.sidebarComponents.v
 const { rightColumn, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
 
 const { projectTree } = storeToRefs(projectStore)
-const { tabs } = storeToRefs(editorStore)
+const { tabs, currentFile } = storeToRefs(editorStore)
 
 const finalSideBarWidth = computed(() => {
   if (!showSideBar.value) return 0

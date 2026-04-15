@@ -10,21 +10,23 @@
         { isOsx: isOsx }
       ]"
     >
-      <div class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
-        <span v-if="!filename">MarkText</span>
-        <span v-else>
-          <span v-for="(path, index) of paths" :key="index">
-            {{ path }}
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-arrow-right"></use>
-            </svg>
-          </span>
-          <span class="filename" :class="{ isOsx: platform === 'darwin' }" @click="rename">
-            {{ filename }}
-          </span>
-          <span class="save-dot" :class="{ show: !isSaved }"></span>
-        </span>
-      </div>
+<!--
+<div class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
+  <span v-if="!filename">MarkText</span>
+  <span v-else>
+    <span v-for="(path, index) of paths" :key="index">
+      {{ path }}
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-arrow-right"></use>
+      </svg>
+    </span>
+    <span class="filename" :class="{ isOsx: platform === 'darwin' }" @click="rename">
+      {{ filename }}
+    </span>
+    <span class="save-dot" :class="{ show: !isSaved }"></span>
+  </span>
+</div>
+-->
       <div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'">
         <div
           v-if="showCustomTitleBar"
@@ -33,36 +35,42 @@
         >
           <span class="text-center-vertical">&#9776;</span>
         </div>
-        <el-tooltip
-          v-if="wordCount"
-          class="item"
-          :content="`${wordCount[show]} ${HASH[show].full + (wordCount[show] > 1 ? 's' : '')}`"
-          placement="bottom-end"
-        >
-          <template #content>
-            <div class="title-item">
-              <span class="front">{{ t('menu.counter.words') }}:</span
-              ><span class="text">{{ wordCount['word'] }}</span>
-            </div>
-            <div class="title-item">
-              <span class="front">{{ t('menu.counter.characters') }}:</span
-              ><span class="text">{{ wordCount['character'] }}</span>
-            </div>
-            <div class="title-item">
-              <span class="front">{{ t('menu.counter.paragraphs') }}:</span
-              ><span class="text">{{ wordCount['paragraph'] }}</span>
-            </div>
-          </template>
-          <div
-            v-if="wordCount"
-            class="word-count"
-            :class="[{ 'title-no-drag': platform !== 'darwin' }]"
-            @click.stop="handleWordClick"
-          >
-            <span class="text-center-vertical">{{ `${HASH[show].short} ${wordCount[show]}` }}</span>
-          </div>
-        </el-tooltip>
-      </div>
+<!--
+<el-tooltip
+  v-if="wordCount"
+  class="item"
+  :content="`${wordCount[show]} ${HASH[show].full + (wordCount[show] > 1 ? 's' : '')}`"
+  placement="bottom-end"
+>
+  <template #content>
+    <div class="title-item">
+      <span class="front">{{ t('menu.counter.words') }}:</span
+      ><span class="text">{{ wordCount['word'] }}</span>
+    </div>
+    <div class="title-item">
+      <span class="front">{{ t('menu.counter.characters') }}:</span
+      ><span class="text">{{ wordCount['character'] }}</span>
+    </div>
+    <div class="title-item">
+      <span class="front">{{ t('menu.counter.paragraphs') }}:</span
+      ><span class="text">{{ wordCount['paragraph'] }}</span>
+    </div>
+  </template>
+  <div
+    v-if="wordCount"
+    class="word-count"
+    :class="[{ 'title-no-drag': platform !== 'darwin' }]"
+    @click.stop="handleWordClick"
+  >
+    <span class="text-center-vertical">{{ `${HASH[show].short} ${wordCount[show]}` }}</span>
+  </div>
+</el-tooltip>
+-->
+<div v-if="filename" class="current-filename title-no-drag">
+  <span>{{ filename }}</span>
+  <span v-if="!isSaved" class="save-dot"></span>
+</div>
+</div>
       <div
         v-if="titleBarStyle === 'custom' && !isFullScreen && !isOsx"
         class="right-toolbar"
@@ -347,7 +355,7 @@ div.title > span {
   position: absolute;
   top: 0;
   left: 0;
-  width: 118px; /* + 2*10px padding*/
+  min-width: 118px; /* + 2*10px padding*/
   display: flex;
   flex-direction: row;
 }
@@ -381,6 +389,21 @@ div.title > span {
   &:hover > span {
     background: var(--sideBarBgColor);
     color: var(--sideBarTitleColor);
+  }
+}
+
+.current-filename {
+  font-size: 13px;
+  color: var(--editorColor);
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  & .save-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--highlightThemeColor);
   }
 }
 
