@@ -170,15 +170,42 @@
       </template>
     </div>
 
-    <div class="footer-right">
-      <button
-        class="footer-btn text-btn"
-        @click="handleOpenSettings"
-        title="Settings"
-      >
-        SETTING
-      </button>
-      <div class="file-dropdown-container" ref="fileDropdownContainer">
+<div class="footer-right">
+  <!-- Custom word count tooltip using Element Plus el-tooltip component. -->
+  <el-tooltip
+    v-if="wordCount"
+    placement="top"
+    :effect="tooltipEffect"
+  >
+    <template #content>
+      <div class="tooltip-item">
+        <span class="label">Words:</span>
+        <span class="value">{{ wordCount.word || 0 }}</span>
+      </div>
+      <div class="tooltip-item">
+        <span class="label">Characters:</span>
+        <span class="value">{{ wordCount.character || 0 }}</span>
+      </div>
+      <div class="tooltip-item">
+        <span class="label">Paragraphs:</span>
+        <span class="value">{{ wordCount.paragraph || 0 }}</span>
+      </div>
+    </template>
+    <div class="word-count">
+      {{ wordCountDisplay }}
+    </div>
+  </el-tooltip>
+  <div v-else class="word-count">
+    {{ wordCountDisplay }}
+  </div>
+  <button
+    class="footer-btn text-btn"
+    @click="handleOpenSettings"
+    title="Settings"
+  >
+    SETTING
+  </button>
+  <div class="file-dropdown-container" ref="fileDropdownContainer">
         <button
           class="footer-btn text-btn"
           @click="toggleFileDropdown"
@@ -220,38 +247,9 @@
               <span class="file-name">{{ file.filename }}</span>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- Custom word count tooltip using Element Plus el-tooltip component.
-           The title bar's word count modal is not encapsulated as a separate component,
-           so we use el-tooltip here for simplicity and style control. -->
-      <el-tooltip
-        v-if="wordCount"
-        placement="top"
-        :effect="tooltipEffect"
-      >
-<template #content>
-<div class="tooltip-item">
-  <span class="label">Words:</span>
-  <span class="value">{{ wordCount.word || 0 }}</span>
 </div>
-<div class="tooltip-item">
-  <span class="label">Characters:</span>
-  <span class="value">{{ wordCount.character || 0 }}</span>
 </div>
-<div class="tooltip-item">
-  <span class="label">Paragraphs:</span>
-  <span class="value">{{ wordCount.paragraph || 0 }}</span>
-</div>
-</template>
-        <div class="word-count">
-          {{ wordCountDisplay }}
-        </div>
-      </el-tooltip>
-      <div v-else class="word-count">
-        {{ wordCountDisplay }}
-      </div>
-      <button
+<button
         class="footer-btn text-btn source-code-btn"
         @click="toggleSourceCode"
         title="Toggle Source Code"
@@ -481,7 +479,7 @@ onUnmounted(() => {
 .file-dropdown {
   position: absolute;
   bottom: 100%;
-  left: 0;
+  left: -90px;
   min-width: 180px;
   max-width: 220px;
   max-height: 350px;
