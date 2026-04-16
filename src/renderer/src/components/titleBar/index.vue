@@ -27,12 +27,13 @@
   </span>
 </div>
 -->
-      <div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'">
-        <div
-          v-if="showCustomTitleBar"
-          class="frameless-titlebar-menu title-no-drag"
-          @click.stop="handleMenuClick"
-        >
+<div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'" :style="leftToolbarStyle">
+  <div
+    v-if="showCustomTitleBar"
+    ref="menuButton"
+    class="frameless-titlebar-menu title-no-drag"
+    @click.stop="handleMenuClick"
+  >
           <span class="text-center-vertical">&#9776;</span>
         </div>
 <!--
@@ -168,6 +169,7 @@ const windowIconClose = closePath
 const isFullScreen = ref(getCurrentWindow().isFullScreen())
 const isMaximized = ref(getCurrentWindow().isMaximized())
 const show = ref('word')
+const menuButton = ref(null)
 
 const { titleBarStyle } = storeToRefs(preferencesStore)
 const { showTabBar, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
@@ -239,7 +241,12 @@ const handleMinimizeClick = () => {
 
 const handleMenuClick = () => {
   const win = getCurrentWindow()
-  RemoteMenu.getApplicationMenu().popup({ window: win, x: 23, y: 20 })
+  if (menuButton.value) {
+    const rect = menuButton.value.getBoundingClientRect()
+    RemoteMenu.getApplicationMenu().popup({ window: win, x: rect.left, y: rect.bottom })
+  } else {
+    RemoteMenu.getApplicationMenu().popup({ window: win, x: 23, y: 20 })
+  }
 }
 
 const rename = () => {
@@ -361,7 +368,6 @@ div.title > span {
   height: 100%;
   position: absolute;
   top: 0;
-  left: 0;
   min-width: 118px; /* + 2*10px padding*/
   display: flex;
   flex-direction: row;
