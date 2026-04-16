@@ -66,10 +66,12 @@
   </div>
 </el-tooltip>
 -->
+<!-- 暂未解决遮挡触控问题
 <div v-if="filename" class="current-filename title-no-drag">
   <span>{{ filename }}</span>
   <span v-if="!isSaved" class="save-dot"></span>
 </div>
+-->
 </div>
       <div
         v-if="titleBarStyle === 'custom' && !isFullScreen && !isOsx"
@@ -168,7 +170,12 @@ const isMaximized = ref(getCurrentWindow().isMaximized())
 const show = ref('word')
 
 const { titleBarStyle } = storeToRefs(preferencesStore)
-const { showTabBar } = storeToRefs(layoutStore)
+const { showTabBar, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
+
+const leftToolbarStyle = computed(() => {
+  if (!showSideBar.value) return {}
+  return { left: `${sideBarWidth.value}px` }
+})
 
 const paths = computed(() => {
   if (!props.pathname) return []

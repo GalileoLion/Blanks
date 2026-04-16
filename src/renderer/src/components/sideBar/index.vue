@@ -5,7 +5,7 @@
     class="side-bar"
     :style="[!rightColumn ? { 'min-width': '45px' } : {}, { width: `${finalSideBarWidth}px` }]"
   >
-    <div class="left-column">
+    <div class="top-column">
       <ul>
         <!-- 内置侧边栏图标 -->
         <li
@@ -27,18 +27,9 @@
           <component :is="plugin.icon" />
         </li>
       </ul>
-      <ul class="bottom">
-        <li
-          v-for="(c, index) of sideBarBottomIcons"
-          :key="index"
-          @click="handleLeftBottomClick(c.id)"
-        >
-          <component :is="c.icon" />
-        </li>
-      </ul>
     </div>
-<div v-show="rightColumn" class="right-column">
-<!-- 内置组件 -->
+    <div v-show="rightColumn" class="right-column">
+      <!-- 内置组件 -->
       <tree
         v-if="rightColumn === 'files'"
         :projectTree="projectTree"
@@ -47,12 +38,23 @@
       ></tree>
       <side-bar-search v-else-if="rightColumn === 'search'"></side-bar-search>
       <toc v-else-if="rightColumn === 'toc'"></toc>
-      
+
       <!-- 插件组件 -->
       <component
         v-else-if="activePluginComponent"
         :is="activePluginComponent"
       />
+    </div>
+    <div v-show="rightColumn" class="bottom-bar">
+      <ul>
+        <li
+          v-for="(c, index) of sideBarBottomIcons"
+          :key="index"
+          @click="handleLeftBottomClick(c.id)"
+        >
+          <component :is="c.icon" />
+        </li>
+      </ul>
     </div>
     <div v-show="rightColumn" ref="dragBar" class="drag-bar"></div>
   </div>
@@ -163,6 +165,7 @@ const handleLeftBottomClick = (name) => {
 <style scoped>
 .side-bar {
   display: flex;
+  flex-direction: column;
   flex-shrink: 0;
   flex-grow: 0;
   width: 280px;
@@ -175,44 +178,48 @@ const handleLeftBottomClick = (name) => {
   border-right: 1px solid var(--itemBgColor);
 }
 
-.side-bar .left-column svg {
+.side-bar .top-column svg {
   fill: none;
 }
 
-.left-column {
-  height: 100%;
-  width: 45px;
+.top-column {
+  width: 100%;
+  height: 40px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 40px;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0 5px;
   box-sizing: border-box;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--itemBgColor);
 }
 
-.left-column > ul {
+.top-column > ul {
   opacity: 1;
+  display: flex;
+  flex-direction: row;
 }
 
-.left-column ul {
+.top-column ul {
   list-style: none;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0;
   padding: 0;
 }
 
-.left-column ul > li {
-  width: 45px;
-  height: 45px;
+.top-column ul > li {
+  width: 35px;
+  height: 35px;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
-.left-column ul > li > svg {
+.top-column ul > li > svg {
   width: 18px;
   height: 18px;
   color: var(--sideBarIconColor);
@@ -225,19 +232,66 @@ const handleLeftBottomClick = (name) => {
   transition: transform 0.25s ease-in-out;
 }
 
-.left-column ul > li.active > svg {
+.top-column ul > li.active > svg {
   color: var(--themeColor);
   stroke: currentColor;
 }
 
-.side-bar:hover .left-column ul li svg {
+.side-bar:hover .top-column ul li svg {
   opacity: 1;
 }
 
 .right-column {
   flex: 1;
-  width: calc(100% - 50px);
   overflow: hidden;
+}
+
+.bottom-bar {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 0 5px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border-top: 1px solid var(--itemBgColor);
+}
+
+.bottom-bar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-bar ul > li {
+  width: 35px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.bottom-bar ul > li > svg {
+  width: 16px;
+  height: 16px;
+  color: var(--sideBarIconColor);
+  stroke: currentColor;
+  stroke-width: 2.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 1;
+  transition: transform 0.25s ease-in-out;
+}
+
+.bottom-bar ul > li:hover > svg {
+  color: var(--themeColor);
 }
 
 .drag-bar {

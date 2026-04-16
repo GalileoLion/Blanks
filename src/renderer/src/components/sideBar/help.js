@@ -23,13 +23,13 @@ export const sideBarIcons = [
 
 export const sideBarBottomIcons = [
   {
-    id: 'settings',
-    name: () => t('sideBar.icons.settings'),
-    icon: SettingIcon
-  },
-  {
     id: 'close',
     name: () => t('sideBar.icons.close') || 'Close',
     icon: FoldIcon
+  },
+  {
+    id: 'settings',
+    name: () => t('sideBar.icons.settings'),
+    icon: SettingIcon
   }
 ]
