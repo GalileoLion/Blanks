@@ -27,7 +27,7 @@
   </span>
 </div>
 -->
-<div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'" :style="leftToolbarStyle">
+<div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'">
   <div
     v-if="showCustomTitleBar"
     ref="menuButton"
@@ -174,10 +174,13 @@ const menuButton = ref(null)
 const { titleBarStyle } = storeToRefs(preferencesStore)
 const { showTabBar, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
 
-const leftToolbarStyle = computed(() => {
-  if (!showSideBar.value) return {}
-  return { left: `${sideBarWidth.value}px` }
-})
+watch([showSideBar, sideBarWidth], ([visible, width]) => {
+  if (visible) {
+    document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
+  } else {
+    document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
+  }
+}, { immediate: true })
 
 const paths = computed(() => {
   if (!props.pathname) return []
@@ -298,7 +301,7 @@ onBeforeUnmount(() => {
   box-sizing: border-box;
   color: var(--editorColor50);
   position: fixed;
-  left: 0;
+  left: var(--currentSideBarWidth, 0px);
   top: 0;
   right: 0;
   z-index: 2;

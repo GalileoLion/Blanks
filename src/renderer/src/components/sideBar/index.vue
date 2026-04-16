@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick, shallowRef } from 'vue'
+import { ref, computed, onMounted, nextTick, shallowRef, watch } from 'vue'
 import { useLayoutStore } from '@/store/layout'
 import { useProjectStore } from '@/store/project'
 import { useEditorStore } from '@/store/editor'
@@ -95,7 +95,9 @@ const { tabs, currentFile } = storeToRefs(editorStore)
 const finalSideBarWidth = computed(() => {
   if (!showSideBar.value) return 0
   if (rightColumn.value === '') return 45
-  return sideBarViewWidth.value < 220 ? 220 : sideBarViewWidth.value
+  if (sideBarViewWidth.value < 220) return 220
+  if (sideBarViewWidth.value > 600) return 600
+  return sideBarViewWidth.value
 })
 
 // 计算当前激活的插件组件
@@ -119,13 +121,20 @@ onMounted(async () => {
     const mouseUpHandler = () => {
       document.removeEventListener('mousemove', mouseMoveHandler, false)
       document.removeEventListener('mouseup', mouseUpHandler, false)
-      layoutStore.CHANGE_SIDE_BAR_WIDTH(currentSideBarWidth < 220 ? 220 : currentSideBarWidth)
+      let finalWidth = currentSideBarWidth
+      if (finalWidth < 220) finalWidth = 220
+      if (finalWidth > 600) finalWidth = 600
+      layoutStore.CHANGE_SIDE_BAR_WIDTH(finalWidth)
     }
 
     const mouseMoveHandler = (event) => {
       const offset = event.clientX - startX
       currentSideBarWidth = startWidth + offset
       sideBarViewWidth.value = currentSideBarWidth
+      let effectiveWidth = currentSideBarWidth
+      if (effectiveWidth < 220) effectiveWidth = 220
+      if (effectiveWidth > 600) effectiveWidth = 600
+      document.documentElement.style.setProperty('--currentSideBarWidth', `${effectiveWidth}px`)
     }
 
     const mouseDownHandler = (event) => {
@@ -160,6 +169,15 @@ const handleLeftBottomClick = (name) => {
     bus.emit('view:toggle-layout-entry', 'showSideBar')
   }
 }
+
+// 监听侧边栏显示/隐藏和宽度变化，同步 CSS 变量
+watch([showSideBar, sideBarWidth], ([visible, width]) => {
+  if (visible) {
+    document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
+  } else {
+    document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
@@ -171,6 +189,7 @@ const handleLeftBottomClick = (name) => {
   width: 280px;
   height: 100vh;
   min-width: 220px;
+  max-width: 600px;
   position: relative;
   color: var(--sideBarColor);
   user-select: none;
