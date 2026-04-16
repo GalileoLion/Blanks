@@ -1073,7 +1073,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
 }
 .chat-messages::-webkit-scrollbar {
   width: 6px;

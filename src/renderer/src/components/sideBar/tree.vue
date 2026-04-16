@@ -225,15 +225,6 @@ onMounted(() => {
   flex-direction: column;
   height: 100%;
 }
-.tree-view > .title {
-  height: 35px;
-  line-height: 35px;
-  padding: 0 15px;
-  display: flex;
-  flex-shrink: 0;
-  flex-direction: row-reverse;
-}
-
 .icon-arrow {
   margin-right: 5px;
   transition: all 0.25s ease-out;
@@ -376,7 +367,7 @@ onMounted(() => {
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
+  /* padding-top: 40px; */
   align-items: center;
   color: var(--sideBarTextColor);
   & button {
