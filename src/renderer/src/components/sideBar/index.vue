@@ -40,10 +40,7 @@
       <toc v-else-if="rightColumn === 'toc'"></toc>
 
       <!-- 插件组件 -->
-      <component
-        v-else-if="activePluginComponent"
-        :is="activePluginComponent"
-      />
+      <component v-else-if="activePluginComponent" :is="activePluginComponent" />
     </div>
     <div v-show="rightColumn" class="bottom-bar">
       <ul>
@@ -102,7 +99,7 @@ const finalSideBarWidth = computed(() => {
 
 // 计算当前激活的插件组件
 const activePluginComponent = computed(() => {
-  const plugin = pluginSidebarComponents.value.find(p => p.id === rightColumn.value)
+  const plugin = pluginSidebarComponents.value.find((p) => p.id === rightColumn.value)
   return plugin ? plugin.component : null
 })
 
@@ -171,13 +168,17 @@ const handleLeftBottomClick = (name) => {
 }
 
 // 监听侧边栏显示/隐藏和宽度变化，同步 CSS 变量
-watch([showSideBar, sideBarWidth], ([visible, width]) => {
-  if (visible) {
-    document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
-  } else {
-    document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
-  }
-}, { immediate: true })
+watch(
+  [showSideBar, sideBarWidth],
+  ([visible, width]) => {
+    if (visible) {
+      document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
+    } else {
+      document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>
@@ -203,7 +204,7 @@ watch([showSideBar, sideBarWidth], ([visible, width]) => {
 
 .top-column {
   width: 100%;
-  height: 40px;
+  height: var(--titleBarHeight);
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -211,6 +212,7 @@ watch([showSideBar, sideBarWidth], ([visible, width]) => {
   box-sizing: border-box;
   flex-shrink: 0;
   border-bottom: 1px solid var(--itemBgColor);
+  -webkit-app-region: drag;
 }
 
 .top-column > ul {
@@ -236,6 +238,12 @@ watch([showSideBar, sideBarWidth], ([visible, width]) => {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+  -webkit-app-region: no-drag;
+}
+.top-column ul > li:hover {
+  background: var(--sideBarItemHoverBgColor);
 }
 
 .top-column ul > li > svg {

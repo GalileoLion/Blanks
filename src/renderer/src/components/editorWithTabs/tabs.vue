@@ -231,6 +231,7 @@ svg.close-icon:hover {
   user-select: none;
   box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  background: var(--sideBarBgColor);
   &:hover > .new-file {
     opacity: 1 !important;
   }
@@ -255,7 +256,9 @@ svg.close-icon:hover {
     display: none;
   }
   & > li {
-    transition: all 0.15s ease-in-out;
+    transition:
+      background-color 0.15s ease-in-out,
+      color 0.15s ease-in-out;
     position: relative;
     padding: 0 8px;
     color: var(--editorColor50);
@@ -263,8 +266,8 @@ svg.close-icon:hover {
     line-height: 35px;
     height: 35px;
     max-width: 280px;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    /* border-top-right-radius: 15px; */
+    /* border-top-left-radius: 15px; */
     display: flex;
     align-items: center;
     &[aria-grabbed='true'] {
@@ -277,7 +280,7 @@ svg.close-icon:hover {
       outline: none;
     }
     &:hover {
-      background: var(--floatBgColor) !important;
+      /* background: var(--floatBgColor) !important; */
     }
     &:hover > svg {
       opacity: 1;
@@ -294,6 +297,15 @@ svg.close-icon:hover {
       white-space: nowrap;
       margin-right: 3px;
     }
+    &:not(.active) {
+      background: var(--sideBarBgColor) !important;
+      border-radius: 6px;
+      &:hover {
+        background:
+          linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)),
+          var(--sideBarBgColor) !important;
+      }
+    }
   }
   & > li.unsaved:not(.active) {
     & > svg.close-icon {
@@ -308,8 +320,15 @@ svg.close-icon:hover {
   }
   & > li.active {
     background: var(--itemBgColor);
+    /* border-top-right-radius: 15px; */
+    /* border-top-left-radius: 15px; */
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border: 1px solid var(--floatBorderColor);
+    border-bottom: none;
     z-index: 3;
-    &:after {
+    /* 原底部主题色边框线，已移除 */
+    /* &:after {
       content: '';
       position: absolute;
       left: 0;
@@ -317,7 +336,7 @@ svg.close-icon:hover {
       right: 0;
       height: 2px;
       background: var(--themeColor);
-    }
+    } */
     & > svg {
       opacity: 1;
     }

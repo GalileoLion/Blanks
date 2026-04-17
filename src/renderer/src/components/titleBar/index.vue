@@ -10,7 +10,7 @@
         { isOsx: isOsx }
       ]"
     >
-<!--
+      <!--
 <div class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
   <span v-if="!filename">MarkText</span>
   <span v-else>
@@ -27,16 +27,16 @@
   </span>
 </div>
 -->
-<div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'">
-  <div
-    v-if="showCustomTitleBar"
-    ref="menuButton"
-    class="frameless-titlebar-menu title-no-drag"
-    @click.stop="handleMenuClick"
-  >
+      <div :class="showCustomTitleBar ? 'left-toolbar title-no-drag' : 'right-toolbar'">
+        <div
+          v-if="showCustomTitleBar"
+          ref="menuButton"
+          class="frameless-titlebar-menu title-no-drag"
+          @click.stop="handleMenuClick"
+        >
           <span class="text-center-vertical">&#9776;</span>
         </div>
-<!--
+        <!--
 <el-tooltip
   v-if="wordCount"
   class="item"
@@ -67,13 +67,13 @@
   </div>
 </el-tooltip>
 -->
-<!-- 暂未解决遮挡触控问题
+        <!-- 暂未解决遮挡触控问题
 <div v-if="filename" class="current-filename title-no-drag">
   <span>{{ filename }}</span>
   <span v-if="!isSaved" class="save-dot"></span>
 </div>
 -->
-</div>
+      </div>
       <div
         v-if="titleBarStyle === 'custom' && !isFullScreen && !isOsx"
         class="right-toolbar"
@@ -174,13 +174,17 @@ const menuButton = ref(null)
 const { titleBarStyle } = storeToRefs(preferencesStore)
 const { showTabBar, showSideBar, sideBarWidth } = storeToRefs(layoutStore)
 
-watch([showSideBar, sideBarWidth], ([visible, width]) => {
-  if (visible) {
-    document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
-  } else {
-    document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
-  }
-}, { immediate: true })
+watch(
+  [showSideBar, sideBarWidth],
+  ([visible, width]) => {
+    if (visible) {
+      document.documentElement.style.setProperty('--currentSideBarWidth', `${width}px`)
+    } else {
+      document.documentElement.style.setProperty('--currentSideBarWidth', '0px')
+    }
+  },
+  { immediate: true }
+)
 
 const paths = computed(() => {
   if (!props.pathname) return []
@@ -287,11 +291,15 @@ onBeforeUnmount(() => {
 <style scoped>
 .title-bar-editor-bg {
   height: var(--titleBarHeight);
-  background: var(--editorBgColor);
+  /* background: var(--editorBgColor); */
+  background: var(--sideBarBgColor);
   position: relative;
   left: 0;
   top: 0;
   right: 0;
+}
+.title-bar-editor-bg.tabs-visible {
+  background: var(--sideBarBgColor);
 }
 .title-bar {
   -webkit-app-region: drag;
@@ -371,7 +379,9 @@ div.title > span {
   height: 100%;
   position: absolute;
   top: 0;
-  min-width: 118px; /* + 2*10px padding*/
+  /* min-width: 118px;  + 2*10px padding */
+  /* min-width: 118px; 原预留标题宽度，标题已隐藏 */
+  width: auto;
   display: flex;
   flex-direction: row;
 }
