@@ -74,6 +74,22 @@
 </div>
 -->
       </div>
+      <tabs v-if="showTabBar" class="title-bar-tabs"></tabs>
+      <div v-if="!showTabBar" class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
+        <span v-if="!filename">MarkText</span>
+        <span v-else>
+          <span v-for="(path, index) of paths" :key="index">
+            {{ path }}
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-arrow-right"></use>
+            </svg>
+          </span>
+          <span class="filename" :class="{ isOsx: platform === 'darwin' }" @click="rename">
+            {{ filename }}
+          </span>
+          <span class="save-dot" :class="{ show: !isSaved }"></span>
+        </span>
+      </div>
       <div
         v-if="titleBarStyle === 'custom' && !isFullScreen && !isOsx"
         class="right-toolbar"
@@ -126,6 +142,7 @@ import { PATH_SEPARATOR } from '../../config'
 import { isOsx as isOsxPlatform } from '@/util'
 import { useEditorStore } from '@/store/editor'
 import { useI18n } from 'vue-i18n'
+import Tabs from '../editorWithTabs/tabs.vue'
 
 const props = defineProps({
   project: Object,
@@ -250,7 +267,9 @@ const handleMenuClick = () => {
   const win = getCurrentWindow()
   if (menuButton.value) {
     const rect = menuButton.value.getBoundingClientRect()
-    RemoteMenu.getApplicationMenu().popup({ window: win, x: rect.left, y: rect.bottom })
+    const x = Math.round(rect.left)
+    const y = Math.round(rect.bottom)
+    RemoteMenu.getApplicationMenu().popup({ window: win, x, y })
   } else {
     RemoteMenu.getApplicationMenu().popup({ window: win, x: 23, y: 20 })
   }
@@ -315,6 +334,14 @@ onBeforeUnmount(() => {
   z-index: 2;
   transition: color 0.4s ease-in-out;
   cursor: default;
+  display: flex;
+  align-items: center;
+}
+.title-bar-tabs {
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+  -webkit-app-region: no-drag;
 }
 .active {
   color: var(--editorColor);
@@ -325,12 +352,15 @@ img {
   vertical-align: top;
 }
 .title {
-  padding: 0 142px;
+  flex: 1;
   height: 100%;
+  min-width: 0;
   line-height: var(--titleBarHeight);
   font-size: 14px;
   text-align: center;
   transition: all 0.25s ease-in-out;
+  position: relative;
+  overflow: hidden;
   & .filename {
     transition: all 0.25s ease-in-out;
   }
@@ -377,20 +407,17 @@ div.title > span {
 .left-toolbar {
   padding: 0 10px;
   height: 100%;
-  position: absolute;
-  top: 0;
-  /* min-width: 118px;  + 2*10px padding */
+  /* min-width: 118px; + 2*10px padding */
   /* min-width: 118px; 原预留标题宽度，标题已隐藏 */
-  width: auto;
+  flex-shrink: 0;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 .right-toolbar {
   height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
   width: 138px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   flex-direction: row-reverse;

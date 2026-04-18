@@ -3,7 +3,6 @@
     class="editor-with-tabs"
     :style="{ 'max-width': showSideBar ? `calc(100vw - ${sideBarWidth}px` : '100vw' }"
   >
-    <tabs v-show="showTabBar"></tabs>
     <div class="container">
       <editor
         :markdown="markdown"
@@ -29,18 +28,13 @@ import { ref, onMounted, defineAsyncComponent, computed } from 'vue'
 import { useLayoutStore } from '@/store/layout'
 import { useEditorStore } from '@/store/editor'
 import { storeToRefs } from 'pinia'
-import Tabs from './tabs.vue'
 import Editor from './editor.vue'
 import SourceCode from './sourceCode.vue'
 import TabNotifications from './notifications.vue'
 
-const FooterBar = defineAsyncComponent(() =>
-  import('./footerBar.vue')
-)
+const FooterBar = defineAsyncComponent(() => import('./footerBar.vue'))
 
-const FloatingToc = defineAsyncComponent(() =>
-  import('./floatingToc.vue')
-)
+const FloatingToc = defineAsyncComponent(() => import('./floatingToc.vue'))
 
 defineProps({
   markdown: {

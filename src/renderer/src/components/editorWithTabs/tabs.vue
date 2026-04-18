@@ -227,11 +227,11 @@ svg.close-icon:hover {
   position: relative;
   display: flex;
   flex-direction: row;
-  height: 35px;
+  height: 100%;
   user-select: none;
-  box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
-  background: var(--sideBarBgColor);
+  /* background: var(--sideBarBgColor); */
   &:hover > .new-file {
     opacity: 1 !important;
   }
