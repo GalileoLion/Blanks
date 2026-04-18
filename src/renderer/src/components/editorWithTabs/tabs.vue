@@ -25,6 +25,8 @@
         <use xlink:href="#icon-plus"></use>
       </svg>
     </div>
+    <!-- 标签页栏右侧空余空间作为可拖动区域 -->
+    <div class="drag-area"></div>
   </div>
 </template>
 
@@ -238,7 +240,7 @@ svg.close-icon:hover {
 }
 .scrollable-tabs {
   flex: 0 1 auto;
-  height: 35px;
+  height: var(--titleBarHeight);
   overflow: hidden;
 }
 .tabs-container {
@@ -246,7 +248,7 @@ svg.close-icon:hover {
   list-style: none;
   margin: 0;
   padding: 0;
-  height: 35px;
+  height: var(--titleBarHeight);
   position: relative;
   display: flex;
   flex-direction: row;
@@ -263,9 +265,10 @@ svg.close-icon:hover {
     padding: 0 8px;
     color: var(--editorColor50);
     font-size: 12px;
-    line-height: 35px;
-    height: 35px;
+    line-height: var(--titleBarHeight);
+    height: var(--titleBarHeight);
     max-width: 280px;
+    box-sizing: border-box;
     /* border-top-right-radius: 15px; */
     /* border-top-left-radius: 15px; */
     display: flex;
@@ -300,6 +303,7 @@ svg.close-icon:hover {
     &:not(.active) {
       background: var(--sideBarBgColor) !important;
       border-radius: 6px;
+      border-bottom: 1px solid var(--floatBorderColor);
       &:hover {
         background:
           linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)),
@@ -346,9 +350,9 @@ svg.close-icon:hover {
   }
 }
 .editor-tabs > .new-file {
-  flex: 0 0 35px;
-  width: 35px;
-  height: 35px;
+  flex: 0 0 var(--titleBarHeight);
+  width: var(--titleBarHeight);
+  height: var(--titleBarHeight);
   border-right: none;
   background: transparent;
   display: flex;
@@ -367,6 +371,13 @@ svg.close-icon:hover {
   & > svg {
     fill: var(--focusColor);
   }
+}
+
+/* 标签页栏右侧可拖动区域 */
+.drag-area {
+  flex: 1;
+  height: 100%;
+  -webkit-app-region: drag;
 }
 
 /* dragula effects */

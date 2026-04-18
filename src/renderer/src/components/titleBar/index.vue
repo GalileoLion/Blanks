@@ -362,6 +362,8 @@ img {
   transition: all 0.25s ease-in-out;
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid var(--floatBorderColor);
+  box-sizing: border-box;
   & .filename {
     transition: all 0.25s ease-in-out;
   }
@@ -406,7 +408,7 @@ div.title > span {
 }
 
 .left-toolbar {
-  padding: 0 10px;
+  padding: 0;
   height: 100%;
   /* min-width: 118px; + 2*10px padding */
   /* min-width: 118px; 原预留标题宽度，标题已隐藏 */
@@ -414,6 +416,8 @@ div.title > span {
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-bottom: 1px solid var(--floatBorderColor);
+  box-sizing: border-box;
 }
 .right-toolbar {
   height: 100%;
@@ -422,6 +426,8 @@ div.title > span {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
+  border-bottom: 1px solid var(--floatBorderColor);
+  box-sizing: border-box;
   & .item {
     margin-right: 10px;
   }
@@ -480,6 +486,11 @@ div.title > span {
 }
 .frameless-titlebar-menu {
   color: var(--sideBarColor);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
 }
 .frameless-titlebar-close:hover {
   background-color: rgb(228, 79, 79);
