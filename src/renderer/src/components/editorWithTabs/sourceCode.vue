@@ -335,6 +335,12 @@ onBeforeUnmount(() => {
   })
 
   sourceCodeContainer.value.removeEventListener('scroll', handleScroll)
+
+  /* 销毁 CodeMirror 实例，避免窗口 resize 时遍历到已卸载的损坏实例 */
+  if (editor.value) {
+    editor.value.toTextArea()
+    editor.value = null
+  }
 })
 
 const handleScroll = debounce(() => {

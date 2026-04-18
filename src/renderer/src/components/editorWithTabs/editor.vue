@@ -868,16 +868,16 @@ const handleQuickInsertTable = () => {
   if (!editor.value) return
   const contentState = editor.value.contentState
   if (!contentState) return
-  
+
   const { start, end } = contentState.cursor
   const block = contentState.getBlock(start.key)
   const isAllowed = contentState.isAllowedTransformation(block, 'table', start.key !== end.key)
-  
+
   // 如果不允许直接转换（比如当前行有文字），则在下方插入新段落
   if (!isAllowed) {
     editor.value.insertParagraph('after')
   }
-  
+
   // 稍作延迟，确保 DOM 更新且光标位置计算正确后，再唤起表格选择器
   setTimeout(() => {
     contentState.updateParagraph('table', true)
@@ -959,6 +959,7 @@ const handleScreenShot = () => {
 }
 
 const handleResetPaddingBottom = () => {
+  if (!editor.value) return
   const { container } = editor.value
   const newScollableHeightWithoutPadding =
     container.scrollHeight -

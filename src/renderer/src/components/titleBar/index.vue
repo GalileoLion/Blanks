@@ -74,8 +74,9 @@
 </div>
 -->
       </div>
-      <tabs v-if="showTabBar" class="title-bar-tabs"></tabs>
-      <div v-if="!showTabBar" class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
+      <!-- 使用 v-show 替代 v-if，避免 DOM 销毁重建导致的布局重排时序问题 -->
+      <tabs v-show="showTabBar" class="title-bar-tabs"></tabs>
+      <div v-show="!showTabBar" class="title" @dblclick.stop="toggleMaxmizeOnMacOS">
         <span v-if="!filename">MarkText</span>
         <span v-else>
           <span v-for="(path, index) of paths" :key="index">
