@@ -724,6 +724,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 0 15px;
+  box-sizing: border-box;
   color: var(--sideBarColor);
 }
 

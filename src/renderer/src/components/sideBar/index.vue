@@ -211,7 +211,7 @@ watch(
   padding: 0 5px;
   box-sizing: border-box;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--itemBgColor);
+  border-bottom: 1px solid var(--floatBorderColor);
   -webkit-app-region: drag;
 }
 
@@ -291,7 +291,7 @@ watch(
   padding: 0 5px;
   box-sizing: border-box;
   flex-shrink: 0;
-  border-top: 1px solid var(--itemBgColor);
+  border-top: 1px solid var(--floatBorderColor);
 }
 
 .bottom-bar ul {
