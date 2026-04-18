@@ -110,9 +110,10 @@ export const usePreferencesStore = defineStore('preferences', {
     },
     cliScript: '',
 
-  // Footer bar configuration
-  footerBarLayout: 'strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task',
-  footerBarCustomIcons: {}
+    // Footer bar configuration
+    footerBarLayout:
+      'strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task',
+    footerBarCustomIcons: {}
   }),
 
   getters: {
@@ -138,14 +139,15 @@ export const usePreferencesStore = defineStore('preferences', {
       this[type] = checked
     },
     TOGGLE_VIEW_MODE(entryName) {
+      // NOTE: Disabled to align with upstream - let user manually control source code mode
       // Prevent disabling source code mode for non-markdown files
-      if (entryName === 'sourceCode' && this.sourceCode) {
-        const editorStore = useEditorStore()
-        const filename = editorStore.currentFile?.filename || ''
-        if (filename && !window.fileUtils.hasMarkdownExtension(filename)) {
-          return
-        }
-      }
+      // if (entryName === 'sourceCode' && this.sourceCode) {
+      //   const editorStore = useEditorStore()
+      //   const filename = editorStore.currentFile?.filename || ''
+      //   if (filename && !window.fileUtils.hasMarkdownExtension(filename)) {
+      //     return
+      //   }
+      // }
       this[entryName] = !this[entryName]
       // Track user intent for source code mode
       if (entryName === 'sourceCode') {

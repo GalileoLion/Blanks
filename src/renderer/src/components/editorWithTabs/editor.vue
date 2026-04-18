@@ -915,9 +915,8 @@ const handleFileChange = ({
   muyaIndexCursor,
   blocks = undefined
 }) => {
-  const { container } = editor.value
-
   if (editor.value) {
+    const { container } = editor.value
     if (history) {
       editor.value.setHistory(history)
     }

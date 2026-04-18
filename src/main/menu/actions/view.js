@@ -123,16 +123,17 @@ export const viewLayoutChanged = (applicationMenu, changes) => {
         changeMenuByName('sourceCodeModeMenuItem', value)
         disableMenuByName(focusModeMenuItemId, !value)
         disableMenuByName(typewriterModeMenuItemId, !value)
+        // NOTE: Disabled to align with upstream - let user manually control source code mode
         // Disable Format and Paragraph menus in source code mode (markdown
         // formatting doesn't apply to plain text files like CSV, JSON, etc.)
-        const formatMenuItem = applicationMenu.getMenuItemById('formatMenuItem')
-        if (formatMenuItem) {
-          formatMenuItem.submenu.items.forEach(item => (item.enabled = !value))
-        }
-        const paragraphMenu = applicationMenu.getMenuItemById('paragraphMenuEntry')
-        if (paragraphMenu) {
-          paragraphMenu.submenu.items.forEach(item => (item.enabled = !value))
-        }
+        // const formatMenuItem = applicationMenu.getMenuItemById('formatMenuItem')
+        // if (formatMenuItem) {
+        //   formatMenuItem.submenu.items.forEach(item => (item.enabled = !value))
+        // }
+        // const paragraphMenu = applicationMenu.getMenuItemById('paragraphMenuEntry')
+        // if (paragraphMenu) {
+        //   paragraphMenu.submenu.items.forEach(item => (item.enabled = !value))
+        // }
         break
       }
       case 'typewriter':

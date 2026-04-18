@@ -270,10 +270,11 @@ class EditorWindow extends BaseWindow {
         continue
       }
 
+      // NOTE: Disabled to align with upstream - let user manually control source code mode
       // Force source code mode for non-markdown files
-      if (!hasMarkdownExtension(filePath)) {
-        options.forceSourceCodeMode = true
-      }
+      // if (!hasMarkdownExtension(filePath)) {
+      //   options.forceSourceCodeMode = true
+      // }
 
       loadMarkdownFile(
         filePath,

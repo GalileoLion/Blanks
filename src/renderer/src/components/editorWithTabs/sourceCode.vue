@@ -92,7 +92,7 @@ const scrollToCords = (y) => {
   })
 }
 
-const handleFileChange = ({ id, markdown: newMarkdown, cursor, scrollTop }) => {
+const handleFileChange = ({ id, markdown: newMarkdown, muyaIndexCursor, scrollTop }) => {
   if (!editor.value) return
   prepareTabSwitch()
 
@@ -100,27 +100,28 @@ const handleFileChange = ({ id, markdown: newMarkdown, cursor, scrollTop }) => {
     editor.value.setValue(newMarkdown)
   }
 
+  // NOTE: Disabled to align with upstream - always use markdown mode
   // Update mode based on current file's extension
-  const filename = editorStore.currentFile.filename || ''
-  const extMatch = filename.match(/\.([^.]+)$/)
-  const ext = extMatch ? extMatch[1].toLowerCase() : ''
-  const modeInfo = codeMirror.findModeByExtension(ext)
-  if (modeInfo && !window.fileUtils.hasMarkdownExtension(filename)) {
-    codeMirror.requireMode(modeInfo.mode, () => {
-      if (editor.value) {
-        editor.value.setOption('mode', modeInfo.mime || modeInfo.mode)
-      }
-    })
-  } else if (editor.value) {
-    setMode(editor.value, 'markdown')
-  }
+  // const filename = editorStore.currentFile.filename || ''
+  // const extMatch = filename.match(/\.([^.]+)$/)
+  // const ext = extMatch ? extMatch[1].toLowerCase() : ''
+  // const modeInfo = codeMirror.findModeByExtension(ext)
+  // if (modeInfo && !window.fileUtils.hasMarkdownExtension(filename)) {
+  //   codeMirror.requireMode(modeInfo.mode, () => {
+  //     if (editor.value) {
+  //       editor.value.setOption('mode', modeInfo.mime || modeInfo.mode)
+  //     }
+  //   })
+  // } else if (editor.value) {
+  //   setMode(editor.value, 'markdown')
+  // }
 
   // Defer cursor/scroll operations to next tick so CodeMirror finishes processing setValue
   requestAnimationFrame(() => {
     if (!editor.value) return
     try {
-      if (cursor) {
-        const { anchor, focus } = cursor
+      if (muyaIndexCursor) {
+        const { anchor, focus } = muyaIndexCursor
         editor.value.setSelection(anchor, focus, { scroll: true })
       } else {
         setCursorAtFirstLine(editor.value)
@@ -285,18 +286,20 @@ onMounted(() => {
   // See https://github.com/codemirror/codemirror5/issues/6886 - hence, we need to use a local variable first.
   const codeMirrorInstance = codeMirror(container, codeMirrorConfig)
 
+  // NOTE: Disabled to align with upstream - always use markdown mode
   // Detect mode from file extension, fallback to markdown
-  const currentFilename = editorStore.currentFile.filename || ''
-  const extMatch = currentFilename.match(/\.([^.]+)$/)
-  const ext = extMatch ? extMatch[1].toLowerCase() : ''
-  const modeInfo = codeMirror.findModeByExtension(ext)
-  if (modeInfo && !window.fileUtils.hasMarkdownExtension(currentFilename)) {
-    codeMirror.requireMode(modeInfo.mode, () => {
-      codeMirrorInstance.setOption('mode', modeInfo.mime || modeInfo.mode)
-    })
-  } else {
-    setMode(codeMirrorInstance, 'markdown')
-  }
+  // const currentFilename = editorStore.currentFile.filename || ''
+  // const extMatch = currentFilename.match(/\.([^.]+)$/)
+  // const ext = extMatch ? extMatch[1].toLowerCase() : ''
+  // const modeInfo = codeMirror.findModeByExtension(ext)
+  // if (modeInfo && !window.fileUtils.hasMarkdownExtension(currentFilename)) {
+  //   codeMirror.requireMode(modeInfo.mode, () => {
+  //     codeMirrorInstance.setOption('mode', modeInfo.mime || modeInfo.mode)
+  //   })
+  // } else {
+  //   setMode(codeMirrorInstance, 'markdown')
+  // }
+  setMode(codeMirrorInstance, 'markdown')
 
   codeMirrorInstance.on('contextmenu', (cm, event) => {
     event.preventDefault()
@@ -335,12 +338,6 @@ onBeforeUnmount(() => {
   })
 
   sourceCodeContainer.value.removeEventListener('scroll', handleScroll)
-
-  /* 销毁 CodeMirror 实例，避免窗口 resize 时遍历到已卸载的损坏实例 */
-  if (editor.value) {
-    editor.value.toTextArea()
-    editor.value = null
-  }
 })
 
 const handleScroll = debounce(() => {

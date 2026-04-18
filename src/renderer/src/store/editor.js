@@ -555,18 +555,19 @@ export const useEditorStore = defineStore('editor', {
           blocks
         })
 
+        // NOTE: Disabled to align with upstream - let user manually control source code mode
         // Enforce source code mode for non-markdown files, restore for markdown
-        const preferencesStore = usePreferencesStore()
-        const filename = currentFile.filename || ''
-        const isMarkdown = !filename || window.fileUtils.hasMarkdownExtension(filename)
-        if (!isMarkdown && !preferencesStore.sourceCode) {
-          preferencesStore.SET_MODE({ type: 'sourceCode', checked: true })
-          preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: true })
-        } else if (isMarkdown && preferencesStore.sourceCode && !preferencesStore._userSourceCode) {
-          // Restore WYSIWYG mode for markdown files (only if user didn't manually enable source code)
-          preferencesStore.SET_MODE({ type: 'sourceCode', checked: false })
-          preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: false })
-        }
+        // const preferencesStore = usePreferencesStore()
+        // const filename = currentFile.filename || ''
+        // const isMarkdown = !filename || window.fileUtils.hasMarkdownExtension(filename)
+        // if (!isMarkdown && !preferencesStore.sourceCode) {
+        //   preferencesStore.SET_MODE({ type: 'sourceCode', checked: true })
+        //   preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: true })
+        // } else if (isMarkdown && preferencesStore.sourceCode && !preferencesStore._userSourceCode) {
+        //   // Restore WYSIWYG mode for markdown files (only if user didn't manually enable source code)
+        //   preferencesStore.SET_MODE({ type: 'sourceCode', checked: false })
+        //   preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: false })
+        // }
       }
 
       if (!this.tabs.some((file) => file.id === currentFile.id)) {
@@ -1014,14 +1015,15 @@ export const useEditorStore = defineStore('editor', {
         this.UPDATE_CURRENT_FILE(docState)
         bus.emit('file-loaded', { id, markdown, cursor })
 
+        // NOTE: Disabled to align with upstream - let user manually control source code mode
         // Switch to source code mode for non-markdown files
-        if (options.forceSourceCodeMode) {
-          const preferencesStore = usePreferencesStore()
-          if (!preferencesStore.sourceCode) {
-            preferencesStore.SET_MODE({ type: 'sourceCode', checked: true })
-            preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: true })
-          }
-        }
+        // if (options.forceSourceCodeMode) {
+        //   const preferencesStore = usePreferencesStore()
+        //   if (!preferencesStore.sourceCode) {
+        //     preferencesStore.SET_MODE({ type: 'sourceCode', checked: true })
+        //     preferencesStore.DISPATCH_EDITOR_VIEW_STATE({ sourceCode: true })
+        //   }
+        // }
       } else {
         this.tabs.push(docState)
         this.updateTabIdToIndex()
