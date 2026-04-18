@@ -328,8 +328,9 @@ svg.close-icon:hover {
     /* border-top-left-radius: 15px; */
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    border: 1px solid var(--floatBorderColor);
-    border-bottom: none;
+    border-top: 1px solid var(--floatBorderColor);
+    border-left: 1px solid var(--floatBorderColor);
+    border-right: 1px solid var(--floatBorderColor);
     z-index: 3;
     /* 原底部主题色边框线，已移除 */
     /* &:after {

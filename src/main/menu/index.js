@@ -307,18 +307,8 @@ class AppMenu {
    * Update theme menu state across editor menus.
    */
   updateThemeMenu = ({ theme, followSystemTheme } = {}) => {
-    this.windowMenus.forEach((value) => {
-      const { menu, type } = value
-      if (type !== MenuType.EDITOR) {
-        return
-      }
-
-      const themeMenus = menu.getMenuItemById('themeMenu')
-      if (!themeMenus) {
-        return
-      }
-
-      themeMenus.submenu.items.forEach((item) => {
+    const updateMenuItems = (items) => {
+      items.forEach((item) => {
         if (item.type === 'radio' && typeof followSystemTheme !== 'undefined') {
           item.enabled = !followSystemTheme
         }
@@ -332,7 +322,26 @@ class AppMenu {
         } else if (item.id && item.id === theme) {
           item.checked = true
         }
+
+        // Recursively update nested submenus
+        if (item.submenu) {
+          updateMenuItems(item.submenu.items)
+        }
       })
+    }
+
+    this.windowMenus.forEach((value) => {
+      const { menu, type } = value
+      if (type !== MenuType.EDITOR) {
+        return
+      }
+
+      const themeMenus = menu.getMenuItemById('themeMenu')
+      if (!themeMenus || !themeMenus.submenu) {
+        return
+      }
+
+      updateMenuItems(themeMenus.submenu.items)
     })
   }
 

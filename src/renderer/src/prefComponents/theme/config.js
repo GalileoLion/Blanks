@@ -1,41 +1,10 @@
-import { t } from '../../i18n'
+import { lightThemeNames, darkThemeNames } from '../../util/themeColor'
 
+// Dynamically generate theme list from folder structure
+// Light themes first, then dark themes (both alphabetical)
 export const themes = [
-  // Light Themes (alphabetical)
-  { name: 'ayu-light' },
-  { name: 'light' },
-  { name: 'catppuccin-latte' },
-  { name: 'everforest-light' },
-  { name: 'graphite' },
-  { name: 'gruvbox-light' },
-  { name: 'rose-pine-dawn' },
-  { name: 'solarized-light' },
-  { name: 'tokyo-night-light' },
-  { name: 'ulysses' },
-  // Dark Themes (alphabetical)
-  { name: 'ayu-dark' },
-  { name: 'ayu-mirage' },
-  { name: 'dark' },
-  { name: 'catppuccin-mocha' },
-  { name: 'cyberdream' },
-  { name: 'dracula' },
-  { name: 'everforest-dark' },
-  { name: 'gruvbox-dark' },
-  { name: 'horizon-dark' },
-  { name: 'kanagawa' },
-  { name: 'material-dark' },
-  { name: 'monokai-pro' },
-  { name: 'nightfox' },
-  { name: 'nord' },
-  { name: 'one-dark' },
-  { name: 'oxocarbon-dark' },
-  { name: 'palenight' },
-  { name: 'rose-pine' },
-  { name: 'rose-pine-moon' },
-  { name: 'solarized-dark' },
-  { name: 'synthwave-84' },
-  { name: 'tokyo-night' },
-  { name: 'tokyo-night-storm' }
+  ...lightThemeNames.map((name) => ({ name })),
+  ...darkThemeNames.map((name) => ({ name }))
 ]
 
 // getAutoSwitchThemeOptions removed - no longer needed

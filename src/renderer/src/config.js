@@ -13,30 +13,3 @@ export const DEFAULT_STYLE = Object.freeze({
   hideScrollbar: false,
   theme: 'light'
 })
-
-export const railscastsThemes = Object.freeze([
-  'dark',
-  'material-dark',
-  // New gogh dark themes
-  'dracula',
-  'nord',
-  'catppuccin-mocha',
-  'gruvbox-dark',
-  'tokyo-night',
-  'tokyo-night-storm',
-  'solarized-dark',
-  'ayu-dark',
-  'ayu-mirage',
-  'everforest-dark',
-  'rose-pine',
-  'rose-pine-moon',
-  'monokai-pro',
-  'synthwave-84',
-  'horizon-dark',
-  'palenight',
-  'oxocarbon-dark',
-  'kanagawa',
-  'nightfox',
-  'cyberdream'
-])
-export const oneDarkThemes = Object.freeze(['one-dark'])

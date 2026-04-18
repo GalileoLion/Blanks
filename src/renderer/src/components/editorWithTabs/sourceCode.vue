@@ -12,7 +12,7 @@ import codeMirror, { setMode, setCursorAtFirstLine, setTextDirection } from '../
 import { debounce, wordCount as getWordCount } from 'muya/lib/utils'
 import { adjustCursor } from '../../util'
 import bus from '../../bus'
-import { oneDarkThemes, railscastsThemes } from '@/config'
+import { oneDarkThemes, railscastsThemes } from '@/util/themeColor'
 
 const props = defineProps({
   markdown: String,

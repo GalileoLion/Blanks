@@ -3,15 +3,15 @@
   "version": "0.2.0",
   "description": "Blanks - An enhanced markdown editor based on MarkText",
   "main": "./out/main/index.js",
-"author": "Galileo Lion",
-"homepage": "https://github.com/GalileoLion/Blanks",
-"repository": {
-  "type": "git",
-  "url": "https://github.com/GalileoLion/Blanks.git"
-},
-"bugs": {
-  "url": "https://github.com/GalileoLion/Blanks/issues"
-},
+  "author": "Galileo Lion",
+  "homepage": "https://github.com/GalileoLion/Blanks",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GalileoLion/Blanks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GalileoLion/Blanks/issues"
+  },
   "license": "MIT",
   "keywords": [
     "markdown",
@@ -25,10 +25,11 @@
     "format": "prettier --write .",
     "lint": "eslint --cache .",
     "minify-locales": "node scripts/minify-locales.mjs",
+    "generate-theme-config": "node scripts/generate-theme-config.mjs",
     "rebuild-native": "npx @electron/rebuild -f",
     "start": "cross-env PERF_TESTING=true electron-vite preview",
-    "dev": "electron-vite dev",
-    "build": "electron-vite build",
+    "dev": "npm run generate-theme-config && electron-vite dev",
+    "build": "npm run generate-theme-config && electron-vite build",
     "build:unpack": "npm run minify-locales && npm run build",
     "build:win": "npm run minify-locales && npx @electron/rebuild && npm run build && electron-builder --win --publish never",
     "build:mac": "npm run minify-locales && npx @electron/rebuild && npm run build && electron-builder --mac --publish never",
