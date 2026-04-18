@@ -219,6 +219,14 @@ watch(
   opacity: 1;
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+
+.top-column > ul::-webkit-scrollbar {
+  display: none;
 }
 
 .top-column ul {
@@ -230,8 +238,8 @@ watch(
 }
 
 .top-column ul > li {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
   display: flex;
@@ -241,6 +249,7 @@ watch(
   border-radius: 6px;
   transition: all 0.15s ease-in-out;
   -webkit-app-region: no-drag;
+  flex-shrink: 0;
 }
 .top-column ul > li:hover {
   background: var(--sideBarItemHoverBgColor);

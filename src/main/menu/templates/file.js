@@ -1,6 +1,6 @@
 import { app } from 'electron'
 import * as actions from '../actions/file'
-import { userSetting } from '../actions/marktext'
+import { userSetting } from '../actions/blanks'
 import { isOsx } from '../../config'
 import { t } from '../../i18n'
 

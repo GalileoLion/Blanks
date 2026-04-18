@@ -26,7 +26,7 @@ class PluginManager {
         console.warn('localStorage is undefined')
         return []
       }
-      const saved = localStorage.getItem('marktext_enabled_plugins')
+      const saved = localStorage.getItem('blanks_enabled_plugins')
       console.log('Loaded from localStorage:', saved)
       const result = saved ? JSON.parse(saved) : []
       console.log('Parsed enabled plugins:', result)
@@ -45,7 +45,7 @@ class PluginManager {
       if (typeof localStorage !== 'undefined') {
         const data = JSON.stringify(this.enabledPlugins.value)
         console.log('Saving to localStorage:', data)
-        localStorage.setItem('marktext_enabled_plugins', data)
+        localStorage.setItem('blanks_enabled_plugins', data)
         console.log('Enabled plugins saved successfully')
       } else {
         console.warn('localStorage is undefined, cannot save')

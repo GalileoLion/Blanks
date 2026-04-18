@@ -145,8 +145,8 @@ const setupDragDropHandler = () => {
   )
 }
 onMounted(async () => {
-  if (global.marktext.initialState) {
-    preferencesStore.SET_USER_PREFERENCE(global.marktext.initialState)
+  if (global.blanks.initialState) {
+    preferencesStore.SET_USER_PREFERENCE(global.blanks.initialState)
   }
 
   mainStore.LISTEN_WIN_STATUS()
@@ -192,7 +192,7 @@ onMounted(async () => {
   setupDragDropHandler()
 
   nextTick(() => {
-    const style = global.marktext.initialState || DEFAULT_STYLE
+    const style = global.blanks.initialState || DEFAULT_STYLE
     addStyles(style)
   })
 })

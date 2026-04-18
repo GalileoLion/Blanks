@@ -14,8 +14,8 @@ import App from './app'
 import { t } from './i18n'
 
 // Set version strings into global and process.versions
-process.env.MARKTEXT_VERSION = MARKTEXT_VERSION
-process.env.MARKTEXT_VERSION_STRING = MARKTEXT_VERSION_STRING
+process.env.BLANKS_VERSION = BLANKS_VERSION
+process.env.BLANKS_VERSION_STRING = BLANKS_VERSION_STRING
 
 // -----------------------------------------------
 // Exception handling and logging setup
@@ -48,7 +48,7 @@ initializeLogger(appEnvironment)
 // Handles native level crashes
 crashReporter.start({
   companyName: '',
-  productName: 'marktext',
+  productName: 'blanks',
   uploadToServer: false, // collect locally
   compress: true
 })
@@ -78,7 +78,7 @@ if (!process.mas && process.env.NODE_ENV !== 'development') {
 remoteInitializeServer()
 
 // Windows-specific AppUserModelID
-electronApp.setAppUserModelId('com.electron.marktext')
+electronApp.setAppUserModelId('com.blanks.app')
 
 // Dev shortcuts and reload suppression
 app.on('browser-window-created', (_, window) => {
@@ -95,8 +95,8 @@ try {
     : ''
   log.error(t('error.initializationFailed', { hint: msgHint }), err)
 
-  const EXIT_ON_ERROR = !!process.env.MARKTEXT_EXIT_ON_ERROR
-  const SHOW_ERROR_DIALOG = !process.env.MARKTEXT_ERROR_INTERACTION
+  const EXIT_ON_ERROR = !!process.env.BLANKS_EXIT_ON_ERROR
+  const SHOW_ERROR_DIALOG = !process.env.BLANKS_ERROR_INTERACTION
   if (!EXIT_ON_ERROR && SHOW_ERROR_DIALOG) {
     dialog.showErrorBox(t('error.startupError'), `${msgHint}${err.message}\n\n${err.stack}`)
   }

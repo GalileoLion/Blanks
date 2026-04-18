@@ -14,7 +14,7 @@ class ClickEvent {
     const { container, eventCenter, contentState } = this.muya
     const handler = (event) => {
       // Allow native context menu in MarkText.
-      if (!global || !global.marktext) {
+      if (!global || !global.blanks) {
         // __MARKTEXT_PATCH__
         event.preventDefault()
         event.stopPropagation()

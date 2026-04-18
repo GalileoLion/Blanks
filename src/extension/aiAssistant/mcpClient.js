@@ -51,7 +51,7 @@ class McpClient {
         this.sendRequest('initialize', {
           protocolVersion: '2024-11-05',
           capabilities: {},
-          clientInfo: { name: 'marktext-client', version: '1.0.0' }
+          clientInfo: { name: 'blanks-client', version: '1.0.0' }
         }).then(async () => {
           await this.sendNotification('notifications/initialized', {})
           const toolsRes = await this.sendRequest('tools/list', {})

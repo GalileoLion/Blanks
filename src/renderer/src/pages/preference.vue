@@ -43,7 +43,7 @@ watch(theme, (newValue, oldValue) => {
 // Lifecycle
 onMounted(() => {
   nextTick(() => {
-    const state = global.marktext.initialState || DEFAULT_STYLE
+    const state = global.blanks.initialState || DEFAULT_STYLE
     addThemeStyle(state.theme)
 
     preferencesStore.ASK_FOR_USER_PREFERENCE()

@@ -107,7 +107,7 @@ onMounted(() => {
 
   // Show keyboard debugging tools which has been moved from CLI because we
   // need an active window on Windows.
-  showDebugTools.value = global.marktext.env.debug
+  showDebugTools.value = global.blanks.env.debug
 })
 
 onUnmounted(() => {

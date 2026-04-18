@@ -12,8 +12,8 @@ import log from 'electron-log'
 import { createAndOpenGitHubIssueUrl } from './utils/createGitHubIssue'
 import { t } from './i18n'
 
-const EXIT_ON_ERROR = !!process.env.MARKTEXT_EXIT_ON_ERROR
-const SHOW_ERROR_DIALOG = !process.env.MARKTEXT_ERROR_INTERACTION
+const EXIT_ON_ERROR = !!process.env.BLANKS_EXIT_ON_ERROR
+const SHOW_ERROR_DIALOG = !process.env.BLANKS_ERROR_INTERACTION
 const ERROR_MSG_MAIN = () => t('error.unexpectedMainProcess')
 const ERROR_MSG_RENDERER = () => t('error.unexpectedRendererProcess')
 
@@ -26,7 +26,7 @@ const getOSInformation = () => {
 const exceptionToString = (error, type) => {
   const { message, stack } = error
   return (
-    `Version: ${MARKTEXT_VERSION_STRING || app.getVersion()}\n` +
+    `Version: ${BLANKS_VERSION_STRING || app.getVersion()}\n` +
     `OS: ${getOSInformation()}\n` +
     `Type: ${type}\n` +
     `Date: ${new Date().toUTCString()}\n` +
@@ -48,7 +48,7 @@ const handleError = async (title, error, type) => {
     process.exit(1)
     // eslint, don't lie to me, the return statement is important!
     return
-  } else if (!SHOW_ERROR_DIALOG || (global.MARKTEXT_IS_STABLE && type === 'renderer')) {
+  } else if (!SHOW_ERROR_DIALOG || (global.BLANKS_IS_STABLE && type === 'renderer')) {
     return
   }
 
@@ -87,7 +87,7 @@ ${title}.
 
 ### Version
 
-MarkText: ${MARKTEXT_VERSION_STRING}
+Blanks: ${BLANKS_VERSION_STRING}
 Operating system: ${getOSInformation()}`
         )
         break
@@ -113,8 +113,8 @@ const setupExceptionHandler = () => {
 
   // start crashReporter to save core dumps to temporary folder
   crashReporter.start({
-    companyName: 'marktext',
-    productName: 'marktext',
+    companyName: 'blanks',
+    productName: 'blanks',
     submitURL: 'http://0.0.0.0/',
     uploadToServer: false,
     compress: true

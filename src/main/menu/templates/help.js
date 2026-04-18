@@ -2,7 +2,7 @@ import path from 'path'
 import { shell } from 'electron'
 import { isFile } from 'common/filesystem'
 import * as actions from '../actions/help'
-import { checkUpdates } from '../actions/marktext'
+import { checkUpdates } from '../actions/blanks'
 import { t } from '../../i18n'
 
 /// Check whether the package is updatable at runtime.

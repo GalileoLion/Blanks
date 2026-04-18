@@ -48,7 +48,9 @@
     </compound>
 
     <div>
-      <div style="font-size: smaller; color: var(--editorColor)">{{ t('preferences.theme.customCss') }}</div>
+      <div style="font-size: smaller; color: var(--editorColor)">
+        {{ t('preferences.theme.customCss') }}
+      </div>
       <textarea
         style="
           width: 100%;
@@ -61,11 +63,13 @@
         @change="(event) => onSelectChange('customCss', event.target.value)"
       ></textarea>
     </div>
-    <separator v-show="false"></separator>
-    <section v-show="false" class="import-themes ag-underdevelop">
+    <separator></separator>
+    <section class="import-themes">
       <div>
         <span>{{ t('preferences.theme.openThemesFolder') }}</span>
-        <el-button size="small">{{ t('preferences.theme.openFolder') }}</el-button>
+        <el-button size="small" @click="openThemesFolder">{{
+          t('preferences.theme.openFolder')
+        }}</el-button>
       </div>
 
       <div>
@@ -82,7 +86,7 @@ import { usePreferencesStore } from '@/store/preferences'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import themeMd from './theme.md?raw'
-import { themes as configThemes } from './config'
+import { getThemes } from './config'
 import markdownToHtml from '@/util/markdownToHtml'
 import Bool from '../common/bool'
 import CurSelect from '../common/select'
@@ -94,17 +98,20 @@ const themes = ref([])
 const { t } = useI18n()
 const preferenceStore = usePreferencesStore()
 
-const { followSystemTheme, lightModeTheme, darkModeTheme, theme, customCss } = storeToRefs(preferenceStore)
+const { followSystemTheme, lightModeTheme, darkModeTheme, theme, customCss } =
+  storeToRefs(preferenceStore)
 
-// Generate dropdown options from configThemes
-const themeOptions = configThemes.map(theme => ({
-  label: theme.name.split('-').map(word =>
-    word.charAt(0).toUpperCase() + word.slice(1)
-  ).join(' '),
+// Generate dropdown options dynamically
+const themeOptions = getThemes().map((theme) => ({
+  label: theme.name
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' '),
   value: theme.name
 }))
 
 onMounted(async () => {
+  const configThemes = getThemes()
   const newThemes = []
   for (const theme of configThemes) {
     const html = await markdownToHtml(themeMd.replace(/{theme}/, theme.name))
@@ -118,6 +125,12 @@ onMounted(async () => {
 
 const onSelectChange = (type, value) => {
   preferenceStore.SET_SINGLE_PREFERENCE({ type, value })
+}
+
+const openThemesFolder = () => {
+  const { userDataPath } = global.blanks.paths
+  const themesDir = window.path.join(userDataPath, 'themes')
+  window.electron.shell.openPath(themesDir)
 }
 </script>
 
@@ -187,139 +200,193 @@ const onSelectChange = (type, value) => {
     &.dracula {
       color: #f8f8f2;
       background: #282a36;
-      & a { color: #bd93f9; }
+      & a {
+        color: #bd93f9;
+      }
     }
     &.nord {
       color: #d8dee9;
       background: #2e3440;
-      & a { color: #81a1c1; }
+      & a {
+        color: #81a1c1;
+      }
     }
     &.catppuccin-mocha {
       color: #cdd6f4;
       background: #1e1e2e;
-      & a { color: #89b4fa; }
+      & a {
+        color: #89b4fa;
+      }
     }
     &.gruvbox-dark {
       color: #ebdbb2;
       background: #282828;
-      & a { color: #83a598; }
+      & a {
+        color: #83a598;
+      }
     }
     &.tokyo-night {
       color: #c0caf5;
       background: #1a1b26;
-      & a { color: #7aa2f7; }
+      & a {
+        color: #7aa2f7;
+      }
     }
     &.tokyo-night-storm {
       color: #c0caf5;
       background: #24283b;
-      & a { color: #7aa2f7; }
+      & a {
+        color: #7aa2f7;
+      }
     }
     &.solarized-dark {
       color: #839496;
       background: #002b36;
-      & a { color: #268bd2; }
+      & a {
+        color: #268bd2;
+      }
     }
     &.ayu-dark {
       color: #b3b1ad;
       background: #0a0e14;
-      & a { color: #39bae6; }
+      & a {
+        color: #39bae6;
+      }
     }
     &.ayu-mirage {
       color: #cbccc6;
       background: #1f2430;
-      & a { color: #ffcc66; }
+      & a {
+        color: #ffcc66;
+      }
     }
     &.everforest-dark {
       color: #d3c6aa;
       background: #2d353b;
-      & a { color: #a7c080; }
+      & a {
+        color: #a7c080;
+      }
     }
     &.rose-pine {
       color: #e0def4;
       background: #191724;
-      & a { color: #c4a7e7; }
+      & a {
+        color: #c4a7e7;
+      }
     }
     &.rose-pine-moon {
       color: #e0def4;
       background: #232136;
-      & a { color: #c4a7e7; }
+      & a {
+        color: #c4a7e7;
+      }
     }
     &.monokai-pro {
       color: #fcfcfa;
       background: #2d2a2e;
-      & a { color: #ffd866; }
+      & a {
+        color: #ffd866;
+      }
     }
     &.synthwave-84 {
       color: #ffffff;
       background: #262335;
-      & a { color: #ff7edb; }
+      & a {
+        color: #ff7edb;
+      }
     }
     &.horizon-dark {
       color: #d5d8da;
       background: #1c1e26;
-      & a { color: #e95678; }
+      & a {
+        color: #e95678;
+      }
     }
     &.palenight {
       color: #a6accd;
       background: #292d3e;
-      & a { color: #82aaff; }
+      & a {
+        color: #82aaff;
+      }
     }
     &.oxocarbon-dark {
       color: #f2f4f8;
       background: #161616;
-      & a { color: #78a9ff; }
+      & a {
+        color: #78a9ff;
+      }
     }
     &.kanagawa {
       color: #dcd7ba;
       background: #1f1f28;
-      & a { color: #7e9cd8; }
+      & a {
+        color: #7e9cd8;
+      }
     }
     &.nightfox {
       color: #cdcecf;
       background: #192330;
-      & a { color: #719cd6; }
+      & a {
+        color: #719cd6;
+      }
     }
     &.cyberdream {
       color: #ffffff;
       background: #16181a;
-      & a { color: #5ea1ff; }
+      & a {
+        color: #5ea1ff;
+      }
     }
 
     /* New gogh themes - Light */
     &.catppuccin-latte {
       color: #4c4f69;
       background: #eff1f5;
-      & a { color: #1e66f5; }
+      & a {
+        color: #1e66f5;
+      }
     }
     &.gruvbox-light {
       color: #3c3836;
       background: #fbf1c7;
-      & a { color: #458588; }
+      & a {
+        color: #458588;
+      }
     }
     &.tokyo-night-light {
       color: #343b58;
       background: #d5d6db;
-      & a { color: #34548a; }
+      & a {
+        color: #34548a;
+      }
     }
     &.solarized-light {
       color: #657b83;
       background: #fdf6e3;
-      & a { color: #268bd2; }
+      & a {
+        color: #268bd2;
+      }
     }
     &.ayu-light {
       color: #575f66;
       background: #fafafa;
-      & a { color: #399ee6; }
+      & a {
+        color: #399ee6;
+      }
     }
     &.everforest-light {
       color: #5c6a72;
       background: #fdf6e3;
-      & a { color: #8da101; }
+      & a {
+        color: #8da101;
+      }
     }
     &.rose-pine-dawn {
       color: #575279;
       background: #faf4ed;
-      & a { color: #907aa9; }
+      & a {
+        color: #907aa9;
+      }
     }
 
     /* Disabled state when followSystemTheme is on */

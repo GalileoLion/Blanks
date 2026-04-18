@@ -1,16 +1,18 @@
 import path from 'path'
 import AppPaths, { ensureAppDirectoriesSync } from './paths'
+import { copyPresetsIfNeeded } from './themePresets'
 
 let envId = 0
 
 const patchEnvPath = () => {
   if (process.platform === 'darwin') {
-    process.env.PATH += (process.env.PATH.endsWith(path.delimiter) ? '' : path.delimiter) + '/Library/TeX/texbin'
+    process.env.PATH +=
+      (process.env.PATH.endsWith(path.delimiter) ? '' : path.delimiter) + '/Library/TeX/texbin'
   }
 }
 
 export class AppEnvironment {
-  constructor (options) {
+  constructor(options) {
     this._id = envId++
     this._appPaths = new AppPaths(options.userDataPath)
     this._debug = !!options.debug
@@ -25,49 +27,49 @@ export class AppEnvironment {
    *
    * @returns {number} Returns an unique identifier.
    */
-  get id () {
+  get id() {
     return this._id
   }
 
   /**
    * @returns {AppPaths}
    */
-  get paths () {
+  get paths() {
     return this._appPaths
   }
 
   /**
    * @returns {boolean}
    */
-  get debug () {
+  get debug() {
     return this._debug
   }
 
   /**
    * @returns {boolean}
    */
-  get isDevMode () {
+  get isDevMode() {
     return this._isDevMode
   }
 
   /**
    * @returns {boolean}
    */
-  get verbose () {
+  get verbose() {
     return this._verbose
   }
 
   /**
    * @returns {boolean}
    */
-  get safeMode () {
+  get safeMode() {
     return this._safeMode
   }
 
   /**
    * @returns {boolean}
    */
-  get disableSpellcheck () {
+  get disableSpellcheck() {
     return this._disableSpellcheck
   }
 }
@@ -78,11 +80,12 @@ export class AppEnvironment {
  * @param {arg.Result} args The parsed application arguments.
  * @returns {AppEnvironment} The current (global) environment.
  */
-const setupEnvironment = args => {
+const setupEnvironment = (args) => {
   patchEnvPath()
 
   const isDevMode = process.env.NODE_ENV !== 'production'
-  const debug = args['--debug'] || !!process.env.MARKTEXT_DEBUG || process.env.NODE_ENV !== 'production'
+  const debug =
+    args['--debug'] || !!process.env.BLANKS_DEBUG || process.env.NODE_ENV !== 'production'
   const verbose = args['--verbose'] || 0
   const safeMode = args['--safe']
   const userDataPath = args['--user-data-dir'] // or null (= default user data path)
@@ -98,11 +101,12 @@ const setupEnvironment = args => {
   })
 
   ensureAppDirectoriesSync(appEnvironment.paths)
+  copyPresetsIfNeeded(appEnvironment.paths.userDataPath)
 
   // Keep this for easier access.
-  global.MARKTEXT_DEBUG = debug
-  global.MARKTEXT_DEBUG_VERBOSE = verbose
-  global.MARKTEXT_SAFE_MODE = safeMode
+  global.BLANKS_DEBUG = debug
+  global.BLANKS_DEBUG_VERBOSE = verbose
+  global.BLANKS_SAFE_MODE = safeMode
 
   return appEnvironment
 }

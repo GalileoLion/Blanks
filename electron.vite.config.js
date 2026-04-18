@@ -22,8 +22,8 @@ export default defineConfig({
       }
     },
     define: {
-      MARKTEXT_VERSION: JSON.stringify(packageJson.version),
-      MARKTEXT_VERSION_STRING: JSON.stringify(`v${packageJson.version}`)
+      BLANKS_VERSION: JSON.stringify(packageJson.version),
+      BLANKS_VERSION_STRING: JSON.stringify(`v${packageJson.version}`)
     },
     resolve: {
       alias: {

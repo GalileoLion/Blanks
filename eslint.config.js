@@ -29,8 +29,8 @@ export default [
         sourceType: 'module'
       },
       globals: {
-        MARKTEXT_VERSION_STRING: 'readonly',
-        MARKTEXT_VERSION: 'readonly',
+        BLANKS_VERSION_STRING: 'readonly',
+        BLANKS_VERSION: 'readonly',
         __static: 'readonly'
       }
     },

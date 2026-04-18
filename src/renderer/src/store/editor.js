@@ -270,7 +270,7 @@ export const useEditorStore = defineStore('editor', {
     UPDATE_LINE_ENDING_MENU() {
       const { lineEnding } = this.currentFile
       if (lineEnding) {
-        const { windowId } = global.marktext.env
+        const { windowId } = global.blanks.env
         window.electron.ipcRenderer.send('mt::update-line-ending-menu', windowId, lineEnding)
       }
     },
@@ -1189,7 +1189,7 @@ export const useEditorStore = defineStore('editor', {
         }
       }
 
-      const { windowId } = global.marktext.env
+      const { windowId } = global.blanks.env
       window.electron.ipcRenderer.send(
         'mt::editor-selection-changed',
         windowId,
@@ -1198,7 +1198,7 @@ export const useEditorStore = defineStore('editor', {
     },
 
     SELECTION_FORMATS(formats) {
-      const { windowId } = global.marktext.env
+      const { windowId } = global.blanks.env
       window.electron.ipcRenderer.send(
         'mt::update-format-menu',
         windowId,

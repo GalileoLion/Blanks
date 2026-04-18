@@ -1,6 +1,8 @@
 import * as actions from '../actions/theme'
 import { t } from '../../i18n'
-import themeConfig from '../../../common/themes.json'
+import fs from 'fs'
+import path from 'path'
+import { app } from 'electron'
 
 /**
  * Convert theme name to translation key (camelCase)
@@ -16,6 +18,26 @@ function themeNameToKey(name) {
     return specialCases[name]
   }
   return name.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+}
+
+function getThemeListFromDisk() {
+  const userDataPath = app.getPath('userData')
+  const themesDir = path.join(userDataPath, 'themes')
+
+  const getNames = (subdir) => {
+    const dir = path.join(themesDir, subdir)
+    if (!fs.existsSync(dir)) return []
+    return fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.theme.css'))
+      .map((f) => f.replace('.theme.css', ''))
+      .sort()
+  }
+
+  return {
+    light: ['light', ...getNames('light')],
+    dark: ['dark', ...getNames('dark')]
+  }
 }
 
 function createThemeMenuItem(themeName, currentTheme, isEnabled) {
@@ -58,6 +80,8 @@ export default function (userPreference) {
   }
 
   submenu.push({ type: 'separator' })
+
+  const themeConfig = getThemeListFromDisk()
 
   // Light Themes submenu
   const lightThemeItems = themeConfig.light.map((name) =>

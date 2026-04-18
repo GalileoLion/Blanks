@@ -1,5 +1,6 @@
 import log from 'electron-log/renderer'
 import RendererPaths from './node/paths'
+import { initializeThemes } from './util/themeColor'
 
 let exceptionLogger = (s) => console.error(s)
 
@@ -104,7 +105,11 @@ const bootstrapRenderer = () => {
     },
     paths
   }
-  global.marktext = marktext
+  global.blanks = marktext
+
+  // Initialize themes after paths are set
+  // This must happen before Vue components are mounted
+  initializeThemes()
 
   configureLogger()
 }
