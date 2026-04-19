@@ -1,0 +1,231 @@
+:root {
+  --themeColor: #9ba3af;
+  --themeColor90: rgba(155, 163, 175, 0.9);
+  --themeColor80: rgba(155, 163, 175, 0.8);
+  --themeColor70: rgba(155, 163, 175, 0.7);
+  --themeColor60: rgba(155, 163, 175, 0.6);
+  --themeColor50: rgba(155, 163, 175, 0.5);
+  --themeColor40: rgba(155, 163, 175, 0.4);
+  --themeColor30: rgba(155, 163, 175, 0.3);
+  --themeColor20: rgba(155, 163, 175, 0.2);
+  --themeColor10: rgba(155, 163, 175, 0.1);
+
+  --highlightColor: rgba(155, 163, 175, 0.3);
+  --selectionColor: rgba(155, 163, 175, 0.2);
+  --editorColor: rgba(82, 88, 96, 0.7);
+  --editorColor80: rgba(82, 88, 96, 0.8);
+  --editorColor60: rgba(82, 88, 96, 0.6);
+  --editorColor50: rgba(82, 88, 96, 0.5);
+  --editorColor40: rgba(82, 88, 96, 0.4);
+  --editorColor30: rgba(82, 88, 96, 0.3);
+  --editorColor10: rgba(82, 88, 96, 0.1);
+  --editorColor04: rgba(82, 88, 96, 0.04);
+  --editorBgColor: #fbfbfb;
+  --deleteColor: #e06c75;
+  --iconColor: rgba(155, 163, 175, 0.8);
+  --codeBgColor: rgba(245, 245, 245, 0.8);
+  --codeBlockBgColor: #f5f5f5;
+  --footnoteBgColor: rgba(245, 245, 245, 0.5);
+  --inputBgColor: #f5f5f5;
+  --focusColor: var(--themeColor);
+
+  --buttonFontColor: var(--editorColor);
+  --buttonBgColor: #f5f5f5;
+  --buttonBorder: 1px solid #f5f5f5;
+  --buttonShadow: none;
+  --buttonFontColorHover: var(--buttonFontColor);
+  --buttonBgColorHover: #eeeeee;
+  --buttonBorderHover: 1px solid #eeeeee;
+  --buttonFontColorActive: var(--buttonFontColor);
+  --buttonBgColorActive: #e8e8e8;
+  --buttonBorderActive: 1px solid #e8e8e8;
+  --buttonFocusBorder: 1px solid var(--themeColor);
+
+  --buttonPrimaryFontColor: #ffffff;
+  --buttonPrimaryBgColor: var(--themeColor);
+  --buttonPrimaryBorder: none;
+  --buttonPrimaryShadow: none;
+  --buttonPrimaryFontColorHover: var(--buttonPrimaryFontColor);
+  --buttonPrimaryBgColorHover: #8a919c;
+  --buttonPrimaryBorderHover: var(--buttonPrimaryBorder);
+  --buttonPrimaryFontColorActive: var(--buttonPrimaryFontColor);
+  --buttonPrimaryBgColorActive: #7a818c;
+  --buttonPrimaryBorderActive: var(--buttonPrimaryBorder);
+  --buttonPrimaryFocusBorder: none;
+  --buttonPrimaryFocusShadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 0 1px var(--themeColor);
+  --tableBorderColor: #f0f0f0;
+
+  /* Markdown element colors */
+  --headingColor: rgba(82, 88, 96, 0.8);
+  --h1Color: #9ba3af;
+  --h2Color: #a0a8b4;
+  --h3Color: #8a919c;
+  --h4Color: #9ba3af;
+  --h5Color: #a0a8b4;
+  --h6Color: #b0b8c4;
+  --blockquoteTextColor: rgba(82, 88, 96, 0.5);
+  --blockquoteBorderColor: #e8e8e8;
+  --hrColor: rgba(245, 245, 245, 0);
+  --linkColor: #9ba3af;
+  --strongColor: rgba(82, 88, 96, 0.85);
+  --emColor: #a0a8b4;
+  --listMarkerColor: #b0b8c4;
+
+  --sideBarColor: rgba(82, 88, 96, 0.6);
+  --sideBarIconColor: rgba(155, 163, 175, 0.8);
+  --sideBarTitleColor: rgba(82, 88, 96, 0.9);
+  --sideBarTextColor: rgba(155, 163, 175, 0.5);
+  --sideBarBgColor: #f7f7f7;
+  --sideBarItemHoverBgColor: rgba(255, 255, 255, 0.6);
+  --itemBgColor: rgba(255, 255, 255, 0.6);
+
+  --floatFontColor: rgba(82, 88, 96, 0.7);
+  --floatBgColor: #f7f7f7;
+  --floatHoverColor: rgba(255, 255, 255, 0.4);
+  --floatBorderColor: rgba(240, 240, 240, 0);
+  --floatShadow: rgba(0, 0, 0, 0.03);
+  --maskColor: rgba(245, 245, 245, 0.8);
+  --editorAreaWidth: 750px;
+}
+
+/* Hide borders - seamless design */
+.side-bar {
+  border-right: none !important;
+}
+
+.editor-tabs {
+  background: #f7f7f7 !important;
+  box-shadow: none !important;
+}
+
+.editor-tabs::after {
+  display: none !important;
+}
+
+.tabs-container > li {
+  background: none !important;
+  border-right: none !important;
+}
+
+.tabs-container > li.active {
+  border: none !important;
+  background: var(--editorBgColor) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(155, 163, 175, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 163, 175, 0.4);
+}
+
+/* Title bar */
+.title-bar .frameless-titlebar-button > div > svg {
+  fill: #9ba3af;
+}
+
+.title-bar-editor-bg.tabs-visible {
+  background: var(--sideBarBgColor) !important;
+}
+
+/* Paragraph styling */
+li.ag-paragraph {
+  color: var(--editorColor);
+}
+
+/* Horizontal line - invisible */
+p:not(.ag-active)[data-role='hr']::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  display: block;
+  left: 50%;
+  top: 50%;
+  height: 1px;
+  box-sizing: border-box;
+  border: none;
+  background: rgba(240, 240, 240, 0.5);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+/* Task list */
+li.ag-task-list-item {
+  list-style-type: none;
+  position: relative;
+}
+li.ag-task-list-item > input[type='checkbox'] {
+  position: absolute;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  top: 0.1em;
+  transform: rotate(-90deg);
+  margin: 0;
+  left: -24px;
+  transform-origin: center;
+  transition: all 0.2s ease;
+}
+li.ag-task-list-item > input.ag-checkbox-checked {
+  transform: rotate(0);
+  opacity: 0.5;
+}
+li.ag-task-list-item > input[type='checkbox']::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 1.5px solid var(--editorColor30);
+  border-radius: 3px;
+  background-color: var(--editorBgColor);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.2s ease;
+}
+li.ag-task-list-item > input.ag-checkbox-checked::before {
+  border: transparent;
+  background-color: var(--themeColor);
+}
+li.ag-task-list-item > input::after {
+  content: '';
+  transform: rotate(-45deg) scale(0);
+  width: 9px;
+  height: 5px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  position: absolute;
+  display: inline-block;
+  top: 1px;
+  left: 5px;
+  transition: all 0.2s ease;
+}
+li.ag-task-list-item > input.ag-checkbox-checked::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+/* Code block */
+:not(pre) > code[class*='language-'],
+pre.ag-paragraph {
+  background: var(--codeBlockBgColor) !important;
+  border: none !important;
+}
+
+/* Table borders - invisible */
+.ag-paragraph table td,
+.ag-paragraph table th {
+  border: 1px solid #f0f0f0;
+}
+
+/* Selection */
+::selection {
+  background: var(--selectionColor);
+}
