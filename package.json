@@ -1,6 +1,6 @@
 {
   "name": "blanks",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Blanks - An enhanced markdown editor based on MarkText",
   "main": "./out/main/index.js",
   "author": "Galileo Lion",
