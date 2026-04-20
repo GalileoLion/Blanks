@@ -367,8 +367,12 @@ svg.close-icon:hover {
   }
 }
 
+.editor-tabs > .new-file {
+  border-radius: 4px;
+}
 .editor-tabs > .new-file:hover {
   transition: all 0.15s ease-in-out;
+  background: var(--sideBarItemHoverBgColor);
   & > svg {
     fill: var(--focusColor);
   }
