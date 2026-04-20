@@ -224,6 +224,32 @@
               </svg>
             </button>
             <button
+              v-else-if="item === 'html_block'"
+              class="footer-btn"
+              @click="handleParagraph('html')"
+              title="HTML Block"
+            >
+              <span
+                v-if="footerBarCustomIcons && footerBarCustomIcons['html_block']"
+                class="custom-svg-wrapper"
+                v-html="footerBarCustomIcons['html_block']"
+              ></span>
+              <svg
+                v-else
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+                <path d="M14 5 L10 19"></path>
+              </svg>
+            </button>
+            <button
               v-else-if="item === 'inline_code'"
               class="footer-btn"
               @click="handleFormat('inline_code')"

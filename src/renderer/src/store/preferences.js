@@ -112,7 +112,7 @@ export const usePreferencesStore = defineStore('preferences', {
 
     // Footer bar configuration
     footerBarLayout:
-      'strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task',
+      'strong, em, u, mark, blockquote, divider, sup, sub, html_block, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task',
     footerBarCustomIcons: {}
   }),
 

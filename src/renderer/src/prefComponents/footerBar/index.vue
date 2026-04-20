@@ -8,9 +8,9 @@
       <template #children>
         <TextBox
           description="Footer Bar Layout"
-          notes="Define the layout of the footer bar, use 'divider' for splitting groups. Comma separated list of icon IDs (e.g. strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task)."
+          notes="Define the layout of the footer bar, use 'divider' for splitting groups. Comma separated list of icon IDs (e.g. strong, em, u, mark, blockquote, divider, sup, sub, html_block, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task)."
           :input="footerBarLayout"
-          :onChange="value => onSelectChange('footerBarLayout', value)"
+          :onChange="(value) => onSelectChange('footerBarLayout', value)"
         ></TextBox>
         <div class="reset-container">
           <el-button size="small" @click="resetToDefault">Reset to Default</el-button>
@@ -24,16 +24,14 @@
       </template>
       <template #children>
         <div class="custom-icon-editor">
-          <div class="description" style="font-size: 14px; margin-bottom: 10px; color: var(--editorColor);">
+          <div
+            class="description"
+            style="font-size: 14px; margin-bottom: 10px; color: var(--editorColor)"
+          >
             <span>Replace SVG:</span>
           </div>
           <el-select v-model="selectedIcon" size="small" placeholder="Select Icon to Replace">
-            <el-option
-              v-for="item in availableIcons"
-              :key="item"
-              :label="item"
-              :value="item"
-            >
+            <el-option v-for="item in availableIcons" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
 
@@ -42,11 +40,13 @@
             :rows="6"
             placeholder="Paste raw <svg>...</svg> code here"
             v-model="customSvgInput"
-            style="margin-top: 15px;"
+            style="margin-top: 15px"
           ></el-input>
 
-          <div style="margin-top: 15px;">
-            <el-button size="small" type="primary" @click="saveCustomIcon">Save Custom Icon</el-button>
+          <div style="margin-top: 15px">
+            <el-button size="small" type="primary" @click="saveCustomIcon"
+              >Save Custom Icon</el-button
+            >
             <el-button size="small" @click="clearCustomIcon">Clear Custom Icon</el-button>
           </div>
         </div>
@@ -66,24 +66,44 @@ const preferencesStore = usePreferencesStore()
 const selectedIcon = ref('strong')
 const customSvgInput = ref('')
 const availableIcons = [
-  'strong', 'em', 'u', 'mark', 'blockquote', 'sup', 'sub', 'inline_code', 'inline_math',
-  'pre', 'mathblock', 'link', 'image', 'table',
-  'ul-bullet', 'ol-order', 'ul-task'
+  'strong',
+  'em',
+  'u',
+  'mark',
+  'blockquote',
+  'sup',
+  'sub',
+  'html_block',
+  'inline_code',
+  'inline_math',
+  'pre',
+  'mathblock',
+  'link',
+  'image',
+  'table',
+  'ul-bullet',
+  'ol-order',
+  'ul-task'
 ]
 
 const footerBarLayout = computed(() => preferencesStore.footerBarLayout)
 const footerBarCustomIcons = computed(() => preferencesStore.footerBarCustomIcons)
 
-watch(selectedIcon, (newVal) => {
-  customSvgInput.value = (footerBarCustomIcons.value && footerBarCustomIcons.value[newVal]) || ''
-}, { immediate: true })
+watch(
+  selectedIcon,
+  (newVal) => {
+    customSvgInput.value = (footerBarCustomIcons.value && footerBarCustomIcons.value[newVal]) || ''
+  },
+  { immediate: true }
+)
 
 const onSelectChange = (type, value) => {
   preferencesStore.SET_SINGLE_PREFERENCE({ type, value })
 }
 
 const resetToDefault = () => {
-  const defaultLayout = 'strong, em, u, mark, blockquote, sup, sub, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task'
+  const defaultLayout =
+    'strong, em, u, mark, blockquote, divider, sup, sub, html_block, inline_code, inline_math, divider, pre, mathblock, link, image, table, divider, ul-bullet, ol-order, ul-task'
   onSelectChange('footerBarLayout', defaultLayout)
 }
 
