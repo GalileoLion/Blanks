@@ -254,6 +254,9 @@ watch(
 .top-column ul > li:hover {
   background: var(--sideBarItemHoverBgColor);
 }
+.top-column ul > li:hover > svg {
+  color: var(--focusColor);
+}
 
 .top-column ul > li > svg {
   width: 18px;
@@ -265,7 +268,7 @@ watch(
   stroke-linejoin: round;
   fill: none;
   opacity: 1;
-  transition: transform 0.25s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 
 .top-column ul > li.active > svg {
@@ -303,19 +306,28 @@ watch(
 }
 
 .bottom-bar ul > li {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+}
+
+.bottom-bar ul > li:hover {
+  background: var(--sideBarItemHoverBgColor);
+}
+.bottom-bar ul > li:hover > svg {
+  color: var(--focusColor);
 }
 
 .bottom-bar ul > li > svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--sideBarIconColor);
   stroke: currentColor;
   stroke-width: 2.5px;
@@ -323,11 +335,7 @@ watch(
   stroke-linejoin: round;
   fill: none;
   opacity: 1;
-  transition: transform 0.25s ease-in-out;
-}
-
-.bottom-bar ul > li:hover > svg {
-  color: var(--themeColor);
+  transition: all 0.15s ease-in-out;
 }
 
 .drag-bar {
