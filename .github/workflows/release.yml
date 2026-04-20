@@ -30,6 +30,11 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Set C++20 for macOS
+        if: runner.os == 'macOS'
+        run: |
+          echo "CXXFLAGS=-std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
+
       - name: Install Linux Build Dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y icnsutils graphicsmagick xz-utils libx11-dev libxkbfile-dev gnome-keyring libsecret-1-dev libfontconfig-dev rpm
@@ -40,11 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GYP_JOBS: 4
           npm_config_jobs: 1
-
-      - name: Set C++20 for macOS
-        if: runner.os == 'macOS'
-        run: |
-          echo "CXXFLAGS=-std=gnu++20 -stdlib=libc++" >> $GITHUB_ENV
 
       - name: Build Linux
         if: runner.os == 'Linux'
