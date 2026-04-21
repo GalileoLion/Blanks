@@ -40,7 +40,11 @@ export const defaultFileState = {
   notifications: [],
   // Content-based dirty detection
   savedNormalizedMarkdown: '',
-  needsInitialAnchor: false
+  needsInitialAnchor: false,
+
+  // File timestamps
+  birthTime: null,
+  mtime: null
 }
 
 export const getOptionsFromState = (file) => {
@@ -152,7 +156,9 @@ export const createDocumentState = (markdownDocument, id = getUniqueId()) => {
     lineEnding,
     adjustLineEndingOnSave,
     trimTrailingNewline,
-    cursor = null
+    cursor = null,
+    birthTime = null,
+    mtime = null
   } = markdownDocument
 
   return Object.assign(docState, {
@@ -166,6 +172,8 @@ export const createDocumentState = (markdownDocument, id = getUniqueId()) => {
     adjustLineEndingOnSave,
     trimTrailingNewline,
     lastSavedHistoryId: -1,
-    needsInitialAnchor: true
+    needsInitialAnchor: true,
+    birthTime,
+    mtime
   })
 }

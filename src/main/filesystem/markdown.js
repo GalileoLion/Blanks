@@ -169,6 +169,10 @@ export const loadMarkdownFile = async (
     trimTrailingNewline,
 
     // raw file information
-    isMixedLineEndings
+    isMixedLineEndings,
+
+    // file timestamps
+    birthTime: stat.birthtime,
+    mtime: stat.mtime
   }
 }

@@ -532,17 +532,56 @@
       <!-- Custom word count tooltip using Element Plus el-tooltip component. -->
       <el-tooltip v-if="wordCount" placement="top" :effect="tooltipEffect">
         <template #content>
-          <div class="tooltip-item">
-            <span class="label">Words:</span>
-            <span class="value">{{ wordCount.word || 0 }}</span>
+          <div class="word-count-tooltip-content">
+            <div class="word-count-grid">
+              <div class="grid-item">
+                <div class="grid-item-row">
+                  <span class="grid-number">{{ wordCount.word || 0 }}</span>
+                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7V4h3"/>
+                    <path d="M20 7V4h-3"/>
+                    <path d="M4 17v3h3"/>
+                    <path d="M20 17v3h-3"/>
+                  </svg>
+                </div>
+                <div class="grid-label">Words</div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-item-row">
+                  <span class="grid-number">{{ wordCount.character || 0 }}</span>
+                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 7V4h16v3"/>
+                    <path d="M9 20h6"/>
+                    <path d="M12 4v16"/>
+                  </svg>
+                </div>
+                <div class="grid-label">Characters</div>
+              </div>
+              <div class="grid-item">
+                <div class="grid-item-row">
+                  <span class="grid-number">{{ wordCount.paragraph || 0 }}</span>
+                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 6h13"/>
+                    <path d="M8 12h13"/>
+                    <path d="M8 18h13"/>
+                    <path d="M3 6h.01"/>
+                    <path d="M3 12h.01"/>
+                    <path d="M3 18h.01"/>
+                  </svg>
+                </div>
+                <div class="grid-label">Paragraphs</div>
+              </div>
           </div>
-          <div class="tooltip-item">
-            <span class="label">Characters:</span>
-            <span class="value">{{ wordCount.character || 0 }}</span>
-          </div>
-          <div class="tooltip-item">
-            <span class="label">Paragraphs:</span>
-            <span class="value">{{ wordCount.paragraph || 0 }}</span>
+            <div class="file-timestamps" v-if="birthTime || mtime">
+              <div class="timestamp-item" v-if="birthTime">
+                <span class="timestamp-label">Created:</span>
+                <span class="timestamp-value">{{ formatDate(birthTime) }}</span>
+              </div>
+              <div class="timestamp-item" v-if="mtime">
+                <span class="timestamp-label">Modified:</span>
+                <span class="timestamp-value">{{ formatDate(mtime) }}</span>
+              </div>
+            </div>
           </div>
         </template>
         <div class="word-count">
@@ -671,6 +710,22 @@ const wordCountDisplay = computed(() => {
   const paragraph = wordCount.value.paragraph || 0
   return `${word}W / ${character}C / ${paragraph}P`
 })
+
+// File timestamps
+const birthTime = computed(() => currentFile.value?.birthTime)
+const mtime = computed(() => currentFile.value?.mtime)
+
+const formatDate = (date) => {
+  if (!date) return '--'
+  const d = new Date(date)
+  return d.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
 
 const toggleSideBar = () => {
   bus.emit('view:toggle-layout-entry', 'showSideBar')
@@ -953,35 +1008,113 @@ onUnmounted(() => {
   margin-right: -15px;
 }
 
-/* Word count tooltip styles - using theme color variables */
+/* Word count tooltip styles - Bear-style grid layout */
 /* Override Element UI tooltip colors to match theme */
 
 .word-count-tooltip,
 .el-tooltip__content {
-  padding: 8px 12px;
-  font-size: 13px;
-  line-height: 1.6;
+  padding: 16px !important;
   background: var(--floatBgColor) !important;
-  color: var(--editorColor);
   border: 1px solid var(--floatBorderColor);
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: var(--floatShadow);
 }
 
-.el-tooltip__content .tooltip-item {
+/* Three-grid layout for word count statistics */
+.word-count-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 16px;
+  min-width: 180px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.grid-item-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.grid-number {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.grid-icon {
+  width: 14px;
+  height: 14px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.grid-label {
+  font-size: 12px;
+  color: #999;
+  line-height: 1.2;
+}
+
+/* Dark theme adjustments - Element Plus dark tooltip */
+.el-popper.is-dark .grid-number,
+.el-tooltip__content.is-dark .grid-number {
+  color: #fff;
+}
+
+.el-popper.is-dark .grid-icon,
+.el-popper.is-dark .grid-label,
+.el-tooltip__content.is-dark .grid-icon,
+.el-tooltip__content.is-dark .grid-label {
+  color: #aaa;
+}
+
+/* File timestamps */
+.file-timestamps {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--floatBorderColor);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timestamp-item {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  margin: 4px 0;
+  font-size: 11px;
 }
 
-.el-tooltip__content .label {
-  color: var(--editorColor50);
+.timestamp-label {
+  color: #999;
 }
 
-.el-tooltip__content .value {
-  color: var(--editorColor);
+.timestamp-value {
+  color: #1a1a1a;
   font-weight: 500;
+}
+
+.el-popper.is-dark .timestamp-value,
+.el-tooltip__content.is-dark .timestamp-value {
+  color: #fff;
+}
+
+.el-popper.is-dark .timestamp-label,
+.el-tooltip__content.is-dark .timestamp-label {
+  color: #aaa;
+}
+
+/* Divider line in dark mode */
+.el-popper.is-dark .file-timestamps,
+.el-tooltip__content.is-dark .file-timestamps {
+  border-top-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Ensure tooltip follows theme colors properly */
