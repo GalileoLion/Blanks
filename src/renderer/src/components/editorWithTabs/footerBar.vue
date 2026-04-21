@@ -533,53 +533,100 @@
       <el-tooltip v-if="wordCount" placement="top" :effect="tooltipEffect">
         <template #content>
           <div class="word-count-tooltip-content">
-            <div class="word-count-grid">
-              <div class="grid-item">
-                <div class="grid-item-row">
-                  <span class="grid-number">{{ wordCount.word || 0 }}</span>
-                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 7V4h3"/>
-                    <path d="M20 7V4h-3"/>
-                    <path d="M4 17v3h3"/>
-                    <path d="M20 17v3h-3"/>
-                  </svg>
+            <!-- Tab Switcher -->
+            <div class="tooltip-tab-switcher">
+              <button 
+                class="tooltip-tab-btn" 
+                :class="{ active: activeTooltipTab === 'stats' }"
+                @click="activeTooltipTab = 'stats'"
+              >
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20V10"/>
+                  <path d="M18 20V4"/>
+                  <path d="M6 20v-4"/>
+                </svg>
+              </button>
+              <button 
+                class="tooltip-tab-btn" 
+                :class="{ active: activeTooltipTab === 'toc' }"
+                @click="activeTooltipTab = 'toc'"
+              >
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 6h16"/>
+                  <path d="M4 12h16"/>
+                  <path d="M4 18h16"/>
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Stats Page -->
+            <div v-if="activeTooltipTab === 'stats'" class="tooltip-page">
+              <div class="word-count-grid">
+                <div class="grid-item">
+                  <div class="grid-item-row">
+                    <span class="grid-number">{{ wordCount.word || 0 }}</span>
+                    <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 7V4h3"/>
+                      <path d="M20 7V4h-3"/>
+                      <path d="M4 17v3h3"/>
+                      <path d="M20 17v3h-3"/>
+                    </svg>
+                  </div>
+                  <div class="grid-label">Words</div>
                 </div>
-                <div class="grid-label">Words</div>
-              </div>
-              <div class="grid-item">
-                <div class="grid-item-row">
-                  <span class="grid-number">{{ wordCount.character || 0 }}</span>
-                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 7V4h16v3"/>
-                    <path d="M9 20h6"/>
-                    <path d="M12 4v16"/>
-                  </svg>
+                <div class="grid-item">
+                  <div class="grid-item-row">
+                    <span class="grid-number">{{ wordCount.character || 0 }}</span>
+                    <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 7V4h16v3"/>
+                      <path d="M9 20h6"/>
+                      <path d="M12 4v16"/>
+                    </svg>
+                  </div>
+                  <div class="grid-label">Characters</div>
                 </div>
-                <div class="grid-label">Characters</div>
-              </div>
-              <div class="grid-item">
-                <div class="grid-item-row">
-                  <span class="grid-number">{{ wordCount.paragraph || 0 }}</span>
-                  <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M8 6h13"/>
-                    <path d="M8 12h13"/>
-                    <path d="M8 18h13"/>
-                    <path d="M3 6h.01"/>
-                    <path d="M3 12h.01"/>
-                    <path d="M3 18h.01"/>
-                  </svg>
+                <div class="grid-item">
+                  <div class="grid-item-row">
+                    <span class="grid-number">{{ wordCount.paragraph || 0 }}</span>
+                    <svg class="grid-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 6h13"/>
+                      <path d="M8 12h13"/>
+                      <path d="M8 18h13"/>
+                      <path d="M3 6h.01"/>
+                      <path d="M3 12h.01"/>
+                      <path d="M3 18h.01"/>
+                    </svg>
+                  </div>
+                  <div class="grid-label">Paragraphs</div>
                 </div>
-                <div class="grid-label">Paragraphs</div>
               </div>
-          </div>
-            <div class="file-timestamps" v-if="birthTime || mtime">
-              <div class="timestamp-item" v-if="birthTime">
-                <span class="timestamp-label">Created:</span>
-                <span class="timestamp-value">{{ formatDate(birthTime) }}</span>
+              <div class="file-timestamps" v-if="birthTime || mtime">
+                <div class="timestamp-item" v-if="birthTime">
+                  <span class="timestamp-label">Created:</span>
+                  <span class="timestamp-value">{{ formatDate(birthTime) }}</span>
+                </div>
+                <div class="timestamp-item" v-if="mtime">
+                  <span class="timestamp-label">Modified:</span>
+                  <span class="timestamp-value">{{ formatDate(mtime) }}</span>
+                </div>
               </div>
-              <div class="timestamp-item" v-if="mtime">
-                <span class="timestamp-label">Modified:</span>
-                <span class="timestamp-value">{{ formatDate(mtime) }}</span>
+            </div>
+            
+            <!-- TOC Page -->
+            <div v-else-if="activeTooltipTab === 'toc'" class="tooltip-page toc-page">
+              <div v-if="listToc.length" class="toc-list">
+                <div 
+                  v-for="item in listToc" 
+                  :key="item.slug"
+                  class="toc-item"
+                  :style="{ paddingLeft: (item.lvl - 1) * 12 + 'px' }"
+                  @click="handleTocClick(item.slug)"
+                >
+                  {{ item.content }}
+                </div>
+              </div>
+              <div v-else class="toc-empty">
+                No headings found
               </div>
             </div>
           </div>
@@ -715,6 +762,10 @@ const wordCountDisplay = computed(() => {
 const birthTime = computed(() => currentFile.value?.birthTime)
 const mtime = computed(() => currentFile.value?.mtime)
 
+// Tooltip tab switching
+const activeTooltipTab = ref('stats') // 'stats' or 'toc'
+const { toc, listToc } = storeToRefs(editorStore)
+
 const formatDate = (date) => {
   if (!date) return '--'
   const d = new Date(date)
@@ -725,6 +776,10 @@ const formatDate = (date) => {
     hour: '2-digit',
     minute: '2-digit'
   })
+}
+
+const handleTocClick = (slug) => {
+  bus.emit('scroll-to-header', slug)
 }
 
 const toggleSideBar = () => {
@@ -1020,6 +1075,12 @@ onUnmounted(() => {
   box-shadow: var(--floatShadow);
 }
 
+/* Fixed size for tooltip to prevent jumping between pages */
+.word-count-tooltip-content {
+  width: 240px;
+  height: 160px;
+}
+
 /* Three-grid layout for word count statistics */
 .word-count-grid {
   display: grid;
@@ -1115,6 +1176,121 @@ onUnmounted(() => {
 .el-popper.is-dark .file-timestamps,
 .el-tooltip__content.is-dark .file-timestamps {
   border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Tooltip Tab Switcher */
+.tooltip-tab-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--floatBorderColor);
+}
+
+.tooltip-tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #999;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-tab-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tooltip-tab-btn.active {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.tab-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Tooltip Pages */
+.tooltip-page {
+  height: 110px;
+  overflow: hidden;
+}
+
+/* TOC Page */
+.toc-page {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.toc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toc-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.2s;
+}
+
+.toc-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.toc-empty {
+  padding: 16px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* Dark theme for tab switcher */
+.el-popper.is-dark .tooltip-tab-btn,
+.el-tooltip__content.is-dark .tooltip-tab-btn {
+  color: #888;
+}
+
+.el-popper.is-dark .tooltip-tab-btn:hover,
+.el-tooltip__content.is-dark .tooltip-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.el-popper.is-dark .tooltip-tab-btn.active,
+.el-tooltip__content.is-dark .tooltip-tab-btn.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.el-popper.is-dark .tooltip-tab-switcher,
+.el-tooltip__content.is-dark .tooltip-tab-switcher {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.el-popper.is-dark .toc-item,
+.el-tooltip__content.is-dark .toc-item {
+  color: #ccc;
+}
+
+.el-popper.is-dark .toc-item:hover,
+.el-tooltip__content.is-dark .toc-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.el-popper.is-dark .toc-empty,
+.el-tooltip__content.is-dark .toc-empty {
+  color: #888;
 }
 
 /* Ensure tooltip follows theme colors properly */
