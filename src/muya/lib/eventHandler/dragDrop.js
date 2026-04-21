@@ -5,6 +5,7 @@ class DragDrop {
     this.dropBinding()
     this.dragendBinding()
     this.dragStartBinding()
+    this.blockDragBinding()
   }
 
   dragStartBinding () {
@@ -47,6 +48,18 @@ class DragDrop {
     }
 
     eventCenter.attachDOMEvent(window, 'dragleave', dragleaveHandler)
+  }
+
+  blockDragBinding () {
+    const { container, eventCenter, contentState } = this.muya
+
+    const mouseDownHandler = event => {
+      if (event.target.closest('.ag-drag-handle')) {
+        contentState.blockDragStartHandler(event)
+      }
+    }
+
+    eventCenter.attachDOMEvent(container, 'mousedown', mouseDownHandler)
   }
 }
 

@@ -63,6 +63,42 @@ mark::after {
   background: var(--highlightColor);
 }
 
+#mu-block-drop-indicator {
+  height: 3px;
+  position: absolute;
+  background: var(--highlightColor);
+  z-index: 100;
+  pointer-events: none;
+  transition: top 0.05s ease;
+}
+
+.ag-front-icon .ag-drag-handle {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  cursor: grab;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  left: -20px;
+}
+
+.ag-paragraph:hover > .ag-front-icon .ag-drag-handle,
+.ag-front-icon:hover .ag-drag-handle {
+  opacity: 0.5;
+}
+
+.ag-front-icon .ag-drag-handle:hover {
+  opacity: 1 !important;
+}
+
+.ag-front-icon .ag-drag-handle:active {
+  cursor: grabbing;
+}
+
+.ag-block-dragging {
+  opacity: 0.3 !important;
+}
+
 div.ag-show-quick-insert-hint
   p.ag-paragraph.ag-active
   > span.ag-paragraph-content:first-of-type:empty::after {

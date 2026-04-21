@@ -118,6 +118,39 @@ export default function renderIcon(block, t) {
       break
   }
 
+  const dragHandleVnode = h(
+    'i.icon.ag-drag-handle',
+    {
+      attrs: {
+        contenteditable: 'false',
+        draggable: 'false'
+      }
+    },
+    h(
+      'svg',
+      {
+        attrs: {
+          width: '16',
+          height: '16',
+          viewBox: '0 0 24 24',
+          fill: 'none',
+          stroke: 'currentColor',
+          'stroke-width': '2',
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
+        }
+      },
+      [
+        h('circle', { attrs: { cx: '9', cy: '12', r: '1' } }),
+        h('circle', { attrs: { cx: '9', cy: '5', r: '1' } }),
+        h('circle', { attrs: { cx: '9', cy: '19', r: '1' } }),
+        h('circle', { attrs: { cx: '15', cy: '12', r: '1' } }),
+        h('circle', { attrs: { cx: '15', cy: '5', r: '1' } }),
+        h('circle', { attrs: { cx: '15', cy: '19', r: '1' } })
+      ]
+    )
+  )
+
   const iconVnode = h(
     'i.icon.ag-front-icon-button',
     h(
@@ -149,7 +182,9 @@ export default function renderIcon(block, t) {
     )
   )
 
-  const iconsToRender = isCopyLink ? [iconVnode, linkCopyIcon] : [iconVnode]
+  const iconsToRender = isCopyLink
+    ? [dragHandleVnode, iconVnode, linkCopyIcon]
+    : [dragHandleVnode, iconVnode]
 
   return h(
     selector,
