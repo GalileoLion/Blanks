@@ -94,7 +94,18 @@
     <div v-else class="open-project">
       <div class="centered-group">
         <button class="button-primary" @click="openFolder">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-folder-open">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M2 6c0 -.796 .316 -1.558 .879 -2.121c.563 -.563 1.325 -.879 2.121 -.879h4l.099 .005c.229 .023 .444 .124 .608 .288l2.707 2.707h6.586c.796 0 1.558 .316 2.121 .879c.319 .319 .559 .703 .707 1.121l-14.523 0c-.407 0 -.805 .125 -1.14 .356c-.292 .203 -.525 .48 -.674 .801l-.058 .141l-1.379 3.676c-.194 .517 .068 1.093 .585 1.287c.517 .194 1.094 -.068 1.288 -.585l1.134 -3.027c.146 -.39 .519 -.649 .937 -.649h13.002l.217 .012c.216 .024 .426 .082 .624 .173c.054 .025 .107 .053 .159 .083c.199 .115 .377 .263 .525 .439c.188 .222 .325 .482 .403 .762c.077 .28 .092 .573 .045 .859c-.001 .008 -.003 .016 -.005 .024l-.995 5.21c-.131 .686 -.497 1.304 -1.036 1.749c-.47 .389 -1.046 .624 -1.65 .677l-.261 .012h-14.026c-.796 0 -1.558 -.316 -2.121 -.879c-.563 -.563 -.879 -1.325 -.879 -2.121v-11z" />
+          </svg>
           {{ t('sideBar.tree.openFolder') }}
+        </button>
+        <button class="button-primary" @click="openFile" title="Open File">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-file">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z" />
+            <path d="M19 7h-4l-.001 -4.001z" />
+          </svg>
         </button>
       </div>
     </div>
@@ -140,6 +151,10 @@ const { createCache } = storeToRefs(projectStore)
 // Methods
 const openFolder = () => {
   projectStore.ASK_FOR_OPEN_PROJECT()
+}
+
+const openFile = () => {
+  window.electron.ipcRenderer.send('mt::cmd-open-file')
 }
 
 const saveAll = (isClose) => {
@@ -334,20 +349,49 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
   align-items: center;
-  padding-bottom: 100px;
+  padding-bottom: 5px;
 }
 
 .open-project .centered-group {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .open-project button.button-primary {
-  display: block;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  height: 36px;
+  margin: 20px 0 0;
+  box-sizing: border-box;
+}
+
+.open-project button.button-primary:last-child {
+  flex: 0 0 36px;
+  width: 36px;
+  padding: 0;
+}
+
+.open-project button.button-primary svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.open-project .centered-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 .new-input {
   outline: none;
