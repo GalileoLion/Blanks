@@ -33,9 +33,9 @@
   --buttonBgColor: #f5f5f5;
   --buttonBorder: 1px solid #f5f5f5;
   --buttonShadow: none;
-  --buttonFontColorHover: var(--buttonFontColor);
-  --buttonBgColorHover: #eeeeee;
-  --buttonBorderHover: 1px solid #eeeeee;
+  --buttonFontColorHover: rgba(82, 88, 96, 0.9);
+  --buttonBgColorHover: transparent;
+  --buttonBorderHover: 1px solid transparent;
   --buttonFontColorActive: var(--buttonFontColor);
   --buttonBgColorActive: #e8e8e8;
   --buttonBorderActive: 1px solid #e8e8e8;
@@ -75,7 +75,7 @@
   --sideBarIconColor: rgba(155, 163, 175, 0.8);
   --sideBarTitleColor: rgba(82, 88, 96, 0.9);
   --sideBarTextColor: rgba(155, 163, 175, 0.5);
-  --sideBarBgColor: #f7f7f7;
+  --sideBarBgColor: #fbfbfb;
   --sideBarItemHoverBgColor: rgba(255, 255, 255, 0.6);
   --itemBgColor: rgba(255, 255, 255, 0.6);
 
@@ -94,7 +94,7 @@
 }
 
 .editor-tabs {
-  background: #f7f7f7 !important;
+  background: var(--editorBgColor) !important;
   box-shadow: none !important;
 }
 
