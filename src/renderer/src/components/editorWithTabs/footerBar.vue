@@ -643,7 +643,7 @@
       </button>
       <div class="file-dropdown-container" ref="fileDropdownContainer">
         <button class="footer-btn text-btn" @click="toggleFileDropdown" title="Opened Files">
-          FILE
+          <span class="file-count-badge"><span class="file-count-num">{{ tabs.length }}</span></span>
         </button>
         <div v-show="showFileDropdown" class="file-dropdown">
           <div class="file-dropdown-header">
@@ -895,6 +895,26 @@ onUnmounted(() => {
   padding: 4px 8px;
 }
 
+.file-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.file-count-num {
+  font-family: 'SF Mono', 'Consolas', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  position: relative;
+  top: 0.5px;
+}
+
 .btn-group {
   display: flex;
   align-items: center;
@@ -940,13 +960,13 @@ onUnmounted(() => {
 }
 
 .file-dropdown-container {
-  position: relative;
+  position: static;
 }
 
 .file-dropdown {
-  position: absolute;
-  bottom: 100%;
-  left: -90px;
+  position: fixed;
+  right: 0;
+  bottom: 35px;
   min-width: 180px;
   max-width: 220px;
   max-height: 350px;
@@ -955,7 +975,6 @@ onUnmounted(() => {
   border-radius: 4px;
   box-shadow: var(--floatShadow);
   z-index: 100;
-  margin-bottom: 5px;
   overflow: hidden;
 }
 
