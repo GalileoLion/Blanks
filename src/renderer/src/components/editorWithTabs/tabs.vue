@@ -233,7 +233,7 @@ svg.close-icon:hover {
   user-select: none;
   /* box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
-  /* background: var(--sideBarBgColor); */
+  background: var(--sideBarBgColor);
   &:hover > .new-file {
     opacity: 1 !important;
   }
@@ -307,7 +307,7 @@ svg.close-icon:hover {
       &:hover {
         background:
           linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)),
-          var(--sideBarBgColor) !important;
+          var(--sideBarBgColor);
       }
     }
   }

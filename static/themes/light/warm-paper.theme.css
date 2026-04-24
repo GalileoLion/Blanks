@@ -137,7 +137,14 @@
   z-index: 2;
 }
 
-.tabs-container > li,
+.tabs-container > li:not(.active) {
+  background: var(--sideBarBgColor) !important;
+}
+
+.tabs-container > li:not(.active):hover {
+  background: linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)), var(--sideBarBgColor) !important;
+}
+
 .tabs-container > li.active {
   background: var(--editorBgColor) !important;
 }

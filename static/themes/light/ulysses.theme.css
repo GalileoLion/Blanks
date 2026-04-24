@@ -93,6 +93,17 @@
 
 .tabs-container > li {
   border-right: 1px solid #e5e5e5 !important;
+}
+
+.tabs-container > li:not(.active) {
+  background: var(--sideBarBgColor) !important;
+}
+
+.tabs-container > li:not(.active):hover {
+  background: linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)), var(--sideBarBgColor) !important;
+}
+
+.tabs-container > li.active {
   background: var(--editorBgColor) !important;
 }
 
