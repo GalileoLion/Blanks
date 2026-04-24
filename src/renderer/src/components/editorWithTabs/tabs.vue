@@ -302,8 +302,8 @@ svg.close-icon:hover {
     }
     &:not(.active) {
       background: var(--sideBarBgColor) !important;
-      border-radius: 6px;
-      border-bottom: 1px solid var(--floatBorderColor);
+      border-radius: 6px 6px 0 0;
+      /* border-bottom: 1px solid var(--floatBorderColor); */
       &:hover {
         background:
           linear-gradient(var(--sideBarItemHoverBgColor), var(--sideBarItemHoverBgColor)),
