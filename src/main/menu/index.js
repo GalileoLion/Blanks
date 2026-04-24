@@ -408,6 +408,9 @@ class AppMenu {
   }
 
   _listenForIpcMain() {
+    ipcMain.handle('mt::get-recently-used-documents', () => {
+      return this.getRecentlyUsedDocuments()
+    })
     ipcMain.on('mt::add-recently-used-document', (e, pathname) => {
       this.addRecentlyUsedDocument(pathname)
     })
