@@ -301,7 +301,7 @@ svg.close-icon:hover {
       margin-right: 3px;
     }
     &:not(.active) {
-      background: var(--sideBarBgColor) !important;
+      background: var(--sideBarBgColor);
       border-radius: 6px 6px 0 0;
       /* border-bottom: 1px solid var(--floatBorderColor); */
       &:hover {

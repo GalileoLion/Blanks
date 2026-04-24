@@ -20,13 +20,13 @@
   --editorColor30: rgba(82, 88, 96, 0.3);
   --editorColor10: rgba(82, 88, 96, 0.1);
   --editorColor04: rgba(82, 88, 96, 0.04);
-  --editorBgColor: #fbfbfb;
+  --editorBgColor: #ffffff;
   --deleteColor: #e06c75;
   --iconColor: rgba(155, 163, 175, 0.8);
-  --codeBgColor: rgba(245, 245, 245, 0.8);
-  --codeBlockBgColor: #f5f5f5;
-  --footnoteBgColor: rgba(245, 245, 245, 0.5);
-  --inputBgColor: #f5f5f5;
+  --codeBgColor: rgba(255, 255, 255, 0.8);
+  --codeBlockBgColor: #ffffff;
+  --footnoteBgColor: rgba(255, 255, 255, 0.5);
+  --inputBgColor: #ffffff;
   --focusColor: var(--themeColor);
 
   --buttonFontColor: var(--editorColor);
@@ -72,25 +72,89 @@
   --listMarkerColor: #b0b8c4;
 
   --sideBarColor: rgba(82, 88, 96, 0.6);
-  --sideBarIconColor: rgba(155, 163, 175, 0.8);
+  --sideBarIconColor: rgba(155, 163, 175, 0.5);
   --sideBarTitleColor: rgba(82, 88, 96, 0.9);
   --sideBarTextColor: rgba(155, 163, 175, 0.5);
-  --sideBarBgColor: #fbfbfb;
-  --sideBarItemHoverBgColor: rgba(255, 255, 255, 0.6);
+  --sideBarBgColor: #f0f0f0;
+  --sideBarItemHoverBgColor: transparent;
   --itemBgColor: rgba(255, 255, 255, 0.6);
 
   --floatFontColor: rgba(82, 88, 96, 0.7);
-  --floatBgColor: #f7f7f7;
+  --floatBgColor: #ffffff;
   --floatHoverColor: rgba(255, 255, 255, 0.4);
   --floatBorderColor: rgba(240, 240, 240, 0);
   --floatShadow: rgba(0, 0, 0, 0.03);
-  --maskColor: rgba(245, 245, 245, 0.8);
+  --maskColor: rgba(255, 255, 255, 0.8);
   --editorAreaWidth: 750px;
 }
 
 /* Hide borders - seamless design */
 .side-bar {
   border-right: none !important;
+}
+
+/* 侧边栏顶栏按钮 - 胶囊用:before实现，不影响按钮本身 */
+.top-column {
+  padding: 4px;
+}
+
+.top-column ul {
+  gap: 8px;
+  padding: 4px;
+}
+
+.top-column ul > li {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 胶囊用:before伪元素 */
+.top-column ul > li::before {
+  content: '';
+  position: absolute;
+  width: 32px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--sideBarIconColor);
+  transition: opacity 0.2s ease;
+}
+
+.top-column ul > li.active::before {
+  background: rgba(155, 163, 175, 0.7);
+}
+
+/* 悬停顶栏时，隐藏所有胶囊 */
+.top-column:hover ul > li::before,
+.top-column:hover ul > li.active::before {
+  opacity: 0;
+}
+
+/* 默认隐藏所有图标 */
+.top-column ul > li > svg,
+.top-column ul > li.active > svg {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease;
+}
+
+/* 悬停顶栏任意位置（包括间隙）时，显示所有按钮图标 */
+.top-column:hover ul li > svg,
+.top-column:hover ul li.active > svg {
+  opacity: 1 !important;
+}
+
+/* Side bar buttons - match footer button hover style */
+.top-column ul > li:hover > svg,
+.bottom-bar ul > li:hover > svg {
+  color: var(--sideBarColor);
+}
+
+/* Side bar buttons active state - black */
+.top-column ul > li.active > svg {
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .editor-tabs {
@@ -102,14 +166,48 @@
   display: none !important;
 }
 
-.tabs-container > li {
-  background: none !important;
+.editor-tabs .tabs-container {
+  padding: 4px 4px 0 4px;
+  gap: 4px;
+}
+
+/* 标签页 - 浅灰色圆角矩形，四个角都圆角，缩窄高度 */
+.editor-tabs .tabs-container > li {
+  height: 24px !important;
+  line-height: 24px !important;
+  margin-top: 0 !important;
+  margin-bottom: 4px !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  border-radius: 6px !important;
   border-right: none !important;
 }
 
-.tabs-container > li.active {
-  border: none !important;
-  background: var(--editorBgColor) !important;
+/* hover - 灰色深一点 (透明度增加) */
+.editor-tabs .tabs-container > li:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 选中 - 灰色再深一点 (透明度继续增加) */
+.editor-tabs .tabs-container > li.active {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 添加标签页按钮 - 始终显示，hover时同标签页背景 */
+.editor-tabs > .new-file {
+  flex: 0 0 24px !important;
+  height: 24px !important;
+  width: 24px !important;
+  opacity: 1 !important;
+  margin: 4px 0 0 0 !important;
+  border-radius: 6px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.editor-tabs > .new-file:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-radius: 4px !important;
 }
 
 /* Scrollbar styling */
@@ -131,8 +229,14 @@
   fill: #9ba3af;
 }
 
+/* Title bar & Footer bar - match editor background */
+.title-bar-editor-bg,
 .title-bar-editor-bg.tabs-visible {
-  background: var(--sideBarBgColor) !important;
+  background: var(--editorBgColor) !important;
+}
+
+.footer-bar {
+  background: var(--editorBgColor) !important;
 }
 
 /* Paragraph styling */
@@ -151,7 +255,7 @@ p:not(.ag-active)[data-role='hr']::before {
   height: 1px;
   box-sizing: border-box;
   border: none;
-  background: rgba(240, 240, 240, 0.5);
+  background: rgba(255, 255, 255, 0.5);
   transform: translateX(-50%) translateY(-50%);
 }
 

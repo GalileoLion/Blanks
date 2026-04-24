@@ -415,6 +415,11 @@ button.button-primary:not(.custom):focus,
   background-color: var(--themeColor);
 }
 
+/* Default light theme - unselected tabs match tab bar background */
+.tabs-container > li:not(.active) {
+  background: var(--sideBarBgColor);
+}
+
 .editor-tabs {
   box-shadow: none !important;
 }
@@ -439,7 +444,6 @@ button.button-primary:not(.custom):focus,
   z-index: 2;
 }
 
-.tabs-container > li,
 .tabs-container > li.active {
   background: var(--editorBgColor) !important;
 }
