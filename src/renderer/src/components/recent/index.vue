@@ -18,25 +18,67 @@
           {{ t('recent.newFile') }}
         </button>
       </div>
+      <div v-if="recentDocuments.length > 0" class="history-bg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-history-icon lucide-history"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+      </div>
       <div v-if="recentDocuments.length > 0" class="recent-list">
         <h3>{{ t('menu.file.openRecent') }}</h3>
-        <ul>
-          <li
-            v-for="doc in recentDocuments"
+        <div class="recent-grid">
+          <!-- Large cards (first 2 items) -->
+          <div
+            v-for="doc in largeCards"
             :key="doc"
+            class="card large-card"
             :title="doc"
             @click="openDocument(doc)"
           >
-            {{ getFileName(doc) }}
-          </li>
-        </ul>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon icon-tabler icons-tabler-filled icon-tabler-file">
+              <path fill="currentColor" d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z" />
+              <path fill="currentColor" d="M19 7h-4l-.001 -4.001z" />
+            </svg>
+            <span class="filename">{{ getFileName(doc) }}</span>
+          </div>
+          <!-- Small cards container -->
+          <div v-if="smallCards.length > 0" class="small-cards-container">
+            <div class="small-cards-row">
+              <div
+                v-for="doc in smallCardsRow1"
+                :key="doc"
+                class="card small-card"
+                :title="doc"
+                @click="openDocument(doc)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon icon-tabler icons-tabler-filled icon-tabler-file">
+                  <path fill="currentColor" d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z" />
+                  <path fill="currentColor" d="M19 7h-4l-.001 -4.001z" />
+                </svg>
+                <span class="filename">{{ getFileName(doc) }}</span>
+              </div>
+            </div>
+            <div v-if="smallCardsRow2.length > 0" class="small-cards-row">
+              <div
+                v-for="doc in smallCardsRow2"
+                :key="doc"
+                class="card small-card"
+                :title="doc"
+                @click="openDocument(doc)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="icon icon-tabler icons-tabler-filled icon-tabler-file">
+                  <path fill="currentColor" d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h5z" />
+                  <path fill="currentColor" d="M19 7h-4l-.001 -4.001z" />
+                </svg>
+                <span class="filename">{{ getFileName(doc) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useEditorStore } from '@/store/editor'
 import { t } from '../../i18n'
 
@@ -54,6 +96,19 @@ const getFileName = (path) => {
 const openDocument = (pathname) => {
   window.electron.ipcRenderer.send('mt::open-file', pathname, {})
 }
+
+// 限制最多显示10个文件
+const displayDocs = computed(() => recentDocuments.value.slice(0, 10))
+
+// 前2个是大卡片
+const largeCards = computed(() => displayDocs.value.slice(0, 2))
+
+// 剩余是小卡片
+const smallCards = computed(() => displayDocs.value.slice(2))
+
+// 小卡片分2行，每行最多4个
+const smallCardsRow1 = computed(() => smallCards.value.slice(0, 4))
+const smallCardsRow2 = computed(() => smallCards.value.slice(4, 8))
 
 onMounted(async () => {
   try {
@@ -93,8 +148,18 @@ onMounted(async () => {
         }
       }
     }
-    & .recent-list {
+    & .history-bg {
       margin-top: 40px;
+      margin-bottom: 16px;
+      opacity: 0.08;
+      pointer-events: none;
+      & svg {
+        width: 120px;
+        height: 120px;
+        color: var(--editorColor);
+      }
+    }
+    & .recent-list {
       text-align: center;
       & h3 {
         font-size: 14px;
@@ -102,36 +167,62 @@ onMounted(async () => {
         margin-bottom: 12px;
         opacity: 0.7;
       }
-      & ul {
-        list-style: none;
-        padding: 4px;
-        margin: 0;
-        max-height: 200px;
-        overflow-y: auto;
-        border: 1px solid var(--editorColor10);
-        border-radius: 6px;
-        background: var(--editorColor04);
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-        &::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: var(--editorColor30);
-          border-radius: 3px;
-        }
-        & li {
-          font-size: 13px;
-          padding: 6px 12px;
+      & .recent-grid {
+        display: flex;
+        gap: 8px;
+        align-items: stretch;
+        justify-content: center;
+        & .card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: var(--editorColor04);
+          border-radius: 8px;
           cursor: pointer;
-          border-radius: 4px;
-          max-width: 280px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          transition: all 0.15s ease-in-out;
+          & .filename {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+            padding: 0 8px;
+          }
           &:hover {
-            background: var(--sideBarBgColor);
+            background: var(--sideBarItemHoverBgColor);
+          }
+        }
+        & .large-card {
+          width: 120px;
+          min-height: 140px;
+          & svg {
+            width: 48px;
+            height: 48px;
+          }
+        }
+        & .small-cards-container {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          & .small-cards-row {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            & .small-card {
+              flex: 1;
+              min-width: 80px;
+              max-width: 120px;
+              padding: 12px 4px;
+              & svg {
+                width: 24px;
+                height: 24px;
+              }
+              & .filename {
+                font-size: 11px;
+              }
+            }
           }
         }
       }
