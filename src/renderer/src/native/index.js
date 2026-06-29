@@ -1,7 +1,7 @@
 import { purePathUtils } from './setupGlobals'
-import keybindingsDarwin from '../../../main/keyboard/keybindingsDarwin'
-import keybindingsLinux from '../../../main/keyboard/keybindingsLinux'
-import keybindingsWindows from '../../../main/keyboard/keybindingsWindows'
+import keybindingsDarwin from 'common/keybinding/keybindingsDarwin'
+import keybindingsLinux from 'common/keybinding/keybindingsLinux'
+import keybindingsWindows from 'common/keybinding/keybindingsWindows'
 
 const isTauriRuntime = () => Boolean(window.__TAURI_INTERNALS__ || window.__TAURI__)
 const listenerRegistry = new Map()

@@ -30,13 +30,11 @@ export default defineConfig({
       '@extension': resolve(__dirname, 'src/extension'),
       common: resolve(__dirname, 'src/common'),
       muya: resolve(__dirname, 'src/muya'),
-      main_renderer: resolve(__dirname, 'src/main'),
       '@electron/remote': resolve(nativeShims, 'electronRemote.js'),
       'electron-log/renderer': resolve(nativeShims, 'electronLog.js'),
       'electron-log': resolve(nativeShims, 'electronLog.js'),
       electron: resolve(nativeShims, 'electron.js'),
       child_process: resolve(nativeShims, 'nodeChildProcess.js'),
-      crypto: resolve(nativeShims, 'nodeCrypto.js'),
       os: resolve(nativeShims, 'nodeOs.js'),
       path: resolve(nativeShims, 'nodePath.js')
     },

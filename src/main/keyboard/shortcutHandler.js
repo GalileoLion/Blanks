@@ -8,9 +8,9 @@ import { isFile2 } from 'common/filesystem'
 import { isEqualAccelerator } from 'common/keybinding'
 import { isLinux, isOsx } from '../config'
 import { getKeyboardInfo, keyboardLayoutMonitor } from '../keyboard'
-import keybindingsDarwin from './keybindingsDarwin'
-import keybindingsLinux from './keybindingsLinux'
-import keybindingsWindows from './keybindingsWindows'
+import keybindingsDarwin from 'common/keybinding/keybindingsDarwin'
+import keybindingsLinux from 'common/keybinding/keybindingsLinux'
+import keybindingsWindows from 'common/keybinding/keybindingsWindows'
 
 class Keybindings {
   /**

@@ -1,1 +1,0 @@
-{"default":{"identifier":"default","description":"Default permissions for Blanks desktop windows.","local":true,"windows":["main","main-*","settings-*"],"permissions":["core:event:default","core:event:allow-listen"]}}

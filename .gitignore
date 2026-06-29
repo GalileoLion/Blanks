@@ -1,6 +1,7 @@
 node_modules
 dist
 dist-tauri
+src-tauri/gen
 src-tauri/target
 out
 .DS_Store

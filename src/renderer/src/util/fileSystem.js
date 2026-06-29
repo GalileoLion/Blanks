@@ -1,5 +1,3 @@
-import crypto from 'crypto'
-
 import { execFile } from 'child_process'
 import { tmpdir } from 'os'
 import dayjs from 'dayjs'
@@ -20,12 +18,15 @@ export const rename = async (src, dest) => {
   return window.fileUtils.move(src, dest)
 }
 
-export const getHash = (content, encoding, type) => {
-  return crypto.createHash(type).update(content, encoding).digest('hex')
+export const getHash = async (content, type) => {
+  if (type !== 'sha1') throw new Error(`Unsupported hash type: ${type}`)
+  const bytes = typeof content === 'string' ? new TextEncoder().encode(content) : new Uint8Array(content)
+  const digest = await globalThis.crypto.subtle.digest('SHA-1', bytes)
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
 export const getContentHash = (content) => {
-  return getHash(content, 'utf8', 'sha1')
+  return getHash(content, 'sha1')
 }
 
 /**
@@ -70,7 +71,7 @@ export const moveImageToFolder = async (pathname, image, outputDir) => {
       if (noHashPath === imagePath) {
         return imagePath
       }
-      const hash = getContentHash(imagePath)
+      const hash = await getContentHash(imagePath)
       const hashFilePath = window.path.join(outputDir, `${hash}${ext}`)
       await window.fileUtils.copy(imagePath, hashFilePath)
       return hashFilePath
