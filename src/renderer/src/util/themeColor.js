@@ -1,6 +1,3 @@
-import { readFileSync, readdirSync, existsSync } from 'fs'
-import path from 'path'
-
 // ==================== Built-in dark theme CSS ====================
 const DARK_EDITOR_CSS = `:root {
   /*editor*/
@@ -312,47 +309,42 @@ export let railscastsThemes = Object.freeze([])
 
 let initialized = false
 
-// ==================== Path configuration ====================
-
-function getThemesBaseDir() {
-  // In renderer process, userDataPath is available via global.blanks
-  const userDataPath = global.blanks?.paths?.userDataPath
-  if (userDataPath) {
-    const userThemesDir = path.join(userDataPath, 'themes')
-    // If user themes directory exists, use it (user customizations take priority)
-    if (existsSync(userThemesDir)) {
-      return userThemesDir
-    }
-  }
-
-  // Fallback: development mode - use static/themes/ from project root
-  try {
-    const staticDir = path.join(process.cwd(), 'static', 'themes')
-    if (existsSync(staticDir)) {
-      return staticDir
-    }
-  } catch (e) {
-    // process.cwd() might not be available in all contexts
-  }
-
-  return null
-}
+const bundledThemeModules = import.meta.glob('../../../../static/themes/**/*.theme.css', {
+  query: '?inline',
+  import: 'default',
+  eager: true
+})
 
 // ==================== Theme scanning ====================
 
-function scanThemes(themesDir, subdir) {
-  if (!themesDir) return {}
-  const dir = path.join(themesDir, subdir)
-  if (!existsSync(dir)) return {}
+function scanBundledThemes(subdir) {
+  const themes = {}
+  const marker = `/static/themes/${subdir}/`
+  for (const [modulePath, css] of Object.entries(bundledThemeModules)) {
+    if (modulePath.includes(marker)) {
+      const filename = modulePath.slice(modulePath.lastIndexOf('/') + 1)
+      const name = filename.replace('.theme.css', '')
+      themes[name] = css
+    }
+  }
+  return themes
+}
+
+async function scanUserThemes(subdir) {
+  const userDataPath = global.blanks?.paths?.userDataPath
+  if (!userDataPath || !window.fileUtils?.listDir) return {}
+
+  const dir = window.path.join(userDataPath, 'themes', subdir)
+  if (!(await window.fileUtils.isDirectory(dir))) return {}
 
   const themes = {}
-  const files = readdirSync(dir).filter((f) => f.endsWith('.theme.css'))
-  for (const filename of files) {
+  const files = await window.fileUtils.listDir(dir)
+  for (const filename of files.filter((f) => f.endsWith('.theme.css'))) {
     const name = filename.replace('.theme.css', '')
     try {
-      themes[name] = readFileSync(path.join(dir, filename), 'utf-8')
-    } catch (e) {
-      console.error(`Failed to read theme file: ${filename}`, e)
+      themes[name] = await window.fileUtils.readTextFile(window.path.join(dir, filename))
+    } catch (error) {
+      console.error(`Failed to read custom theme file: ${filename}`, error)
     }
   }
   return themes
@@ -372,15 +364,11 @@ function buildThemeRegistry(editorThemes, prismThemes, fallbackPrism = '') {
 export function initializeThemes() {
   if (initialized) return
 
-  const themesDir = getThemesBaseDir()
+  const lightEditor = scanBundledThemes('light')
+  const darkEditor = scanBundledThemes('dark')
 
-  // Editor themes from filesystem
-  const lightEditor = scanThemes(themesDir, 'light')
-  const darkEditor = scanThemes(themesDir, 'dark')
-
-  // Prism themes from filesystem
-  const lightPrism = scanThemes(themesDir, 'prismjs/light')
-  const darkPrism = scanThemes(themesDir, 'prismjs/dark')
+  const lightPrism = scanBundledThemes('prismjs/light')
+  const darkPrism = scanBundledThemes('prismjs/dark')
 
   // Build registries
   const lightThemes = buildThemeRegistry(lightEditor, lightPrism, '')
@@ -399,8 +387,27 @@ export function initializeThemes() {
 
   initialized = true
   console.log(
-    `[ThemeColor] Initialized ${lightThemeNames.length - 1} light themes and ${darkThemeNames.length} dark themes from:`,
-    themesDir || 'none'
+    `[ThemeColor] Initialized ${lightThemeNames.length - 1} light themes and ${darkThemeNames.length} dark themes from bundled assets`
+  )
+}
+
+export async function initializeUserThemes() {
+  initializeThemes()
+
+  const [lightEditor, darkEditor, lightPrism, darkPrism] = await Promise.all([
+    scanUserThemes('light'),
+    scanUserThemes('dark'),
+    scanUserThemes('prismjs/light'),
+    scanUserThemes('prismjs/dark')
+  ])
+
+  const lightThemes = buildThemeRegistry(lightEditor, lightPrism, '')
+  const darkThemes = buildThemeRegistry(darkEditor, darkPrism, DARK_PRISM_CSS)
+  allThemes = { ...allThemes, ...lightThemes, ...darkThemes }
+  lightThemeNames = ['light', ...new Set([...lightThemeNames.slice(1), ...Object.keys(lightThemes).sort()])]
+  darkThemeNames = [...new Set([...darkThemeNames, ...Object.keys(darkThemes).sort()])]
+  railscastsThemes = Object.freeze(
+    darkThemeNames.filter((name) => name !== 'one-dark' && name !== 'dark')
   )
 }
 

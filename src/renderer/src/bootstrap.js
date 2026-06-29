@@ -1,6 +1,6 @@
 import log from 'electron-log/renderer'
 import RendererPaths from './node/paths'
-import { initializeThemes } from './util/themeColor'
+import { initializeThemes, initializeUserThemes } from './util/themeColor'
 
 let exceptionLogger = (s) => console.error(s)
 
@@ -20,6 +20,17 @@ const parseUrlArgs = () => {
   const userDataPath = params.get('udp')
   const windowId = Number(params.get('wid'))
   const type = params.get('type')
+
+  if ((!params.has('wid') || Number.isNaN(windowId)) && window.__blanksNative?.bootstrap) {
+    const bootstrap = window.__blanksNative.bootstrap
+    return {
+      type: bootstrap.type || 'editor',
+      debug: !!bootstrap.debug,
+      userDataPath: bootstrap.userDataPath,
+      windowId: bootstrap.windowId || 1,
+      initialState: bootstrap.initialState || {}
+    }
+  }
 
   if (Number.isNaN(windowId)) {
     throw new Error('Error while parsing URL arguments: windowId!')
@@ -88,7 +99,7 @@ const handleRendererError = (event) => {
   }
 }
 
-const bootstrapRenderer = () => {
+const bootstrapRenderer = async () => {
   // Register renderer exception handler
   window.addEventListener('error', handleRendererError)
   window.addEventListener('unhandledrejection', handleRendererError)
@@ -110,6 +121,7 @@ const bootstrapRenderer = () => {
   // Initialize themes after paths are set
   // This must happen before Vue components are mounted
   initializeThemes()
+  await initializeUserThemes()
 
   configureLogger()
 }

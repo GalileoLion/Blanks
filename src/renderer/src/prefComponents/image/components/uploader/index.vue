@@ -181,7 +181,7 @@ import { useI18n } from 'vue-i18n'
 import { usePreferencesStore } from '@/store/preferences'
 import getServices, { isValidService } from './services.js'
 import legalNoticesCheckbox from './legalNoticesCheckbox.vue'
-import { isFileExecutableSync } from '@/util/fileSystem'
+import { isFileExecutable } from '@/util/fileSystem'
 import CurSelect from '@/prefComponents/common/select'
 import notice from '@/services/notification'
 import { storeToRefs } from 'pinia'
@@ -207,6 +207,7 @@ const github = reactive({
   branch: ''
 })
 const cliScript = ref('')
+const cliScriptExecutable = ref(false)
 const picgoExists = ref(false)
 const picgoDetectionFailed = ref(false) // 检测是否失败
 const picgoDetectionStatus = ref('') // 检测状态文本
@@ -240,8 +241,16 @@ const cliScriptDisable = computed(() => {
   if (!cliScript.value) {
     return true
   }
-  return !isFileExecutableSync(cliScript.value)
+  return !cliScriptExecutable.value
 })
+
+watch(
+  cliScript,
+  async (value) => {
+    cliScriptExecutable.value = value ? await isFileExecutable(value) : false
+  },
+  { immediate: true }
+)
 
 // watch
 watch(imageBed, (value, oldValue) => {
@@ -680,7 +689,7 @@ const stopAnimationAndButton = () => {
 }
 
 const testPicgo = () => {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     console.log('=== PicGo 检测开始 ===')
     
     console.log('window.commandExists:', window.commandExists)
@@ -732,12 +741,12 @@ const testPicgo = () => {
       debugMessages.push('正在检测 PicGo 命令...')
       
       // 先测试一些基本命令
-      const nodeExists = window.commandExists.exists('node')
-      const npmExists = window.commandExists.exists('npm')
+      const nodeExists = await window.commandExists.exists('node')
+      const npmExists = await window.commandExists.exists('npm')
       debugMessages.push(`Node.js 检测: ${nodeExists ? '✓' : '✗'}`)
       debugMessages.push(`npm 检测: ${npmExists ? '✓' : '✗'}`)
       
-      const result = window.commandExists.exists('picgo')
+      const result = await window.commandExists.exists('picgo')
       console.log('PicGo 检测结果:', result)
       debugMessages.push(`PicGo 检测结果: ${result}`)
       
@@ -755,7 +764,7 @@ const testPicgo = () => {
         debugMessages.push('可能原因:')
         debugMessages.push('1. PicGo 未安装')
         debugMessages.push('2. PATH 环境变量问题')
-        debugMessages.push('3. Electron 环境限制')
+        debugMessages.push('3. 桌面运行时 PATH 环境限制')
         picgoDetectionFailed.value = false  // 检测成功，只是PicGo未安装
         picgoDetectionStatus.value = t('preferences.image.uploader.picgoNotInstalled')
       }
@@ -1199,4 +1208,3 @@ const validate = (value) => {
   border: 1px solid var(--deleteColor);
 }
 </style>
-

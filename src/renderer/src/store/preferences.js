@@ -172,7 +172,7 @@ export const usePreferencesStore = defineStore('preferences', {
         setLanguage(value)
       }
 
-      // save to electron-store
+      // Persist through the native settings bridge.
       window.electron.ipcRenderer.send('mt::set-user-preference', { [type]: value })
     },
 

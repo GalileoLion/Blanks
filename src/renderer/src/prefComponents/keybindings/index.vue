@@ -60,7 +60,6 @@
 
 <script setup>
 import log from 'electron-log'
-import { setKeyboardLayout } from '@hfelix/electron-localshortcut'
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import Separator from '../common/separator'
 import KeyInputDialog from './key-input-dialog.vue'
@@ -92,8 +91,9 @@ onMounted(() => {
   window.electron.ipcRenderer
     .invoke('mt::keybinding-get-keyboard-info')
     .then(({ layout, keymap }) => {
-      // Update the key mapper to prevent problems on non-US keyboards.
-      setKeyboardLayout(layout, keymap)
+      if (window.__blanksNative) {
+        window.__blanksNative.keyboardInfo = { layout, keymap }
+      }
     })
     .catch((error) => log.error('Error while loading keyboard information for settings:', error))
 

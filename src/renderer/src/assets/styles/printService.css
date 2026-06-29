@@ -10,7 +10,7 @@ body article.print-container {
 }
 
 @media print {
-  /* Set all settings like margin with @page or Electron settings. */
+  /* Set page settings such as margin with @page or native print options. */
 
   @page {
     /* 

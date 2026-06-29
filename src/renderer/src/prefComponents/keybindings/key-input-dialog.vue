@@ -39,9 +39,9 @@
 <script setup>
 import {
   isCompositionEvent,
-  isValidElectronAccelerator,
+  isValidAccelerator,
   getAcceleratorFromKeyboardEvent
-} from '@hfelix/electron-localshortcut'
+} from '@/util/accelerator'
 import { ref, watch, useTemplateRef, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -113,8 +113,7 @@ const handleKeyDown = (event) => {
 
   const keybinding = getAcceleratorFromKeyboardEvent(event)
   currentKeybinding = keybinding
-  // Verify whether the given key binding is valid for Electron.
-  isKeybindingValid.value = keybinding.isValid && isValidElectronAccelerator(keybinding.accelerator)
+  isKeybindingValid.value = keybinding.isValid && isValidAccelerator(keybinding.accelerator)
   keybindingInputValue.value = keybinding.accelerator
 }
 

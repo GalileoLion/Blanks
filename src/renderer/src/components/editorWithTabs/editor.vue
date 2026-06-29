@@ -744,7 +744,7 @@ const handleExport = async (options) => {
     throw new Error(`Invalid type to export: "${type}".`)
   }
 
-  const extraCss = getCssForOptions(options)
+  const extraCss = await getCssForOptions(options)
   const htmlToc = getHtmlToc(editor.value.getTOC(), options)
 
   switch (type) {
@@ -768,7 +768,7 @@ const handleExport = async (options) => {
       break
     }
     case 'pdf': {
-      // NOTE: We need to set page size via Electron.
+      // Page options are forwarded to the native export bridge.
       try {
         const { pageSize, pageSizeWidth, pageSizeHeight, isLandscape } = options
         const pageOptions = {

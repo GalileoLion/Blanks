@@ -450,6 +450,19 @@ class Selection {
           offset
         }
       }
+      if (
+        offset === 0 &&
+        node.nodeType === 1 &&
+        node.nodeName === 'SPAN' &&
+        node.classList.contains(CLASS_OR_ID.AG_PARAGRAPH) &&
+        node.childNodes.length === 0
+      ) {
+        node.appendChild(document.createTextNode(''))
+        return {
+          node: node.firstChild,
+          offset: 0
+        }
+      }
 
       const childNodes = node.childNodes
       const len = childNodes.length

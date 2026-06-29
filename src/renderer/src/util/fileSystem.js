@@ -1,7 +1,6 @@
 import crypto from 'crypto'
 
-import { statSync, constants } from 'fs'
-import { exec, execFile } from 'child_process'
+import { execFile } from 'child_process'
 import { tmpdir } from 'os'
 import dayjs from 'dayjs'
 import { Octokit } from '@octokit/rest'
@@ -120,7 +119,7 @@ export const uploadImage = async (pathname, image, preferences) => {
       .catch(() => rejectPromise('Upload failed, the image will be copied to the image folder'))
   }
 
-  // Build a robust PATH for spawned processes (Electron packaged apps often miss Homebrew paths)
+  // Build a robust PATH for spawned processes; GUI apps often miss shell paths.
   const getPreferredPathEnv = () => {
     const extras =
       process.platform === 'darwin'
@@ -134,7 +133,7 @@ export const uploadImage = async (pathname, image, preferences) => {
     return merged.filter(Boolean).join(':')
   }
 
-  const resolvePicgoBinary = () => {
+  const resolvePicgoBinary = async () => {
     const candidates =
       process.platform === 'win32'
         ? ['picgo', 'picgo.exe']
@@ -149,11 +148,11 @@ export const uploadImage = async (pathname, image, preferences) => {
           ]
     for (const c of candidates) {
       try {
-        if (window.commandExists?.exists && window.commandExists.exists(c)) return c
+        if (window.commandExists?.exists && (await window.commandExists.exists(c))) return c
         if (
           c.startsWith('/') &&
-          window.fileUtils?.pathExistsSync &&
-          window.fileUtils.pathExistsSync(c)
+          window.fileUtils?.pathExists &&
+          (await window.fileUtils.pathExists(c))
         )
           return c
       } catch {}
@@ -221,10 +220,11 @@ export const uploadImage = async (pathname, image, preferences) => {
       else rejectPromise(`PicGo upload error: cannot parse output\n${text.slice(0, 400)}`)
     }
     if (uploader === 'picgo') {
-      const cmd = resolvePicgoBinary()
+      const cmd = await resolvePicgoBinary()
       if (!cmd) return rejectPromise('PicGo command not found in PATH')
-      exec(
-        `${cmd} u "${localPath}"`,
+      execFile(
+        cmd,
+        ['u', localPath],
         { env: { ...process.env, PATH: getPreferredPathEnv() } },
         handleExec
       )
@@ -293,17 +293,9 @@ export const uploadImage = async (pathname, image, preferences) => {
   return promise
 }
 
-export const isFileExecutableSync = (filepath) => {
+export const isFileExecutable = async (filepath) => {
   try {
-    const stat = statSync(filepath)
-    if (process.platform === 'win32') {
-      return stat.isFile()
-    } else {
-      return (
-        stat.isFile() &&
-        (stat.mode & (constants.S_IXUSR | constants.S_IXGRP | constants.S_IXOTH)) !== 0
-      )
-    }
+    return await window.fileUtils.isFileExecutable(filepath)
   } catch {
     return false
   }

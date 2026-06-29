@@ -1,0 +1,25 @@
+[package]
+name = "blanks"
+version = "0.2.5"
+description = "Blanks - An enhanced markdown editor based on MarkText"
+authors = ["Galileo Lion"]
+license = "MIT"
+repository = "https://github.com/GalileoLion/Blanks"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+arboard = "3"
+dirs = "6"
+open = "5"
+rfd = "0.15"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = [] }
+trash = "5"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

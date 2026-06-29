@@ -260,8 +260,6 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import fs from 'fs'
-import fsPromises from 'fs/promises'
 import bus from '../../bus'
 import Bool from '@/prefComponents/common/bool'
 import CurSelect from '@/prefComponents/common/select'
@@ -437,37 +435,34 @@ const onSelectChange = (key, value) => {
   }
 }
 
-const loadThemesFromDisk = () => {
+const loadThemesFromDisk = async () => {
   const { userDataPath } = global.blanks.paths
   const themeDir = window.path.join(userDataPath, 'themes/export')
 
   // Search for dictionaries on filesystem.
-  if (window.fileUtils.isDirectory(themeDir)) {
-    fs.readdirSync(themeDir).forEach(async (filename) => {
+  if (await window.fileUtils.isDirectory(themeDir)) {
+    const files = await window.fileUtils.listDir(themeDir)
+    for (const filename of files) {
       const fullname = window.path.join(themeDir, filename)
-      if (/.+\.css$/i.test(filename) && window.fileUtils.isFile(fullname)) {
-        try {
-          const content = await fsPromises.readFile(fullname, 'utf8')
+      if (/.+\.css$/i.test(filename) && (await window.fileUtils.isFile(fullname))) {
+        const content = await window.fileUtils.readTextFile(fullname)
 
-          // Match comment with theme name in first line only.
-          const match = content.match(/^(?:\/\*+[ \t]*([A-z0-9 -]+)[ \t]*(?:\*+\/|[\n\r])?)/)
+        // Match comment with theme name in first line only.
+        const match = content.match(/^(?:\/\*+[ \t]*([A-z0-9 -]+)[ \t]*(?:\*+\/|[\n\r])?)/)
 
-          let label
-          if (match && match[1]) {
-            label = match[1]
-          } else {
-            label = filename
-          }
-
-          themeList.value.push({
-            value: filename,
-            label
-          })
-        } catch (e) {
-          console.error('loadThemesFromDisk failed:', e)
+        let label
+        if (match && match[1]) {
+          label = match[1]
+        } else {
+          label = filename
         }
+
+        themeList.value.push({
+          value: filename,
+          label
+        })
       }
-    })
+    }
   }
 }
 </script>

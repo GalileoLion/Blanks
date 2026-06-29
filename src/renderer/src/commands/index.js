@@ -660,7 +660,7 @@ const commands = [
 // --------------------------------------------------------------------------
 // etc
 
-if (isUpdatable()) {
+if (await isUpdatable()) {
   commands.push({
     id: 'file.check-update',
     execute: async () => {

@@ -13,8 +13,9 @@ import Plugins from '@/prefComponents/plugins'
 
 const parseSettingsPage = (type) => {
   let pageUrl = '/preference'
-  if (/\/spelling$/.test(type)) {
-    pageUrl += '/spelling'
+  const category = /^preference\/(.+)$/.exec(type)?.[1]
+  if (category) {
+    pageUrl += `/${category}`
   }
   return pageUrl
 }

@@ -4,6 +4,17 @@ import bus from '../bus'
 // 直接导入翻译文件
 import enTranslations from '../../../../static/locales/en.json'
 
+const localeModules = import.meta.glob('../../../../static/locales/*.json', {
+  import: 'default',
+  eager: true
+})
+
+const bundledLocales = Object.entries(localeModules).reduce((acc, [path, messages]) => {
+  const filename = path.slice(path.lastIndexOf('/') + 1).replace('.json', '')
+  acc[filename] = messages
+  return acc
+}, { en: enTranslations })
+
 // 创建Vue i18n实例
 const i18n = createI18n({
   legacy: false,
@@ -54,10 +65,9 @@ export const t = (key, ...args) => {
 // 导出语言设置函数
 export const setLanguage = (locale) => {
   if (!locale) return
-  if (!i18n.global.availableLocales.includes[locale]) {
-    // Locale not yet available, need to get it from the main process
-    const translation = window.i18nUtils.loadTranslations(locale)
-    if (!translation) return // Failed to load locale file, error msg should be in the loadTranslations function
+  if (!i18n.global.availableLocales.includes(locale)) {
+    const translation = bundledLocales[locale]
+    if (!translation) return
 
     // Add the loaded locale to i18n instance
     i18n.global.setLocaleMessage(locale, translation)

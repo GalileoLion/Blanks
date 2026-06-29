@@ -16,6 +16,7 @@
       popper-class="font-autocomplete-popper"
       :fetch-suggestions="querySearch"
       :placeholder="t('preferences.selectFont')"
+      @focus="handleFocus"
       @select="handleSelect"
     >
       <template #suffix>
@@ -29,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { InfoFilled, ArrowDown } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
 
@@ -54,6 +55,37 @@ let defaultValue = props.value
 const fontFamilies = ref([])
 const selectValue = ref(props.value)
 
+const normalizeFonts = (fonts = []) =>
+  fonts
+    .map((f) => `${f}`.replace(/\"/g, '').trim())
+    .filter(Boolean)
+
+const nativeFontCache = () => {
+  if (!window.__blanksNative) return { families: null, promise: null }
+  window.__blanksNative.systemFontFamilies ||= {
+    families: null,
+    promise: null
+  }
+  return window.__blanksNative.systemFontFamilies
+}
+
+const loadFontFamilies = async () => {
+  const cache = nativeFontCache()
+  if (cache.families) return cache.families
+  if (!cache.promise) {
+    cache.promise = window.__blanksNative
+      .invoke('list_system_fonts')
+      .then((fonts) => {
+        cache.families = normalizeFonts(fonts)
+        return cache.families
+      })
+      .finally(() => {
+        cache.promise = null
+      })
+  }
+  return cache.promise
+}
+
 watch(
   () => props.value,
   (value, oldValue) => {
@@ -65,11 +97,29 @@ watch(
 )
 
 const querySearch = (queryString, callback) => {
+  if (!fontFamilies.value.length) {
+    const immediate = selectValue.value ? [selectValue.value] : []
+    callback(immediate)
+    loadFontFamilies()
+      .then((fonts) => {
+        fontFamilies.value = fonts
+        callback(filterFonts(queryString))
+      })
+      .catch((error) => {
+        console.error('Failed to load system fonts:', error)
+      })
+    return
+  }
+
+  callback(filterFonts(queryString))
+}
+
+const filterFonts = (queryString) => {
   const results =
     queryString && defaultValue !== queryString
       ? fontFamilies.value.filter((f) => f.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
       : fontFamilies.value
-  callback(results)
+  return results
 }
 
 const handleSelect = (value) => {
@@ -85,13 +135,16 @@ const handleMoreClick = () => {
   }
 }
 
-onMounted(async () => {
-  // Delay load native library because it's not needed for the editor and causes a delay.
-  const { getFonts } = require('font-list')
-
-  const fonts = await getFonts()
-  fontFamilies.value = fonts.map((f) => f.replace(/\"/g, '').trim())
-})
+const handleFocus = () => {
+  if (fontFamilies.value.length) return
+  loadFontFamilies()
+    .then((fonts) => {
+      fontFamilies.value = fonts
+    })
+    .catch((error) => {
+      console.error('Failed to load system fonts:', error)
+    })
+}
 </script>
 
 <style>

@@ -9,9 +9,9 @@
   content="default-src 'self';
   script-src 'self';
   style-src 'self' 'unsafe-inline';
-  img-src * data: file:;
+  img-src * data: file: asset:;
   font-src 'self' data:;
-  connect-src *;
+  connect-src * ipc: http://ipc.localhost;
   "
 />
   </head>
