@@ -4,6 +4,36 @@ import { findNearestParagraph } from '../selection/dom'
 import { getParagraphReference, getImageInfo } from '../utils'
 import { checkEditEmoji } from '../ui/emojis'
 
+const debugIme = (label, event, isComposed) => {
+  const native = globalThis.__TAURI__?.core
+  if (!native) return
+  const docSelection = document.getSelection()
+  native.invoke('file_write', {
+    path: '/private/tmp/blanks-ime.log',
+    append: true,
+    data:
+      `${new Date().toISOString()} ${label} ` +
+      JSON.stringify({
+        type: event.type,
+        inputType: event.inputType,
+        data: event.data,
+        key: event.key,
+        keyCode: event.keyCode,
+        isComposing: event.isComposing,
+        isComposed,
+        target: event.target?.nodeName,
+        targetClass: event.target?.className,
+        active: document.activeElement?.nodeName,
+        activeClass: document.activeElement?.className,
+        anchor: docSelection?.anchorNode?.nodeName,
+        anchorOffset: docSelection?.anchorOffset,
+        focus: docSelection?.focusNode?.nodeName,
+        focusOffset: docSelection?.focusOffset
+      }) +
+      '\n'
+  })
+}
+
 class Keyboard {
   constructor(muya) {
     this.muya = muya
@@ -43,9 +73,17 @@ class Keyboard {
     }
   }
 
+  flushComposition(contentState) {
+    if (!this.isComposed) return
+    this.isComposed = false
+    contentState.inputHandler({ type: 'compositionflush', data: '' })
+    this.muya.dispatchChange()
+  }
+
   recordIsComposed() {
     const { container, eventCenter, contentState } = this.muya
     const handler = (event) => {
+      debugIme('composition', event, this.isComposed)
       if (event.type === 'compositionstart') {
         this.isComposed = true
       } else if (event.type === 'compositionend') {
@@ -57,7 +95,7 @@ class Keyboard {
     }
 
     eventCenter.attachDOMEvent(container, 'compositionend', handler)
-    // eventCenter.attachDOMEvent(container, 'compositionupdate', handler)
+    eventCenter.attachDOMEvent(container, 'compositionupdate', handler)
     eventCenter.attachDOMEvent(container, 'compositionstart', handler)
   }
 
@@ -66,6 +104,10 @@ class Keyboard {
 
     let timer = null
     const changeHandler = (event) => {
+      if (this.isComposed || event.isComposing) {
+        return
+      }
+
       if (
         event.type === 'keyup' &&
         (event.key === EVENT_KEYS.ArrowUp || event.key === EVENT_KEYS.ArrowDown) &&
@@ -105,6 +147,14 @@ class Keyboard {
   keydownBinding() {
     const { container, eventCenter, contentState } = this.muya
     const docHandler = (event) => {
+      if (this.isComposed || event.isComposing || event.key === 'Process' || event.keyCode === 229) {
+        debugIme('doc-keydown', event, this.isComposed)
+      }
+      if (event.isComposing || event.key === 'Process' || event.keyCode === 229) {
+        return
+      }
+      this.flushComposition(contentState)
+
       switch (event.code) {
         case EVENT_KEYS.Enter:
           return contentState.docEnterHandler(event)
@@ -135,9 +185,17 @@ class Keyboard {
     }
 
     const handler = (event) => {
+      if (this.isComposed || event.isComposing || event.key === 'Process' || event.keyCode === 229) {
+        debugIme('keydown', event, this.isComposed)
+      }
       if (event.metaKey || event.ctrlKey) {
         container.classList.add('ag-meta-or-ctrl')
       }
+
+      if (event.isComposing || event.key === 'Process' || event.keyCode === 229) {
+        return
+      }
+      this.flushComposition(contentState)
 
       if (
         Object.keys(this.shownFloat).length > 0 &&
@@ -205,10 +263,18 @@ class Keyboard {
   inputBinding() {
     const { container, eventCenter, contentState } = this.muya
     const inputHandler = (event) => {
-      if (!this.isComposed) {
-        contentState.inputHandler(event)
-        this.muya.dispatchChange()
+      debugIme('input', event, this.isComposed)
+      if (
+        event.isComposing ||
+        event.inputType === 'insertCompositionText' ||
+        event.inputType === 'deleteCompositionText'
+      ) {
+        return
       }
+      this.flushComposition(contentState)
+
+      contentState.inputHandler(event)
+      this.muya.dispatchChange()
 
       const { lang, paragraph } = contentState.checkEditLanguage()
       if (lang) {
@@ -225,12 +291,19 @@ class Keyboard {
       }
     }
 
+    eventCenter.attachDOMEvent(container, 'beforeinput', (event) => {
+      debugIme('beforeinput', event, this.isComposed)
+    })
     eventCenter.attachDOMEvent(container, 'input', inputHandler)
   }
 
   keyupBinding() {
     const { container, eventCenter, contentState } = this.muya
     const handler = (event) => {
+      if (this.isComposed || event.isComposing) {
+        return
+      }
+
       container.classList.remove('ag-meta-or-ctrl')
       // check if edit emoji
       const node = selection.getSelectionStart()

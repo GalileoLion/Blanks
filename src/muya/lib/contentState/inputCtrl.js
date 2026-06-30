@@ -31,6 +31,16 @@ const BACK_HASH = {
 // TODO: refactor later.
 let renderCodeBlockTimer = null
 
+const debugInput = (label, payload) => {
+  const native = globalThis.__TAURI__?.core
+  if (!native) return
+  native.invoke('file_write', {
+    path: '/private/tmp/blanks-ime.log',
+    append: true,
+    data: `${new Date().toISOString()} ${label} ${JSON.stringify(payload)}\n`
+  })
+}
+
 const inputCtrl = (ContentState) => {
   // Input @ to quick insert paragraph
   ContentState.prototype.checkQuickInsert = function (block) {
@@ -107,6 +117,17 @@ const inputCtrl = (ContentState) => {
     const key = start.key
     const block = this.getBlock(key)
     const paragraph = document.querySelector(`#${key}`)
+    debugInput('inputHandler-start', {
+      type: event.type,
+      inputType: event.inputType,
+      data: event.data,
+      key,
+      start,
+      end,
+      oldStart,
+      oldEnd,
+      blockText: block?.text
+    })
 
     // Fix issue 1447
     // Fixme: any better solution?
@@ -130,6 +151,27 @@ const inputCtrl = (ContentState) => {
     }
 
     let text = getTextContent(paragraph, [CLASS_OR_ID.AG_MATH_RENDER, CLASS_OR_ID.AG_RUBY_RENDER])
+    debugInput('inputHandler-domText', {
+      type: event.type,
+      inputType: event.inputType,
+      data: event.data,
+      key,
+      domText: text,
+      blockText: block?.text
+    })
+    if (
+      event.type === 'compositionend' &&
+      event.data &&
+      oldStart.key === oldEnd.key &&
+      oldStart.key === key &&
+      block.text === text
+    ) {
+      const from = Math.min(oldStart.offset, oldEnd.offset)
+      const to = Math.max(oldStart.offset, oldEnd.offset)
+      text = block.text.substring(0, from) + event.data + block.text.substring(to)
+      start.offset = from + event.data.length
+      end.offset = start.offset
+    }
 
     let needRender = false
     let needRenderAll = false
@@ -310,6 +352,15 @@ const inputCtrl = (ContentState) => {
         needRenderAll = true
       }
     }
+    debugInput('inputHandler-after-block', {
+      type: event.type,
+      inputType: event.inputType,
+      data: event.data,
+      key,
+      blockText: block?.text,
+      cursorStart: start,
+      cursorEnd: end
+    })
 
     // show quick insert
     const rect = paragraph.getBoundingClientRect()

@@ -557,8 +557,50 @@ class Selection {
     return node.closest('span.ag-paragraph')
   }
 
+  normalizeBlockCursorNode(node, offset) {
+    if (
+      !node ||
+      node.nodeType !== 1 ||
+      node.nodeName === 'SPAN' ||
+      !node.classList.contains(CLASS_OR_ID.AG_PARAGRAPH)
+    ) {
+      return { node, offset }
+    }
+
+    const textBlock = Array.from(node.childNodes).find(
+      (child) =>
+        child.nodeType === 1 &&
+        child.nodeName === 'SPAN' &&
+        child.classList.contains(CLASS_OR_ID.AG_PARAGRAPH)
+    )
+    if (!textBlock) {
+      return { node, offset }
+    }
+
+    if (!textBlock.firstChild) {
+      textBlock.appendChild(document.createTextNode(''))
+    }
+
+    const textNode = textBlock.firstChild
+    if (textNode.nodeType !== 3) {
+      return { node: textBlock, offset: 0 }
+    }
+
+    const textBlockIndex = Array.prototype.indexOf.call(node.childNodes, textBlock)
+    const normalizedOffset = offset <= textBlockIndex ? 0 : textNode.textContent.length
+    return { node: textNode, offset: normalizedOffset }
+  }
+
   getCursorRange() {
     let { anchorNode, anchorOffset, focusNode, focusOffset } = this.doc.getSelection()
+    ;({ node: anchorNode, offset: anchorOffset } = this.normalizeBlockCursorNode(
+      anchorNode,
+      anchorOffset
+    ))
+    ;({ node: focusNode, offset: focusOffset } = this.normalizeBlockCursorNode(
+      focusNode,
+      focusOffset
+    ))
     const isAnchorValid = this.isValidCursorNode(anchorNode)
     const isFocusValid = this.isValidCursorNode(focusNode)
     let needFix = false
