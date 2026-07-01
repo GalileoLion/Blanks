@@ -110,6 +110,26 @@ const inputCtrl = (ContentState) => {
   ContentState.prototype.inputHandler = function (event, notEqual = false) {
     const { start, end } = selection.getCursorRange()
     if (!start || !end) {
+      if (event.type === 'compositionend' && event.data) {
+        const { start: oldStart, end: oldEnd } = this.cursor
+        if (oldStart.key === oldEnd.key) {
+          const block = this.getBlock(oldStart.key)
+          if (block) {
+            const from = Math.min(oldStart.offset, oldEnd.offset)
+            const to = Math.max(oldStart.offset, oldEnd.offset)
+            const offset = from + event.data.length
+            block.text = block.text.substring(0, from) + event.data + block.text.substring(to)
+            this.cursor = {
+              start: { key: oldStart.key, offset },
+              end: { key: oldStart.key, offset },
+              isEdit: true
+            }
+            this.singleRender(block)
+            setTimeout(() => this.muya.focus())
+            return
+          }
+        }
+      }
       return
     }
 
